@@ -2,7 +2,7 @@
 
 #TODO add PLS package to Matlab path
 #TODO check if any variables are undefined
-#TODO get PLS_PATH to convert between Windows & Linux-style directory structure
+#TODO get INPUT_FILE to convert between Windows & Linux-style directory structure
 #TODO add brain region
 
 ##### accept arguments #####
@@ -14,7 +14,7 @@ while getopts t:d:o:n:p:pre:win: option; do
                 d) DIR=${OPTARG};;             # group directory
                 o) OUTPUT=${OPTARG};;          # directory to output results
                 n) NAME_OUT=${OPTARG};;        # name to give teh output files
-								p) PLS_PATH=${OPTARG};;        # path to the PLS package
+								p) INPUT_FILE=${OPTARG};;        # path to the PLS package
 								pre) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
 								win) WIN_SIZE=${OPTARG};;      # temporal window size in scans
 								arun) ACROSS_RUN=${OPTARG};;   # for merge data across all run, 0 for within each run
@@ -27,7 +27,7 @@ done
 
 ##### test variables #####
 
-PLS_PATH='/mnt/c/Users/john/Desktop/practice_PLS/output/GO/Older/noCustomReg_GO_sart_old_erCVA_JE_erCVA/'
+INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  #TODO only needs to be the input file
 OUTPUT='/mnt/c/Users/john/Desktop/practice_PLS/PLS_results'
 
 ##### create output directories #####
@@ -84,45 +84,8 @@ function lin2win {
 	echo $conv_path_new
 }
 
-# cd $PLS_PATH
+if [ $OS == "windows" ]; then
+	INPUT_FILE=$(lin2win $INPUT_FILE)
+fi
 
-subj_count=0
-( cat $PLS_PATH/input_file.txt; echo; ) | while read subj_line; do
-
-	subj_line=($subj_line)
-	subj_line=${subj_line[1]}
-	subj_line=(${subj_line//'='/ })
-	subj_line=${subj_line[1]}
-
-	subj_line=$(basename $subj_line)
-	subj_line=$(echo ${subj_line%.*})
-	
-	if (( $subj_count == 0 )); then
-		echo $subj_line >  $OUTPUT/tmp/subj_ls.txt 
-	else
-		echo $subj_line >> $OUTPUT/tmp/subj_ls.txt 
-	fi
-	
-	subj_count=$(( $subj_count + 1 ))
-
-done 
-
-##### create batch text file #####
-
-( cat $OUTPUT/tmp/subj_ls.txt ; echo; ) | while read subj; do
-	
-	if (( ${#subj} > 0)); then
-
-		split_info=$PLS_PATH/'intermediate_processed/split_info/'$subj.mat
-		split_info=$(lin2win $split_info)
-		echo $split_info
-
-		$matlab -r "split_info=load(""'"$split_info"'"");run('read_subjmat.m')" # -nodesktop -nosplash 
-
-	fi
-	
-done 
-
-
-
-# $matlab -nodesktop -nosplash -r "PLS=$PLS_PATH;run('run_PLS.m')" #-wait # -r path/to/matlab/script.m 
+$matlab -r "fileID=fopen('"$INPUT_FILE"');OUTPUT=""'$OUTPUT';run('read_subjmat.m')" -wait # -nodesktop -nosplash 
