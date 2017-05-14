@@ -5,25 +5,33 @@
 #TODO get INPUT_FILE to convert between Windows & Linux-style directory structure
 #TODO add brain region
 
-##### accept arguments #####
-
-while getopts t:d:o:n:p:pre:win: option; do
-        case "${option}"
-        in
-                t) TYPE=${OPTARG};;            # type of PLS to run
-                d) DIR=${OPTARG};;             # group directory
-                o) OUTPUT=${OPTARG};;          # directory to output results
-                n) NAME_OUT=${OPTARG};;        # name to give teh output files
-								p) INPUT_FILE=${OPTARG};;        # path to the PLS package
-								pre) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
-								win) WIN_SIZE=${OPTARG};;      # temporal window size in scans
-								arun) ACROSS_RUN=${OPTARG};;   # for merge data across all run, 0 for within each run
-								ssubj) SINGLE_SUBJ=${OPTARG};; # 1 for single subject analysis, 0 for normal analysis
-								refon) REF_ONSER=${OPTARG};;   # reference scan onset for all conditions
-								nref) NUM_REFS=${OPTARG};;     # number of reference scans for all conditions
-								conds) NUM_CONDS=${OPTARG};;   # number of conditions to use in analysis
-        esac
+##### accept arguments ##### 
+while getopts i:o:p:b:w:a:f:s:r:n:t:z: option; do
+	case "${option}"
+	in
+		i) INPUT_FILE=${OPTARG};;    # path to the PLS package
+		o) OUTPUT=${OPTARG};;        # place to output the PLS files
+		p) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
+		b) BRAIN_ROI=${OPTARG};;     # brain roi (can be number or file path to a mask)
+		w) WIN_SIZE=${OPTARG};;      # temporal window size in scans
+		a) ACROSS_RUN=${OPTARG};;    # for merge data across all run, 0 for within each run
+		f) NORM_REF=${OPTARG};;      # for single subject analysis, 0 for normal analysis
+		s) SINGLE_SUBJ=${OPTARG};;   # 1 for single subject analysis, 0 for normal analysis
+		r) REF_ONSET=${OPTARG};;     # reference scan onset for all conditions
+		n) REF_NUM=${OPTARG};;       # number of reference scans for all conditions
+		t) NORMAL=${OPTARG};;        # normalize volume mean (keey 0 unless necessary)
+		z) RUN=${OPTARG};;           # do you want to run the analysis after the creation of the file? ('true or false')
+		:) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+			 ;;
+		\?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+	esac
 done
+
 
 ##### test variables #####
 
@@ -88,4 +96,30 @@ if [ $OS == "windows" ]; then
 	INPUT_FILE=$(lin2win $INPUT_FILE)
 fi
 
-$matlab -r "fileID=fopen('"$INPUT_FILE"');OUTPUT=""'$OUTPUT';run('read_subjmat.m')" -wait # -nodesktop -nosplash 
+##### prep arguments for passage into Matlab #####
+
+mOS=$(echo "OS='$OS'")
+mINPUT_FILE=$(echo "fileID=fopen('$INPUT_FILE')")
+mOUTPUT=$(echo "OUTPUT='$OUTPUT'")
+mPREFIX=$(echo "PREFIX='$PREFIX'")
+mBRAIN_ROI=$(echo "BRAIN_ROI='$BRAIN_ROI'")
+mWIN_SIZE=$(echo "WIN_SIZE='$WIN_SIZE'")
+mACROSS_RUN=$(echo "ACROSS_RUN='$ACROSS_RUN'")
+mNORM_REF=$(echo "NORM_REF='$NORM_REF'")
+mSINGLE_SUBJ=$(echo "SINGLE_SUBJ='$SINGLE_SUBJ'")
+mREF_ONSET=$(echo "REF_ONSET='$REF_ONSET'")
+mREF_NUM=$(echo "REF_NUM='$REF_NUM'")
+mNORMAL=$(echo "NORMAL='$NORMAL'")
+mRUN=$(echo "RUN=$RUN")
+
+# echo RUN = $RUN
+
+mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
+
+mCOMMANDS=$(echo "$mOS;$mINPUT_FILE;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
+
+echo $mCOMMANDS
+
+$matlab -r "$mCOMMANDS" #-wait # -nodesktop -nosplash 
+
+# $matlab -r "fileID=fopen('"$INPUT_FILE"');OUTPUT=""'$OUTPUT';run('read_subjmat.m')" #-wait # -nodesktop -nosplash 
