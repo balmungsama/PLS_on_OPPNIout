@@ -1,6 +1,6 @@
 
 
-This script is able to product an E.R. fMRI PLS batch file for any group preprocessed in OPPNI.
+This script produces an E.R. fMRI PLS batch file for any OPPNI-preprocessed dataset.
 All file paths must be entered in a Unix/Linux format. 
 
   -i   Filepath to the OPPNI input txt file.
