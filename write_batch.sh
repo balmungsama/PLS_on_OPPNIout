@@ -1,3 +1,14 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -cwd
+#$ -M hpc3586@localhost
+#$ -m be
+#$ -o logs/grp_STD.out
+#$ -e logs/grp_STD.err
+#$ -q abaqus.q
+#$ -o logs/write_erfmri_batch.out
+#$ -e logs/write_erfmri_batch.err
+
 ##### installation directory #####
 INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory in which the package is stored
 cd $INSTALL_DIR                                         # cd to the install directory
