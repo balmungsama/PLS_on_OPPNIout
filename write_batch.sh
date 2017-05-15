@@ -1,12 +1,12 @@
-##### log #####
+##### Default values #####
 
-#TODO add PLS package to Matlab path
-#TODO check if any variables are undefined
-#TODO get INPUT_FILE to convert between Windows & Linux-style directory structure
-#TODO add brain region
+
+##### get help Documentation text #####
+
+usage=$(cat Documentation.txt)
 
 ##### accept arguments ##### 
-while getopts i:o:p:b:w:a:f:s:r:n:t:z: option; do
+while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 	case "${option}"
 	in
 		i) INPUT_FILE=${OPTARG};;    # path to the PLS package
@@ -21,6 +21,11 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z: option; do
 		n) REF_NUM=${OPTARG};;       # number of reference scans for all conditions
 		t) NORMAL=${OPTARG};;        # normalize volume mean (keey 0 unless necessary)
 		z) RUN=${OPTARG};;           # do you want to run the analysis after the creation of the file? ('true or false')
+		h) echo "$usage" >&2
+			 exit 1
+			 ;;
+		c) seed=${OPTARG}
+       ;;
 		:) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
        exit 1
@@ -118,8 +123,6 @@ mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
 
 mCOMMANDS=$(echo "$mOS;$mINPUT_FILE;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
 
-echo $mCOMMANDS
+# echo $mCOMMANDS
 
-$matlab -r "$mCOMMANDS" #-wait # -nodesktop -nosplash 
-
-# $matlab -r "fileID=fopen('"$INPUT_FILE"');OUTPUT=""'$OUTPUT';run('read_subjmat.m')" #-wait # -nodesktop -nosplash 
+$matlab -r "$mCOMMANDS" -nosplash -nodesktop -wait 

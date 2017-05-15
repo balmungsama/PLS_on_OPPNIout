@@ -161,8 +161,16 @@ fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
 for nsubj = 1:num_subs;
 
-	% input_file{nsubj,1} = ['hello world ', num2str(nsubj)]; % remove this after testing
-	fprintf(fid, [ 'data_files ', input_file{nsubj,1}, '\n' ] );
+	% this should send the command to change the input file paths to windows format, but it isn't working	
+	% if strcmp(OS, 'windows') == true
+	% 	[status, tmp_input_file] = system([bash, '"bash lin2win.sh ', input_file{nsubj,1}, '"'], '-echo');
+	% else 
+	% 	tmp_input_file = input_file{nsubj,1};
+	% end 
+
+	tmp_input_file = input_file{nsubj,1};
+
+	fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
 	
 	% this doesn't properly cycle trhough the subjects
 	for num_cond = 1:cond_count;
@@ -188,8 +196,14 @@ disp('Batch file created.');
 
 %%%%% run the PLS file that was just created %%%%%
 
+[status, tmp_output_dir] = system([bash, '"bash lin2win.sh ', OUTPUT, '"']);
+
 if RUN == true
 	disp('Running the batch file...');
-	batch_plsgui [PREFIX, '_batch_fmri_data.txt']
+	batch_plsgui fullfile(tmp_output_dir, [PREFIX, '_batch_fmri_data.txt'])
 	disp('DONE!');
 end
+
+%%%%% quit matlab once it's done running #####
+pause(2);
+exit
