@@ -60,7 +60,7 @@ done
 
 ##### test variables #####
 
-# INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  #TODO only needs to be the input file
+# INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  
 # OUTPUT='/mnt/c/Users/john/Desktop/practice_PLS/PLS_results'
 
 ##### create output directories #####
