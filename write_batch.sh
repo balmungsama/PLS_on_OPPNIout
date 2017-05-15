@@ -46,12 +46,11 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 	esac
 done
 
-echo $BRAIN_ROI
 
 ##### test variables #####
 
-INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  #TODO only needs to be the input file
-OUTPUT='/mnt/c/Users/john/Desktop/practice_PLS/PLS_results'
+# INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  #TODO only needs to be the input file
+# OUTPUT='/mnt/c/Users/john/Desktop/practice_PLS/PLS_results'
 
 ##### create output directories #####
 
