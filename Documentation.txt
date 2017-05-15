@@ -6,7 +6,7 @@ All file paths must be entered in a Unix/Linux format.
 	-i   Filepath to the OPPNI input txt file.
 
 	-o   Filepath to the directory where you would to output the batch text file.
-
+ 
 	-p   Specify the prefix you would like to use for the PLS batch file.
 
 	-b   Enter the brain ROI to use (either a number between 0.00 - 1.00, or a file path to a mask file)

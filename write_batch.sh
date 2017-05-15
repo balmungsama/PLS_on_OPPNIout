@@ -3,7 +3,7 @@ INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory
 cd $INSTALL_DIR                                         # cd to the install directory
 
 ##### Default values #####
-
+ 
 WIN_SIZE=8
 NORMAL=0
 RUN=false
