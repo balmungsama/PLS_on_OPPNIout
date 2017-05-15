@@ -10,10 +10,10 @@ All file paths must be entered in a Unix/Linux format.
 	-p   Specify the prefix you would like to use for the PLS batch file.
 
 	-b   Enter the brain ROI to use (either a number between 0.00 - 1.00, or a file path to a mask file)
-	     DEFAULT = 0.15
+       DEFAULT = 0.15
 
 	-w   Size of the temporal window to use in the PLS (in TRs)
-			 DEFAULT = 8
+       DEFAULT = 8
 
 	-a   Would you like to merge data across runs? 1 = yes, 0 = no
 
@@ -24,10 +24,10 @@ All file paths must be entered in a Unix/Linux format.
 	-r   Reference scan onset for all conditions (in TRs)
 
 	-n   Number of reference scans for all conditions
-	     DEFAULT = 1
+       DEFAULT = 1
 
 	-t   Normalize volume mean (keey 0 unless necessary)
-	     DEFAULT = 0
+       DEFAULT = 0
 
 	-z   Do you want to run the analysis after the creation of the file? ('true' or 'false')
-	     DEFAULT = false
+       DEFAULT = false
