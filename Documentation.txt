@@ -3,31 +3,31 @@
 This script is able to product an E.R. fMRI PLS batch file for any group preprocessed in OPPNI.
 All file paths must be entered in a Unix/Linux format. 
 
-	-i   Filepath to the OPPNI input txt file.
+  -i   Filepath to the OPPNI input txt file.
 
-	-o   Filepath to the directory where you would to output the batch text file.
+  -o   Filepath to the directory where you would to output the batch text file.
  
-	-p   Specify the prefix you would like to use for the PLS batch file.
+  -p   Specify the prefix you would like to use for the PLS batch file.
 
-	-b   Enter the brain ROI to use (either a number between 0.00 - 1.00, or a file path to a mask file)
+  -b   Enter the brain ROI to use (either a number between 0.00 - 1.00, or a file path to a mask file)
        DEFAULT = 0.15
 
-	-w   Size of the temporal window to use in the PLS (in TRs)
+  -w   Size of the temporal window to use in the PLS (in TRs)
        DEFAULT = 8
 
-	-a   Would you like to merge data across runs? 1 = yes, 0 = no
+  -a   Would you like to merge data across runs? 1 = yes, 0 = no
 
-	-s   Would you like to run a single-subject analysis? 1 = yes, 0 = no
+  -s   Would you like to run a single-subject analysis? 1 = yes, 0 = no
 
-	-f   1 for single reference scan, 0 for normal reference scan
+  -f   1 for single reference scan, 0 for normal reference scan
 
-	-r   Reference scan onset for all conditions (in TRs)
+  -r   Reference scan onset for all conditions (in TRs)
 
-	-n   Number of reference scans for all conditions
+  -n   Number of reference scans for all conditions
        DEFAULT = 1
 
-	-t   Normalize volume mean (keey 0 unless necessary)
+  -t   Normalize volume mean (keey 0 unless necessary)
        DEFAULT = 0
 
-	-z   Do you want to run the analysis after the creation of the file? ('true' or 'false')
+  -z   Do you want to run the analysis after the creation of the file? ('true' or 'false')
        DEFAULT = false
