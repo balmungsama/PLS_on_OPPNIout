@@ -32,3 +32,4 @@ All file paths must be entered in a Unix/Linux format.
   -z   Do you want to run the analysis after the creation of the file? ('true' or 'false')
        DEFAULT = false
 
+ 
