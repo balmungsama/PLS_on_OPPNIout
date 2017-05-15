@@ -54,6 +54,7 @@ for subj = 1:num_subs
 	% TODO insert subject loop in here %%%%%
 
 	fid = fopen(subj_task);
+	disp(['subj_task = ', subj_task]);
 
 
 	while true
