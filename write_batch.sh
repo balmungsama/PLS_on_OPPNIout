@@ -1,5 +1,14 @@
+##### installation directory #####
+INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory in which the package is stored
+cd $INSTALL_DIR                                         # cd to the install directory
+
 ##### Default values #####
 
+WIN_SIZE=8
+NORMAL=0
+RUN=false
+REF_NUM=1
+BRAIN_ROI=0.15
 
 ##### get help Documentation text #####
 
@@ -26,10 +35,10 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 			 ;;
 		c) seed=${OPTARG}
        ;;
-		:) printf "missing argument for -%s\n" "$OPTARG" >&2
-       echo "$usage" >&2
-       exit 1
-			 ;;
+		# :) printf "missing argument for -%s\n" "$OPTARG" >&2
+    #    echo "$usage" >&2
+    #    exit 1
+		# 	 ;;
 		\?) printf "illegal option: -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
        exit 1
@@ -37,6 +46,7 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 	esac
 done
 
+echo $BRAIN_ROI
 
 ##### test variables #####
 
