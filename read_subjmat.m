@@ -49,9 +49,7 @@ for subj = 1:num_subs
 	subj_task = subj_task(2);
 	subj_task = subj_task{1};
 
-	subj_task ='C:\Users\john\Desktop\practice_PLS\nathan_splitinfo_GO\older\10745_run4.txt'; %TODO TESTING
-
-	% TODO insert subject loop in here %%%%%
+	% subj_task ='C:\Users\john\Desktop\practice_PLS\nathan_splitinfo_GO\older\10745_run4.txt'; % TESTING
 
 	fid = fopen(subj_task);
 	disp(['subj_task = ', subj_task]);
