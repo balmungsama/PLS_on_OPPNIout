@@ -144,5 +144,4 @@ mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
 mCOMMANDS=$(echo "$mOS;$mINPUT_FILE;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
 
 # echo $mCOMMANDS
-'use matlab'
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop #-wait 
