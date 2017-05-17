@@ -42,8 +42,8 @@ fclose(fileID);
 cond_count    = 0;
 cond(1).names = 0;
 
-TR_length = system(['fslval ', input_file{nsubj,1}, ' pixdim4' ]);
-disp(['TR length in seconds is ', TR_length]);
+TR_length = system(['fslval ', input_file{1,1}, ' pixdim4' ]);
+disp([ 'TR length in seconds is ', TR_length ]);
 
 num_subs = size(input_file,1);
 for subj = 1:num_subs
