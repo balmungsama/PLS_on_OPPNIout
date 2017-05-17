@@ -10,10 +10,6 @@ PLUGINS_DIR = fullfile( PLUGINS_DIR, 'Pls');
 
 addpath( genpath(PLUGINS_DIR) );
 
-%%%%% define function to transform onsets from MSEC to TRs
-
-
-
 %%%%% check OS to determine how to access BASH commands %%%%%
 
 if strcmp(OS, 'windows') == true
@@ -48,7 +44,6 @@ fclose(fileID);
 cond_count    = 0;
 cond(1).names = 0;
 
-% TODO: correctly extract TR length
 [status, TR_length] = system(['fslval ', input_file{1,1}, ' pixdim4' ], '-echo');
 TR_length = str2num(TR_length);
 
@@ -97,8 +92,8 @@ for subj = 1:num_subs
 			cond(cond_count).names = tline;
 			% disp(tline);
 		elseif ~isempty(TFons);
-			tmp_ons = tline;
-			tmp_ons = str2num(tmp_ons);
+			t_ons = tline;
+			tmp_ons = conv_onsets(t_ons);
 			cond(cond_count).ons   = tline; % TODO: need to change these units from MSEC to TRs
 		elseif ~isempty(TFdur);
 			cond(cond_count).dur   = tline;
