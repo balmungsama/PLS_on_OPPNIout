@@ -7,6 +7,6 @@ function YY = conv_onsets(onsets, TR)
 	t_onsets = floor(t_onsets);
 
 	YY = t_onsets;
-	return YY
+	% return YY
 
 end
