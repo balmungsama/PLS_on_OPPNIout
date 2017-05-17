@@ -106,7 +106,7 @@ end
 
 %%%%% write to text file #####	
 
-fid = fopen( [PREFIX, '_batch_fmri_data.txt'], 'w'); %TODO need to make this customized
+fid = fopen( fullfile(OUTPUT, [PREFIX, '_batch_fmri_data.txt']), 'w'); %TODO need to make this customized
 
 fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
