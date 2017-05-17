@@ -138,7 +138,7 @@ mNORMAL=$(echo "NORMAL='$NORMAL'")
 mRUN=$(echo "RUN=$RUN")
 
 # echo RUN = $RUN
-echo mINPUT_FILE
+# echo mINPUT_FILE
 mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
 
 mCOMMANDS=$(echo "$mOS;$mINPUT_FILE;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
