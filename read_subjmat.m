@@ -42,6 +42,9 @@ fclose(fileID);
 cond_count    = 0;
 cond(1).names = 0;
 
+TR_length = system(['fslval ', input_file{nsubj,1}, ' pixdim4' ]);
+disp(['TR length in seconds is ', TR_length]);
+
 num_subs = size(input_file,1);
 for subj = 1:num_subs
 	subj_task = input_file{subj, 5};
@@ -87,7 +90,9 @@ for subj = 1:num_subs
 			cond(cond_count).names = tline;
 			% disp(tline);
 		elseif ~isempty(TFons);
-			cond(cond_count).ons   = tline;
+			tmp_ons = tline;
+			tmp_ons = str2num(tmp_ons);
+			cond(cond_count).ons   = tline; % TODO: need to change these units from MSEC to TRs
 		elseif ~isempty(TFdur);
 			cond(cond_count).dur   = tline;
 		elseif ~isempty(SCunit)
@@ -106,7 +111,7 @@ end
 
 %%%%% write to text file #####	
 
-fid = fopen( fullfile(OUTPUT, [PREFIX, '_batch_fmri_data.txt']), 'w'); %TODO need to make this customized
+fid = fopen( fullfile(OUTPUT, [PREFIX, '_batch_fmri_data.txt']), 'w'); 
 
 fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
