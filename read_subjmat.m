@@ -95,6 +95,7 @@ for subj = 1:num_subs
 			% TODO: need to change these units from MSEC to TRs
 
 			t_ons = tline;
+			disp(['t_ons = ', t_ons]);
 			t_ons = conv_onsets(t_ons);
 			t_ons = num2cell(num2str(t_ons(:)));
 			t_ons =  strjoin(t_ons, ',');
