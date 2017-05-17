@@ -1,3 +1,5 @@
+% TODO: write function to transform onsets from MSEC to TRs
+
 %%%%% Add the PLS package to Matlab's search path %%%%%
 
 PLUGINS = fopen('matlab_plugins.txt');
@@ -42,7 +44,8 @@ fclose(fileID);
 cond_count    = 0;
 cond(1).names = 0;
 
-TR_length = system(['fslval ', input_file{1,1}, ' pixdim4' ]);
+% TODO: correctly extract TR length
+[status, TR_length] = system(['fslval ', input_file{1,1}, ' pixdim4' ], '-echo');
 disp([ 'TR length in seconds is ', TR_length ]);
 
 num_subs = size(input_file,1);

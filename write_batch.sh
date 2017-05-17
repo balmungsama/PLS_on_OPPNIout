@@ -9,6 +9,8 @@
 #$ -o logs/write_erfmri_batch.out
 #$ -e logs/write_erfmri_batch.err
 
+# TODO: make this extract the CON/FIX/IND optimized data instead of the un-preprocessed input
+
 ##### installation directory #####
 INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory in which the package is stored
 cd $INSTALL_DIR                                         # cd to the install directory
