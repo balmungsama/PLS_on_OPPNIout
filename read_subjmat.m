@@ -208,6 +208,5 @@ if RUN == true
 	disp('DONE!');
 end
 
-%%%%% quit matlab once it's done running #####
-% pause(2);
-exit
+
+% exit
