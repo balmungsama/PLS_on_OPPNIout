@@ -73,10 +73,12 @@ for subj = 1:num_subs
 		SCunit = strfind(tline, 'UNIT='    );
 		SCtr   = strfind(tline, 'TR_MSEC=' );
 		SCtype = strfind(tline, 'TYPE='    );
+		DROP   = strfind(tline, 'DROP='    );
 
 		TFname = TFname(:);
 		TFons  = TFons(:) ;
 		TFdur  = TFdur(:) ;
+		DROP   = DROP(:)  ;
 
 		tline = strsplit(tline, '[');
 		tline = tline(2); 
@@ -90,9 +92,11 @@ for subj = 1:num_subs
 		if ~isempty(TFname);
 			cond_count             = cond_count + 1;		
 			cond(cond_count).names = tline;
+		elseif ~isempty(DROP);
+			cond(cond_count).drop  = tline;
 		elseif ~isempty(TFons);
 			t_ons = tline;
-			t_ons = conv_onsets(t_ons, TR_length);
+			t_ons = conv_onsets(t_ons, TR_length, cond(cond_count).drop);
 			cond(cond_count).ons   = t_ons;
 		elseif ~isempty(TFdur);
 			cond(cond_count).dur   = tline;
@@ -165,13 +169,6 @@ fprintf(fid, ['	%%  Run Section Start  %%\n']);
 fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
 for nsubj = 1:num_subs;
-
-	% this should send the command to change the input file paths to windows format, but it isn't working	
-	% if strcmp(OS, 'windows') == true
-	% 	[status, tmp_input_file] = system([bash, '"bash lin2win.sh ', input_file{nsubj,1}, '"'], '-echo');
-	% else 
-	% 	tmp_input_file = input_file{nsubj,1};
-	% end 
 
 	out_index           = strfind(input_file, 'OUT=');
 	out_index           = out_index(1, :);
