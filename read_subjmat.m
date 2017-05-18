@@ -101,8 +101,6 @@ for subj = 1:num_subs
 		if ~isempty(TFname);
 			cond_count             = cond_count + 1;		
 			cond(cond_count).names = tline;
-		elseif ~isempty(DROP);
-			cond(cond_count).drop  = tline;
 		elseif ~isempty(TFons);
 			t_ons = tline;
 			t_ons = conv_onsets(t_ons, TR_length, DROP);
