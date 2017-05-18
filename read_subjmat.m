@@ -57,8 +57,6 @@ for subj = 1:num_subs
 	% subj_task ='C:\Users\john\Desktop\practice_PLS\nathan_splitinfo_GO\older\10745_run4.txt'; % TESTING
 
 	fid = fopen(subj_task);
-	disp(['subj_task = ', subj_task]);
-
 
 	while true
 
@@ -90,12 +88,8 @@ for subj = 1:num_subs
 		if ~isempty(TFname);
 			cond_count             = cond_count + 1;		
 			cond(cond_count).names = tline;
-			% disp(tline);
 		elseif ~isempty(TFons);
-			% TODO: need to change these units from MSEC to TRs
-
 			t_ons = tline;
-			disp(['t_ons = ', t_ons]);
 			t_ons = conv_onsets(t_ons, TR_length);
 			cond(cond_count).ons   = t_ons;
 		elseif ~isempty(TFdur);
@@ -181,10 +175,8 @@ for nsubj = 1:num_subs;
 
 	fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
 	
-	% this doesn't properly cycle trhough the subjects
 	for num_cond = 1:cond_count;
 		cond_ind = ((nsubj - 1) * cond_count) + num_cond;
-		% disp(cond_ind)
 		fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
 	end
 
