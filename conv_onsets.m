@@ -10,11 +10,9 @@ function YY = conv_onsets(onsets, TR, DROP)
 
 	TR = TR * 1000;
 
-	adjust.start = drop.start * TR;
-
 	t_onsets = onsets / TR;
 	t_onsets = round(t_onsets);  % TODO: decide if you want to use round() or floor()
-	t_onsets = t_onsets - adjust.start;
+	t_onsets = t_onsets - drop.start;
 	t_onsets = sprintf('%.0f,' , t_onsets);
 	t_onsets = t_onsets(1:end-1);
 
