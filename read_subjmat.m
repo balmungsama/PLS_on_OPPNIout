@@ -41,7 +41,7 @@ end
 
 input_file = input_file_array;
 clear input_file_array tmp_line;
-fclose(input_file);
+fclose(fileID);
 
 cond_count    = 0;
 cond(1).names = 0;
