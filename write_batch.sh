@@ -31,7 +31,7 @@ usage=$(cat Documentation.txt)
 while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 	case "${option}"
 	in
-		i) INPUT_FILE=${OPTARG};;    # path to the PLS package
+		i) OPPNI_DIR=${OPTARG};;    # path to the PLS package
 		o) OUTPUT=${OPTARG};;        # place to output the PLS files
 		p) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
 		b) BRAIN_ROI=${OPTARG};;     # brain roi (can be number or file path to a mask)
@@ -62,13 +62,12 @@ done
 
 ##### test variables #####
 
-# INPUT_FILE='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  
+# OPPNI_DIR='/mnt/c/Users/john/Desktop/practice_PLS/GO_sart_old_erCVA_JE.txt'  
 # OUTPUT='/mnt/c/Users/john/Desktop/practice_PLS/PLS_results'
 
 ##### create output directories #####
 
 mkdir -p $OUTPUT
-# mkdir $OUTPUT/tmp
 
 ##### check OS #####
 
@@ -120,13 +119,13 @@ function lin2win {
 }
 
 if [ $OS == "windows" ]; then
-	INPUT_FILE=$(lin2win $INPUT_FILE)
+	OPPNI_DIR=$(lin2win $OPPNI_DIR)
 fi
 
 ##### prep arguments for passage into Matlab #####
 
 mOS=$(echo "OS='$OS'")
-mINPUT_FILE=$(echo "fileID=fopen('$INPUT_FILE')")
+mOPPNI_DIR=$(echo "OPPNI_DIR='$OPPNI_DIR'")
 mOUTPUT=$(echo "OUTPUT='$OUTPUT'")
 mPREFIX=$(echo "PREFIX='$PREFIX'")
 mBRAIN_ROI=$(echo "BRAIN_ROI='$BRAIN_ROI'")
@@ -140,10 +139,10 @@ mNORMAL=$(echo "NORMAL='$NORMAL'")
 mRUN=$(echo "RUN=$RUN")
 
 # echo RUN = $RUN
-# echo mINPUT_FILE
+# echo mOPPNI_DIR
 mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
 
-mCOMMANDS=$(echo "$mOS;$mINPUT_FILE;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
+mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
 
 # echo $mCOMMANDS
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait 

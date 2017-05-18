@@ -20,6 +20,7 @@ end
 
 %%%%% begin gathering data to build text file %%%%%
 
+input_file = fullfile(OPPNI_DIR, 'input_file.txt');
 input_file = fscanf(fileID, '%c');
 input_file = strsplit(input_file, 'IN=')';
 input_file = {input_file{2:end}};
