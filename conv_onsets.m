@@ -2,12 +2,14 @@
 
 function YY = conv_onsets(onsets, TR)
 	onsets = str2num(onsets);
+	disp(onsets);
 
 	TR = TR * 1000;
 	t_onsets = onsets / TR;
-	t_onsets = floor(t_onsets);
-	t_onsets = num2cell(num2str(t_onsets(:)));
-	t_onsets =  strjoin(t_onsets, ',');
+	disp(t_onsets);
+	t_onsets = round(t_onsets);  % TODO: decide if you want to use rouond() or floor()
+	t_onsets = sprintf('%.0f,' , t_onsets);
+	t_onsets =  t_onsets(1:end-1);
 
 	YY = t_onsets;
 	% return YY
