@@ -96,7 +96,7 @@ for subj = 1:num_subs
 
 			t_ons = tline;
 			disp(['t_ons = ', t_ons]);
-			t_ons = conv_onsets(t_ons);
+			t_ons = conv_onsets(t_ons, TR_length);
 			cond(cond_count).ons   = t_ons;
 		elseif ~isempty(TFdur);
 			cond(cond_count).dur   = tline;
