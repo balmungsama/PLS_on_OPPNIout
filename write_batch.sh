@@ -67,7 +67,7 @@ done
 
 ##### create output directories #####
 
-mkdir $OUTPUT
+mkdir -p $OUTPUT
 # mkdir $OUTPUT/tmp
 
 ##### check OS #####
