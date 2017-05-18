@@ -213,5 +213,4 @@ if RUN == true
 	disp('DONE!');
 end
 
-
-% exit
+exit
