@@ -49,6 +49,17 @@ cond(1).names = 0;
 [status, TR_length] = system(['fslval ', input_file{1,1}, ' pixdim4' ], '-echo');
 TR_length = str2num(TR_length);
 
+% find number of volumes ro be dropped
+DROP = input_file(1,:);
+DROP = strfind(DROP, 'DROP=');
+DROP = DROP(1, :);
+DROP = find(~cellfun(@isempty, DROP));
+DROP = input_file(1, DROP);
+DROP = DROP{:};
+DROP = strsplit(DROP, '=');
+DROP = DROP{2};
+DROP = str2num(DROP);
+
 num_subs = size(input_file,1);
 for subj = 1:num_subs
 	subj_task = input_file{subj, 5};
@@ -73,12 +84,10 @@ for subj = 1:num_subs
 		SCunit = strfind(tline, 'UNIT='    );
 		SCtr   = strfind(tline, 'TR_MSEC=' );
 		SCtype = strfind(tline, 'TYPE='    );
-		DROP   = strfind(tline, 'DROP='    );
 
 		TFname = TFname(:);
 		TFons  = TFons(:) ;
 		TFdur  = TFdur(:) ;
-		DROP   = DROP(:)  ;
 
 		tline = strsplit(tline, '[');
 		tline = tline(2); 
@@ -96,7 +105,7 @@ for subj = 1:num_subs
 			cond(cond_count).drop  = tline;
 		elseif ~isempty(TFons);
 			t_ons = tline;
-			t_ons = conv_onsets(t_ons, TR_length, cond(cond_count).drop);
+			t_ons = conv_onsets(t_ons, TR_length, DROP);
 			cond(cond_count).ons   = t_ons;
 		elseif ~isempty(TFdur);
 			cond(cond_count).dur   = tline;
