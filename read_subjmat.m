@@ -173,9 +173,13 @@ for nsubj = 1:num_subs;
 	% 	tmp_input_file = input_file{nsubj,1};
 	% end 
 
-	tmp_input_file      = input_file{nsubj,1};
+	out_index           = strfind(input_file, 'OUT=');
+	out_index           = out_index(1, :);
+	out_index           = find(~cellfun(@isempty, out_index));
+
+	tmp_input_file      = input_file{nsubj, out_index};
 	[~, nifti_name, ~]  = fileparts(tmp_input_file);
-	tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii']);
+	tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
 	[~, tmp_input_file] = fileattrib(tmp_input_file);
 	tmp_input_file      = tmp_input_file.Name;
 
