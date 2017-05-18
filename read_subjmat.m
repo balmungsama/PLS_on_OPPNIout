@@ -20,8 +20,9 @@ end
 
 %%%%% begin gathering data to build text file %%%%%
 
-input_file = fullfile(OPPNI_DIR, 'input_file.txt');
-input_file = fscanf(input_file, '%c');
+fileID     = fullfile(OPPNI_DIR, 'input_file.txt');
+fileID     = fopen(fileID);
+input_file = fscanf(fileID, '%c');
 input_file = strsplit(input_file, 'IN=')';
 input_file = {input_file{2:end}};
 
@@ -40,7 +41,7 @@ end
 
 input_file = input_file_array;
 clear input_file_array tmp_line;
-fclose(fileID);
+fclose(input_file);
 
 cond_count    = 0;
 cond(1).names = 0;
