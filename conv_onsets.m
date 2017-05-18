@@ -5,8 +5,8 @@ function YY = conv_onsets(onsets, TR)
 	disp(onsets);
 
 	TR = TR * 1000;
+	
 	t_onsets = onsets / TR;
-	disp(t_onsets);
 	t_onsets = round(t_onsets);  % TODO: decide if you want to use rouond() or floor()
 	t_onsets = sprintf('%.0f,' , t_onsets);
 	t_onsets =  t_onsets(1:end-1);
