@@ -48,18 +48,6 @@ cond(1).names = 0;
 [status, TR_length] = system(['fslval ', input_file{1,1}, ' pixdim4' ], '-echo');
 TR_length = str2num(TR_length);
 
-% TODO: Need to make the drop values update with each participant, as not all may have the same drop values
-% find number of volumes to be dropped
-% DROP = input_file(1,:);
-% DROP = strfind(DROP, 'DROP=');
-% DROP = DROP(1, :);
-% DROP = find(~cellfun(@isempty, DROP));
-% DROP = input_file(1, DROP);
-% DROP = DROP{:};
-% DROP = strsplit(DROP, '=');
-% DROP = DROP{2};
-% DROP = str2num(DROP);
-
 num_subs = size(input_file,1);
 for subj = 1:num_subs
 	subj_task = input_file{subj, 5};
@@ -67,6 +55,7 @@ for subj = 1:num_subs
 	subj_task = subj_task(2);
 	subj_task = subj_task{1};
 
+	% find number of volumes to be dropped
 	DROP = input_file(subj,:);
 	DROP = strfind(DROP, 'DROP=');
 	DROP = DROP(1, :);
@@ -76,9 +65,7 @@ for subj = 1:num_subs
 	DROP = strsplit(DROP, '=');
 	DROP = DROP{2};
 	DROP = str2num(DROP);
-	disp(['DROP = ', num2str(DROP)]);
-
-	% subj_task ='C:\Users\john\Desktop\practice_PLS\nathan_splitinfo_GO\older\10745_run4.txt'; % TESTING
+	% disp(['DROP = ', num2str(DROP)]);
 
 	fid = fopen(subj_task);
 
