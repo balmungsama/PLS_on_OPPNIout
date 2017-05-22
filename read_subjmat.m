@@ -71,7 +71,7 @@ for subj = 1:num_subs
 	DROP = strfind(DROP, 'DROP=');
 	DROP = DROP(1, :);
 	DROP = find(~cellfun(@isempty, DROP));
-	DROP = input_file(1, DROP);
+	DROP = input_file(subj, DROP);
 	DROP = DROP{:};
 	DROP = strsplit(DROP, '=');
 	DROP = DROP{2};
