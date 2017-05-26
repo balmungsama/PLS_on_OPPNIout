@@ -156,7 +156,7 @@ fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']
 cond_count = unique({cond(:).names});
 cond_count = length(cond_count);
 for num_conds = 1:cond_count;
-	fprintf(fid, [cond(num_conds).names, ' c', num2str(num_conds), '\n' ] ); % unique({cond(:).names})
+	fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
 	fprintf(fid, ['ref_scan_onset ', num2str(0), '\n'   ] );
 	fprintf(fid, ['num_ref_scan '  , num2str(1), '\n\n' ] );
 end
