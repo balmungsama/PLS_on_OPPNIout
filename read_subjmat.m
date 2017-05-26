@@ -213,12 +213,10 @@ disp('Batch file created.');
 
 %%%%% run the PLS file that was just created %%%%%
 
-% [status, tmp_output_dir] = system([bash, '"bash lin2win.sh ', OUTPUT, '"']);
 
-if RUN == true
-	disp('Running the batch file...');
-	batch_plsgui fullfile(OUTPUT, [PREFIX, '_batch_fmri_data.txt'])
-	disp('DONE!');
-end
+disp('Running the batch file...');
+batch_plsgui fullfile(OUTPUT, [PREFIX, '_batch_fmri_data.txt'])
+disp('DONE!');
+
 
 exit
