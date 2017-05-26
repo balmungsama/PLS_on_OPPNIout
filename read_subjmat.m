@@ -136,10 +136,6 @@ fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold 
 fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
 fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
 fprintf(fid, [ 'single_subj '	        , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
-fprintf(fid, [ 'single_ref_scan '	    , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
-fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
-fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
-fprintf(fid, [ 'single_subj '	        , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
 fprintf(fid, [ 'single_ref_scan '	    , NORM_REF       , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
 fprintf(fid, [ 'single_ref_onset '    , REF_ONSET      , '\n'   ] ); % single reference scan onset
 fprintf(fid, [ 'single_ref_number '   , REF_NUM        , '\n'   ] ); % single reference scan number
