@@ -65,7 +65,7 @@ for row = 1:size(out_array, 1);
 end
 
 for row = 1:size(out_array, 1);
-	out_array2{row,3}  = str2num(out_array2{row,2})
+	out_array2{row,3}  = str2num(out_array2{row,2});
 end
 
 out_array = out_array2;
