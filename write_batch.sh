@@ -135,11 +135,10 @@ mNORM_REF=$(echo "NORM_REF='$NORM_REF'")
 mSINGLE_SUBJ=$(echo "SINGLE_SUBJ='$SINGLE_SUBJ'")
 mREF_ONSET=$(echo "REF_ONSET='$REF_ONSET'")
 mREF_NUM=$(echo "REF_NUM='$REF_NUM'")
-mNORMAL=$(echo "NORMAL='$NORMAL'")
+mNORMAL=$(echo "NORMAL='$NORMAL'") 
 mRUN=$(echo "RUN=$RUN")
 
-# echo RUN = $RUN
-# echo mOPPNI_DIR
+
 mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
 
 mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
