@@ -75,82 +75,83 @@ group.out_array = out_array;
 group.names     = unique( group.out_array(:,1) ); % get array of unique subjects
 
 for row = 1:size(group.names, 1)
-	name_index      = strfind( group.out_array(:, 1), group.names{row} )
-	name_index      = find(~cellfun(@isempty, name_index))'
-	group.runs{row,1} = [ group.out_array{ [name_index] , 3} ]
-	group.rows{row,1} = [name_index]
+	name_index      = strfind( group.out_array(:, 1), group.names{row} );
+	name_index      = find(~cellfun(@isempty, name_index))';
+	group.runs{row,1} = [ group.out_array{ [name_index] , 3} ];
+	group.rows{row,1} = [name_index];
 end
 
-clear out_array
+clear out_array;
 
+for subj = 1:size(input_file,1)
+	subj_task = input_file{subj, 5};
+	subj_task = strsplit(subj_task, '=');
+	subj_task = subj_task(2);
+	subj_task = subj_task{1};
 
-subj_task = input_file{subj, 5};
-subj_task = strsplit(subj_task, '=');
-subj_task = subj_task(2);
-subj_task = subj_task{1};
+	% find number of volumes to be dropped
+	DROP = input_file(subj,:);
+	DROP = strfind(DROP, 'DROP=');
+	DROP = DROP(1, :);
+	DROP = find(~cellfun(@isempty, DROP));
+	DROP = input_file(subj, DROP);
+	DROP = DROP{:};
+	DROP = strsplit(DROP, '=');
+	DROP = DROP{2};
+	DROP = str2num(DROP);
+	% disp(['DROP = ', num2str(DROP)]);
 
-% find number of volumes to be dropped
-DROP = input_file(subj,:);
-DROP = strfind(DROP, 'DROP=');
-DROP = DROP(1, :);
-DROP = find(~cellfun(@isempty, DROP));
-DROP = input_file(subj, DROP);
-DROP = DROP{:};
-DROP = strsplit(DROP, '=');
-DROP = DROP{2};
-DROP = str2num(DROP);
-% disp(['DROP = ', num2str(DROP)]);
+	fid = fopen(subj_task);
 
-fid = fopen(subj_task);
+	while true
 
-while true
+		tline = fgetl(fid);
 
-	tline = fgetl(fid);
+		if sum(size(tline)) == 0; continue; end % check if the line is blank
+		if ~ischar(tline); break; end           % check if the file has ended
 
-	if sum(size(tline)) == 0; continue; end % check if the line is blank
-	if ~ischar(tline); break; end           % check if the file has ended
+		TFname = strfind(tline, 'NAME='    );
+		TFons  = strfind(tline, 'ONSETS='  );
+		TFdur  = strfind(tline, 'DURATION=');
+		SCunit = strfind(tline, 'UNIT='    );
+		SCtr   = strfind(tline, 'TR_MSEC=' );
+		SCtype = strfind(tline, 'TYPE='    );
 
-	TFname = strfind(tline, 'NAME='    );
-	TFons  = strfind(tline, 'ONSETS='  );
-	TFdur  = strfind(tline, 'DURATION=');
-	SCunit = strfind(tline, 'UNIT='    );
-	SCtr   = strfind(tline, 'TR_MSEC=' );
-	SCtype = strfind(tline, 'TYPE='    );
+		TFname = TFname(:);
+		TFons  = TFons(:) ;
+		TFdur  = TFdur(:) ;
 
-	TFname = TFname(:);
-	TFons  = TFons(:) ;
-	TFdur  = TFdur(:) ;
+		tline = strsplit(tline, '[');
+		tline = tline(2); 
+		tline = tline{1};
+		tline = strsplit(tline, ']');
+		tline = tline(1);
+		tline = tline{1};
 
-	tline = strsplit(tline, '[');
-	tline = tline(2); 
-	tline = tline{1};
-	tline = strsplit(tline, ']');
-	tline = tline(1);
-	tline = tline{1};
+		% scan and cond are the variables containing important information
 
-	% scan and cond are the variables containing important information
+		if ~isempty(TFname);
+			cond_count             = cond_count + 1;		
+			cond(cond_count).names = tline;
+		elseif ~isempty(TFons);
+			t_ons = tline;
+			t_ons = conv_onsets(t_ons, TR_length, DROP);
+			cond(cond_count).ons   = t_ons;
+		elseif ~isempty(TFdur);
+			cond(cond_count).dur   = tline;
+		elseif ~isempty(SCunit)
+			scan.unit = tline;
+		elseif ~isempty(SCtr)
+			scan.tr   = tline;
+		elseif ~isempty(SCtype);
+			scan.type = tline;
+		end
 
-	if ~isempty(TFname);
-		cond_count             = cond_count + 1;		
-		cond(cond_count).names = tline;
-	elseif ~isempty(TFons);
-		t_ons = tline;
-		t_ons = conv_onsets(t_ons, TR_length, DROP);
-		cond(cond_count).ons   = t_ons;
-	elseif ~isempty(TFdur);
-		cond(cond_count).dur   = tline;
-	elseif ~isempty(SCunit)
-		scan.unit = tline;
-	elseif ~isempty(SCtr)
-		scan.tr   = tline;
-	elseif ~isempty(SCtype);
-		scan.type = tline;
 	end
 
+	fclose(fid);
+
 end
-
-fclose(fid);
-
 
 
 %%%%% write to text file #####	
