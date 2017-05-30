@@ -156,7 +156,7 @@ end
 
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
-	fid = fopen( fullfile(OUTPUT, [PREFIX, group.names{nsubj}, '_batch_fmri_data.txt']), 'w'); 
+	fid = fopen( fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']), 'w'); 
 
 	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
