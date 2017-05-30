@@ -145,4 +145,3 @@ mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mAC
 
 # echo $mCOMMANDS
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait 
-
