@@ -11,6 +11,10 @@
 
 # TODO: make this extract the CON/FIX/IND optimized data instead of the un-preprocessed input
 
+##### matlab plugins #####
+
+MAT_PLUGINS='/home/hpc3586/matlab_plugins'
+
 ##### installation directory #####
 INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory in which the package is stored
 cd $INSTALL_DIR                                         # cd to the install directory
