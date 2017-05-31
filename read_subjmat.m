@@ -158,7 +158,7 @@ end
 for nsubj = 1:size(group.names,1);
 	fid = fopen( fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']), 'w'); 
 
-	SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt'];
+	SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
 
 	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
