@@ -226,7 +226,7 @@ for nsubj = 1:size(group.names,1);
 			cond_ind = ((task_run - 1) * cond_count) + num_cond;
 			fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
 
-			disp([task_run ' ' cond_ind]); % FIXME: this is a trouble-shooting line
+			disp([task_run ' ' cond_ind]); % FIXME: this is a trouble-shooting  line 
 		end
 
 		fprintf(fid, [ '\n' ] );
