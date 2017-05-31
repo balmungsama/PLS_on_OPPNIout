@@ -168,7 +168,7 @@ for nsubj = 1:size(group.names,1);
 	fprintf(fid, ['	%%  General Section Start  %%\n']);
 	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-	fprintf(fid, [ 'prefix '		          , PREFIX         , '\n'   ] ); % prefix for session file and datamat file
+	fprintf(fid, [ 'prefix '		          , SUBJ_PREFIX    , '\n'   ] ); % prefix for session file and datamat file
 	fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
 	fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
 	fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
