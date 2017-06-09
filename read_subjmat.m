@@ -73,9 +73,8 @@ clear out_array2;
 
 group.out_array = out_array;
 % group.names     = unique( group.out_array(:,1) ); % get array of unique subjects
-
-[group.names, grp_indx] = unique( group.out_array(:,1) );
-group.names = group.out_array(sort(grp_indx)) 
+[group.names, grp_indx] = unique( group.out_array(:,1) ); % get array of unique subjects
+ group.names            = group.out_array(sort(grp_indx)) ;
 
 for row = 1:size(group.names, 1)
 	name_index      = strfind( group.out_array(:, 1), group.names{row} );
