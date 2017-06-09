@@ -17,6 +17,22 @@ else
 	bash = 'bash ';
 end
 
+%%%%% trouble-shooting print statements %%%%%
+
+disp(OS)
+disp(OPPNI_DIR)
+disp(OUTPUT)
+disp(PREFIX)
+disp(BRAIN_ROI)
+disp(WIN_SIZE)
+disp(ACROSS_RUN)
+disp(NORM_REF)
+disp(SINGLE_SUBJ)
+disp(REF_ONSET)
+disp(REF_NUM)
+disp(NORMAL)
+disp(RUN)
+
 %%%%% begin gathering data to build text file %%%%%
 
 fileID     = fullfile(OPPNI_DIR, 'input_file.txt');
@@ -196,8 +212,8 @@ for nsubj = 1:size(group.names,1);
 	cond_count = length(cond_count);
 	for num_conds = 1:cond_count;
 		fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
-		fprintf(fid, ['ref_scan_onset ', num2str(REF_ONSET), '\n'   ] );
-		fprintf(fid, ['num_ref_scan '  , num2str(REF_NUM)  , '\n\n' ] );
+		fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
+		fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
 	end
 
 	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
