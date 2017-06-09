@@ -1,0 +1,259 @@
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Result File Name Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Note: Result file must be listed first, and must follow the file
+%	 name format of xxxx_yyyyresult.mat, where xxxx stands for
+%	 "any result file name prefix" and yyyy stands for the name
+%	 of PLS module (either PET ERP fMRI BfMRI STRUCT or SmallFC).
+%	 File name is case sensitive on Unix or Linux computers.
+
+result_file	mu+sigma_fMRIresult.mat
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Result File Name End  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Group Section Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+
+group_files	Young_custReg_2382_fMRIsessiondata.mat Young_custReg_5382_fMRIsessiondata.mat Young_custReg_2731_fMRIsessiondata.mat Young_custReg_5383_fMRIsessiondata.mat Young_custReg_3780_fMRIsessiondata.mat Young_custReg_6194_fMRIsessiondata.mat Young_custReg_4028_fMRIsessiondata.mat Young_custReg_6230_fMRIsessiondata.mat Young_custReg_4575_fMRIsessiondata.mat Young_custReg_7130_fMRIsessiondata.mat Young_custReg_4827_fMRIsessiondata.mat Young_custReg_7218_fMRIsessiondata.mat Young_custReg_4863_fMRIsessiondata.mat Young_custReg_7244_fMRIsessiondata.mat Young_custReg_4993_fMRIsessiondata.mat Young_custReg_7295_fMRIsessiondata.mat Young_custReg_5067_fMRIsessiondata.mat Young_custReg_7296_fMRIsessiondata.mat Young_custReg_5301_fMRIsessiondata.mat Young_custReg_7324_fMRIsessiondata.mat Young_custReg_5311_fMRIsessiondata.mat Young_custReg_7338_fMRIsessiondata.mat Young_custReg_5312_fMRIsessiondata.mat Young_custReg_7339_fMRIsessiondata.mat Young_custReg_5344_fMRIsessiondata.mat Young_custReg_7435_fMRIsessiondata.mat	% group 1 
+group_files Old_custReg_10745_fMRIsessiondata.mat Old_custReg_4855_fMRIsessiondata.mat Old_custReg_7522_fMRIsessiondata.mat Old_custReg_4356_fMRIsessiondata.mat Old_custReg_5168_fMRIsessiondata.mat Old_custReg_8112_fMRIsessiondata.mat Old_custReg_4438_fMRIsessiondata.mat Old_custReg_5224_fMRIsessiondata.mat Old_custReg_8393_fMRIsessiondata.mat Old_custReg_4450_fMRIsessiondata.mat Old_custReg_5485_fMRIsessiondata.mat Old_custReg_8626_fMRIsessiondata.mat Old_custReg_4503_fMRIsessiondata.mat Old_custReg_5780_fMRIsessiondata.mat Old_custReg_8633_fMRIsessiondata.mat Old_custReg_4559_fMRIsessiondata.mat Old_custReg_5799_fMRIsessiondata.mat Old_custReg_9161_fMRIsessiondata.mat Old_custReg_4707_fMRIsessiondata.mat Old_custReg_6100_fMRIsessiondata.mat Old_custReg_9253_fMRIsessiondata.mat                                                                                                                                                                                                                                             % group 2
+
+% ... following above pattern for more groups
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	%  Group Section End  %
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	%  PLS Section Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Notes:
+%    1. Mean-Centering PLS
+%    2. Non-Rotated Task PLS (please also fill out contrast data below)
+%    3. Regular Behav PLS (please also fill out behavior data & name below)
+%    4. Multiblock PLS (please also fill out behavior data & name below)
+%    5. Non-Rotated Behav PLS (please also fill out contrast data and
+%	behavior data & name below)
+%    6. Non-Rotated Multiblock PLS (please also fill out contrast data and
+%	behavior data & name below)
+
+pls		3		% PLS Option (between 1 to 5, see above notes)
+
+%  Mean-Centering Type:
+%    0. Remove group condition means from conditon means within each group
+%    1. Remove grand condition means from each group condition mean
+%    2. Remove grand mean over all subjects and conditions
+%    3. Remove all main effects by subtracting condition and group means
+
+mean_type	1		% Mean-Centering Type (between 0 to 3, see above)
+
+%  Correlation Mode:
+%    0. Pearson correlation
+%    2. covaraince
+%    4. cosine angle
+%    6. dot product
+
+cormode		0		% Correlation Mode (can be 0,2,4,6, see above)
+
+num_perm	500		% Number of Permutation
+num_split	100		% Natasha Perm Split Half
+num_boot	1000		% Number of Bootstrap
+boot_type	strat		% Either strat or nonstrat bootstrap type
+clim		95		% Confidence Level for Behavior PLS
+save_data	1		% Set to 1 to save stacked datamat
+
+	%%%%%%%%%%%%%%%%%%%%%
+	%  PLS Section End  %
+	%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Condition Selection Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Notes: If you don't need to deselect conditions, just leave
+%  "selected_cond" & "selected_bcond" to be commented.
+
+%  First put k number of 1 after "selected_cond" keyword, where k is the
+%  number of conditions in the session/datamat. Then, replace with 0 for
+%  those conditions that you would like to deselect for any case except
+%  behavior block of multiblock PLS. e.g. If you have 3 conditions in 
+%  session/datamat, and you would like to deselect the 2nd condition, 
+%  then you should enter 1 0 1 after selected_cond.
+%
+%selected_cond	1 1		% you may want to comment this line
+
+%  First put k number of 1 after "selected_bcond" keyword, where k is the
+%  number of conditions in sessiondata file. Then, replace with 0 for
+%  those conditions that you would like to deselect only for behavior 
+%  block of multiblock PLS. e.g. If you have 3 conditions in 
+%  sessiondata file, and you would like to deselect the 2nd condition, 
+%  then you should enter 1 0 1 after selected_cond. you can not select 
+%  any conditions for "selected_bcond" that were deselected in 
+%  "selected_cond". e.g. in the above comments, you can not select the 
+%  2nd condition for "selected_bcond" because it was already deselected 
+%  in "selected_cond".
+%
+%selected_bcond	1 1		% you may want to comment this line
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Condition Selection End  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Contrast Data Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Notes: only list selected conditions (selected_cond)
+ 1 -1 for Young and Old, respectively
+contrast_data	1 0		% contrast 1&2 for group 1 run1 condition 1
+contrast_data	1 0		% contrast 1&2 for group 1 run2 condition 1
+contrast_data	0 -1		% contrast 1&2 for group 2 run1 condition 1
+contrast_data	0 -1		% contrast 1&2 for group 2 run2 condition 2
+
+% ... following above pattern for more groups
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	%  Contrast Data End  %
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Behavior Data Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Notes: only list selected conditions (selected_cond)
+
+behavior_data 274.24741	11.48967
+behavior_data 262.42806	12.51182
+behavior_data 586.25331	113.18956
+behavior_data 587.60517	68.13132
+behavior_data 341.23385	21.01874
+behavior_data 346.99678	37.76213
+behavior_data 479.47954	95.73458
+behavior_data 424.17044	69.11875
+behavior_data 303.09270	27.64838
+behavior_data 309.32347	35.27236
+behavior_data 291.88025	186.31710
+behavior_data 388.36927	159.68879
+behavior_data 306.70726	18.54556
+behavior_data 341.32652	31.91948
+behavior_data 266.76239	18.68931
+behavior_data 296.93717	38.66598
+behavior_data 484.25524	46.75951
+behavior_data 457.33669	53.86010
+behavior_data 252.71016	8.27824
+behavior_data 289.56503	24.40501
+behavior_data 243.71133	14.41498
+behavior_data 245.69124	5.69372
+behavior_data 465.82695	122.40813
+behavior_data 344.99235	57.02013
+behavior_data 292.77470	43.79020
+behavior_data 305.07159	63.16625
+behavior_data 251.54813	2.30795
+behavior_data 254.35251	57.64866
+behavior_data 363.69959	57.08640
+behavior_data 367.07779	57.22567
+behavior_data 277.44135	23.42775
+behavior_data 276.86985	14.30693
+behavior_data 320.62942	32.66792
+behavior_data 328.57802	37.26234
+behavior_data 345.86564	52.94596
+behavior_data 325.10119	16.97721
+behavior_data 279.03910	14.70904
+behavior_data 310.72409	33.12456
+behavior_data 294.07780	12.94026
+behavior_data 290.47021	17.02417
+behavior_data 324.21185	32.54365
+behavior_data 313.68714	34.51489
+behavior_data 260.63942	10.27147
+behavior_data 247.99992	0.00001
+behavior_data 256.48905	4.17436
+behavior_data 293.88307	25.95711
+behavior_data 328.49055	18.59969
+behavior_data 424.79740	72.38278
+behavior_data 292.67144	19.35659
+behavior_data 298.85688	24.34327
+behavior_data 456.96834	62.61103
+behavior_data 466.43245	77.82583
+
+behavior_data 326.39647	46.88980
+behavior_data 351.62001	36.86727
+behavior_data 505.28127	51.97935
+behavior_data 477.27769	45.54884
+behavior_data 338.30892	37.28550
+behavior_data 317.74665	29.22047
+behavior_data 389.07571	32.90372
+behavior_data 377.08830	20.96190
+behavior_data 153.96900	140.87164
+behavior_data 419.29583	45.53577
+behavior_data 482.68271	58.60013
+behavior_data 367.81551	21.60735
+behavior_data 358.60840	33.26408
+behavior_data 335.94200	48.56126
+behavior_data 302.22383	46.09408
+behavior_data 368.74144	46.34886
+behavior_data 382.79552	52.97503
+behavior_data 329.92539	42.22343
+behavior_data 385.73437	35.31864
+behavior_data 278.81823	11.26733
+behavior_data 334.04261	60.94230
+behavior_data 392.51612	49.19111
+behavior_data 384.17021	29.50025
+behavior_data 391.49913	71.49000
+behavior_data 362.19604	62.80322
+behavior_data 366.35489	19.07654
+behavior_data 386.04392	34.83849
+behavior_data 371.38164	46.13792
+behavior_data 363.95963	33.03883
+behavior_data 365.10045	47.22557
+behavior_data 356.72957	31.67131
+behavior_data 337.81544	29.44541
+behavior_data 358.40229	43.14101
+behavior_data 308.54692	52.43136
+behavior_data 361.95383	39.32601
+behavior_data 279.31058	183.05988
+behavior_data 368.76443	47.32721
+behavior_data 432.35999	42.97513
+behavior_data 400.88444	40.92945
+behavior_data 380.95579	47.23845
+behavior_data 394.51405	60.94921
+
+
+% ... following above pattern for more groups
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	%  Behavior Data End  %
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+	%  Behavior Name Start  %
+	%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Numbers of Behavior Name should match the Behavior Data above
+
+behavior_name	mu sigma
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	%  Behavior Name End  %
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------------
+

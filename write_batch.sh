@@ -3,8 +3,6 @@
 #$ -cwd
 #$ -M hpc3586@localhost
 #$ -m be
-#$ -o logs/grp_STD.out
-#$ -e logs/grp_STD.err
 #$ -q abaqus.q
 #$ -o logs/write_erfmri_batch.out
 #$ -e logs/write_erfmri_batch.err
