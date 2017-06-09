@@ -221,6 +221,8 @@ for nsubj = 1:size(group.names,1);
 		tmp_input_file      = input_file{task_run, out_index};
 		% tmp_input_file      = strsplit(tmp_input_file, '=');
 		% tmp_input_file      = tmp_input_file{2};
+		tmp_input_file      = strsplit(tmp_input_file, '=');
+		tmp_input_file      = tmp_input_file{2};
 		[~, nifti_name, ~]  = fileparts(tmp_input_file);
 		tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
 		[~, tmp_input_file] = fileattrib(tmp_input_file);
