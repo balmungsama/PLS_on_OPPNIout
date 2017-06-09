@@ -19,19 +19,19 @@ end
 
 %%%%% trouble-shooting print statements %%%%%
 
-disp(OS)
-disp(OPPNI_DIR)
-disp(OUTPUT)
-disp(PREFIX)
-disp(BRAIN_ROI)
-disp(WIN_SIZE)
-disp(ACROSS_RUN)
-disp(NORM_REF)
-disp(SINGLE_SUBJ)
-disp(REF_ONSET)
-disp(REF_NUM)
-disp(NORMAL)
-disp(RUN)
+disp(class(OS         ))
+disp(class(OPPNI_DIR  ))
+disp(class(OUTPUT     ))
+disp(class(PREFIX     ))
+disp(class(BRAIN_ROI  ))
+disp(class(WIN_SIZE   ))
+disp(class(ACROSS_RUN ))
+disp(class(NORM_REF   ))
+disp(class(SINGLE_SUBJ))
+disp(class(REF_ONSET  ))
+disp(class(REF_NUM    ))
+disp(class(NORMAL     ))
+disp(class(RUN        ))
 
 %%%%% begin gathering data to build text file %%%%%
 
