@@ -174,7 +174,8 @@ end
 
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
-	fid = fopen( fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']), 'w'); 
+	batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']);
+	fid = fopen( batch_filename, 'w'); 
 
 	SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
 
@@ -265,6 +266,8 @@ for nsubj = 1:size(group.names,1);
 
 
 	fclose(fid);
+
+	batch_plsgui(batch_filename);
 
 end
 

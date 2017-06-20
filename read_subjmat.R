@@ -15,3 +15,7 @@ subj.mat <- readMat('/mnt/c/Users/john/Desktop/practice_PLS/output/GO/Older/noCu
 subj.mat <- subj.mat$split.info
 
 subj.mat[4][[1]][2]
+
+print(hello world, 
+
+data.frame(x)
