@@ -23,8 +23,8 @@ result_file	mu+sigma_fMRIresult.mat
 	%  Group Section Start  %
 	%%%%%%%%%%%%%%%%%%%%%%%%%
 
-group_files	Young_custReg_2382_fMRIsessiondata.mat Young_custReg_5382_fMRIsessiondata.mat Young_custReg_2731_fMRIsessiondata.mat Young_custReg_5383_fMRIsessiondata.mat Young_custReg_3780_fMRIsessiondata.mat Young_custReg_6194_fMRIsessiondata.mat Young_custReg_4028_fMRIsessiondata.mat Young_custReg_6230_fMRIsessiondata.mat Young_custReg_4575_fMRIsessiondata.mat Young_custReg_7130_fMRIsessiondata.mat Young_custReg_4827_fMRIsessiondata.mat Young_custReg_7218_fMRIsessiondata.mat Young_custReg_4863_fMRIsessiondata.mat Young_custReg_7244_fMRIsessiondata.mat Young_custReg_4993_fMRIsessiondata.mat Young_custReg_7295_fMRIsessiondata.mat Young_custReg_5067_fMRIsessiondata.mat Young_custReg_7296_fMRIsessiondata.mat Young_custReg_5301_fMRIsessiondata.mat Young_custReg_7324_fMRIsessiondata.mat Young_custReg_5311_fMRIsessiondata.mat Young_custReg_7338_fMRIsessiondata.mat Young_custReg_5312_fMRIsessiondata.mat Young_custReg_7339_fMRIsessiondata.mat Young_custReg_5344_fMRIsessiondata.mat Young_custReg_7435_fMRIsessiondata.mat	% group 1 
-group_files Old_custReg_10745_fMRIsessiondata.mat Old_custReg_4855_fMRIsessiondata.mat Old_custReg_7522_fMRIsessiondata.mat Old_custReg_4356_fMRIsessiondata.mat Old_custReg_5168_fMRIsessiondata.mat Old_custReg_8112_fMRIsessiondata.mat Old_custReg_4438_fMRIsessiondata.mat Old_custReg_5224_fMRIsessiondata.mat Old_custReg_8393_fMRIsessiondata.mat Old_custReg_4450_fMRIsessiondata.mat Old_custReg_5485_fMRIsessiondata.mat Old_custReg_8626_fMRIsessiondata.mat Old_custReg_4503_fMRIsessiondata.mat Old_custReg_5780_fMRIsessiondata.mat Old_custReg_8633_fMRIsessiondata.mat Old_custReg_4559_fMRIsessiondata.mat Old_custReg_5799_fMRIsessiondata.mat Old_custReg_9161_fMRIsessiondata.mat Old_custReg_4707_fMRIsessiondata.mat Old_custReg_6100_fMRIsessiondata.mat Old_custReg_9253_fMRIsessiondata.mat                                                                                                                                                                                                                                             % group 2
+group_files Young_custReg_2382_fMRIsessiondata.mat Young_custReg_2731_fMRIsessiondata.mat Young_custReg_3780_fMRIsessiondata.mat Young_custReg_4028_fMRIsessiondata.mat Young_custReg_4575_fMRIsessiondata.mat Young_custReg_4827_fMRIsessiondata.mat Young_custReg_4863_fMRIsessiondata.mat Young_custReg_4993_fMRIsessiondata.mat Young_custReg_5067_fMRIsessiondata.mat Young_custReg_5301_fMRIsessiondata.mat Young_custReg_5311_fMRIsessiondata.mat Young_custReg_5312_fMRIsessiondata.mat Young_custReg_5344_fMRIsessiondata.mat   Young_custReg_5382_fMRIsessiondata.mat Young_custReg_5383_fMRIsessiondata.mat Young_custReg_6194_fMRIsessiondata.mat Young_custReg_6230_fMRIsessiondata.mat Young_custReg_7130_fMRIsessiondata.mat Young_custReg_7218_fMRIsessiondata.mat Young_custReg_7244_fMRIsessiondata.mat Young_custReg_7295_fMRIsessiondata.mat Young_custReg_7296_fMRIsessiondata.mat Young_custReg_7324_fMRIsessiondata.mat Young_custReg_7338_fMRIsessiondata.mat Young_custReg_7339_fMRIsessiondata.mat Young_custReg_7435_fMRIsessiondata.mat % group 1
+group_files Old_custReg_10745_fMRIsessiondata.mat Old_custReg_4356_fMRIsessiondata.mat Old_custReg_4438_fMRIsessiondata.mat Old_custReg_4450_fMRIsessiondata.mat Old_custReg_4503_fMRIsessiondata.mat Old_custReg_4559_fMRIsessiondata.mat Old_custReg_4707_fMRIsessiondata.mat Old_custReg_4855_fMRIsessiondata.mat Old_custReg_5168_fMRIsessiondata.mat Old_custReg_5224_fMRIsessiondata.mat Old_custReg_5485_fMRIsessiondata.mat Old_custReg_5780_fMRIsessiondata.mat Old_custReg_5799_fMRIsessiondata.mat Old_custReg_6100_fMRIsessiondata.mat Old_custReg_7522_fMRIsessiondata.mat Old_custReg_8112_fMRIsessiondata.mat Old_custReg_8393_fMRIsessiondata.mat Old_custReg_8626_fMRIsessiondata.mat Old_custReg_8633_fMRIsessiondata.mat Old_custReg_9161_fMRIsessiondata.mat Old_custReg_9253_fMRIsessiondata.mat                                                                                                                                                                                                                                               % group 2
 
 % ... following above pattern for more groups
 
@@ -139,100 +139,55 @@ contrast_data	0 -1		% contrast 1&2 for group 2 run2 condition 2
 
 %  Notes: only list selected conditions (selected_cond)
 
-behavior_data 274.24741	11.48967
-behavior_data 262.42806	12.51182
-behavior_data 586.25331	113.18956
-behavior_data 587.60517	68.13132
-behavior_data 341.23385	21.01874
-behavior_data 346.99678	37.76213
-behavior_data 479.47954	95.73458
-behavior_data 424.17044	69.11875
-behavior_data 303.09270	27.64838
-behavior_data 309.32347	35.27236
-behavior_data 291.88025	186.31710
-behavior_data 388.36927	159.68879
-behavior_data 306.70726	18.54556
-behavior_data 341.32652	31.91948
-behavior_data 266.76239	18.68931
-behavior_data 296.93717	38.66598
-behavior_data 484.25524	46.75951
-behavior_data 457.33669	53.86010
-behavior_data 252.71016	8.27824
-behavior_data 289.56503	24.40501
-behavior_data 243.71133	14.41498
-behavior_data 245.69124	5.69372
-behavior_data 465.82695	122.40813
-behavior_data 344.99235	57.02013
-behavior_data 292.77470	43.79020
-behavior_data 305.07159	63.16625
-behavior_data 251.54813	2.30795
-behavior_data 254.35251	57.64866
-behavior_data 363.69959	57.08640
-behavior_data 367.07779	57.22567
-behavior_data 277.44135	23.42775
-behavior_data 276.86985	14.30693
-behavior_data 320.62942	32.66792
-behavior_data 328.57802	37.26234
-behavior_data 345.86564	52.94596
-behavior_data 325.10119	16.97721
-behavior_data 279.03910	14.70904
-behavior_data 310.72409	33.12456
-behavior_data 294.07780	12.94026
-behavior_data 290.47021	17.02417
-behavior_data 324.21185	32.54365
-behavior_data 313.68714	34.51489
-behavior_data 260.63942	10.27147
-behavior_data 247.99992	0.00001
-behavior_data 256.48905	4.17436
-behavior_data 293.88307	25.95711
-behavior_data 328.49055	18.59969
-behavior_data 424.79740	72.38278
-behavior_data 292.67144	19.35659
-behavior_data 298.85688	24.34327
-behavior_data 456.96834	62.61103
-behavior_data 466.43245	77.82583
+behavior_data 316.5547945	52.07262469
+behavior_data 610.2733333	97.53381184
+behavior_data 412.8466667	74.98899475
+behavior_data 487.1666667	96.81669235
+behavior_data 365.2837838	72.95774447
+behavior_data 344.7933333	174.1229972
+behavior_data 393.8400000 68.69084083
+behavior_data 374.2535211	94.91277547
+behavior_data 493.8000000 56.73057393
+behavior_data 341.4876577	80.39279564
+behavior_data 313.2943723	85.01903866
+behavior_data 487.7491562	131.8861634
+behavior_data 406.8580938	121.0567552
+behavior_data 302.9236597	67.13309885
+behavior_data 453.5000000 109.4402615
+behavior_data 392.2567568	121.6035122
+behavior_data 534.1552381	203.4486961
+behavior_data 394.6151598	71.17533414
+behavior_data 362.3310811	74.82107453
+behavior_data 343.5466667	56.35103238
+behavior_data 391.1107207	77.79895526
+behavior_data 323.5725521	82.15728731
+behavior_data 312.8272201	38.56715966
+behavior_data 441.9905405	88.07773439
+behavior_data 356.2002628	65.72497237
+behavior_data 573.1800000 129.2138752
 
-behavior_data 326.39647	46.88980
-behavior_data 351.62001	36.86727
-behavior_data 505.28127	51.97935
-behavior_data 477.27769	45.54884
-behavior_data 338.30892	37.28550
-behavior_data 317.74665	29.22047
-behavior_data 389.07571	32.90372
-behavior_data 377.08830	20.96190
-behavior_data 153.96900	140.87164
-behavior_data 419.29583	45.53577
-behavior_data 482.68271	58.60013
-behavior_data 367.81551	21.60735
-behavior_data 358.60840	33.26408
-behavior_data 335.94200	48.56126
-behavior_data 302.22383	46.09408
-behavior_data 368.74144	46.34886
-behavior_data 382.79552	52.97503
-behavior_data 329.92539	42.22343
-behavior_data 385.73437	35.31864
-behavior_data 278.81823	11.26733
-behavior_data 334.04261	60.94230
-behavior_data 392.51612	49.19111
-behavior_data 384.17021	29.50025
-behavior_data 391.49913	71.49000
-behavior_data 362.19604	62.80322
-behavior_data 366.35489	19.07654
-behavior_data 386.04392	34.83849
-behavior_data 371.38164	46.13792
-behavior_data 363.95963	33.03883
-behavior_data 365.10045	47.22557
-behavior_data 356.72957	31.67131
-behavior_data 337.81544	29.44541
-behavior_data 358.40229	43.14101
-behavior_data 308.54692	52.43136
-behavior_data 361.95383	39.32601
-behavior_data 279.31058	183.05988
-behavior_data 368.76443	47.32721
-behavior_data 432.35999	42.97513
-behavior_data 400.88444	40.92945
-behavior_data 380.95579	47.23845
-behavior_data 394.51405	60.94921
+behavior_data 397.3613699	72.8437151
+behavior_data 580.709009	108.8742554
+behavior_data 378.9466667	59.41902937
+behavior_data 425.6533333	49.60358921
+behavior_data 301.7200000 219.9607803
+behavior_data 506.1064865	76.29558209
+behavior_data 448.6933333	92.03211392
+behavior_data 337.2598684	51.4196305
+behavior_data 456.0624324	97.26910951
+behavior_data 405.1621648	66.05625652
+behavior_data 411.7098144	129.440939
+behavior_data 465.0133333	87.15251347
+behavior_data 459.5950222	115.4503845
+behavior_data 428.5800000 64.72553238
+behavior_data 399.9726027	52.66610561
+behavior_data 409.0800000 69.81896884
+behavior_data 417.3783784	83.85870908
+behavior_data 401.4069608	88.20162606
+behavior_data 363.6648268	134.4791792
+behavior_data 486.8400000 90.17350478
+behavior_data 442.6309524	79.78838828
+
 
 
 % ... following above pattern for more groups
@@ -249,7 +204,7 @@ behavior_data 394.51405	60.94921
 
 %  Numbers of Behavior Name should match the Behavior Data above
 
-behavior_name	mu sigma
+behavior_name	mean sd
 
 	%%%%%%%%%%%%%%%%%%%%%%%
 	%  Behavior Name End  %
