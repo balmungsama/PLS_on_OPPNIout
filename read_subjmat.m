@@ -267,8 +267,6 @@ for nsubj = 1:size(group.names,1);
 
 	fclose(fid);
 
-	batch_plsgui(batch_filename);
-
 end
 
 disp('Batch file created.');
