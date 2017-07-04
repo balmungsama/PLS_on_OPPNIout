@@ -1,4 +1,5 @@
-disp(pwd)
+cd(OUTPUT);
+disp(pwd);
 
 pls_list = dir([PREFIX, '*']);
 pls_list = {pls_list(:).name};
