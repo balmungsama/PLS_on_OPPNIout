@@ -150,5 +150,5 @@ cd $OUTPUT
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait
 
 if [[ $RUN == 'true' ]]; then
-	matlab -r "$mPREFIX;run('$INSTALL_DIR/run_subjmat.m')"
+	$matlab -r "$mPREFIX;run('$INSTALL_DIR/run_subjmat.m')"
 fi
