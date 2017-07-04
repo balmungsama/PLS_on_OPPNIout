@@ -147,8 +147,14 @@ mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mAC
 
 # echo $mCOMMANDS
 cd $OUTPUT
+echo 'Creating batch files...'
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait
+echo 'DONE'
+
+echo ' '
 
 if [[ $RUN == 'true' ]]; then
+	echo 'Running batch_plsgui...'
 	$matlab -r "$mPREFIX;run('$INSTALL_DIR/run_subjmat.m')"
+	echo 'DONE'
 fi
