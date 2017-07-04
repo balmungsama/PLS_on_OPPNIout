@@ -1,3 +1,12 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -cwd
+#$ -M hpc3586@localhost
+#$ -m be
+#$ -q abaqus.q
+#$ -o logs/analysis_erfmri_batch.out
+#$ -e logs/analysis_erfmri_batch.err
+
 filename=$1
 
 TOP_DIR=$(dirname $filename)
