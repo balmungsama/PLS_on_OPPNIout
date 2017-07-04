@@ -141,9 +141,14 @@ mNORMAL=$(echo "NORMAL='$NORMAL'")
 mRUN=$(echo "RUN=$RUN")
 
 
-mREAD_SUBJMAT=$(echo "run('read_subjmat.m')")
+mREAD_SUBJMAT=$(echo "run('$INSTALL_DIR/read_subjmat.m')")
 
 mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
 
 # echo $mCOMMANDS
+cd $OUTPUT
 $matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait
+
+if [[ $RUN == 'true' ]]; then
+	matlab -r "$mPREFIX;run('$INSTALL_DIR/run_subjmat.m')"
+fi
