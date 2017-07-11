@@ -27,7 +27,7 @@ BRAIN_ROI=0.15
 
 ##### get help Documentation text #####
 
-usage=$(cat Documentation.txt)
+usage=$(cat write_batch_Documentation.txt)
 
 ##### accept arguments ##### 
 while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
