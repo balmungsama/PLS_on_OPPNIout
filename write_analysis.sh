@@ -42,4 +42,4 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e: option; do
 	esac
 done
 
-Rscript $SCRIPT_DIR/write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS --CONDS=$CONDS
+Rscript.bak $SCRIPT_DIR/write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS --CONDS=$CONDS
