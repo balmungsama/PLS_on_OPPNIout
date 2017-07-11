@@ -1,7 +1,6 @@
 #!/bin/bash
 #$ -S /bin/bash
 #$ -cwd
-#$ -M hpc3586@localhost
 #$ -m be
 #$ -q abaqus.q
 #$ -o logs/write_erfmri_analysis.out
