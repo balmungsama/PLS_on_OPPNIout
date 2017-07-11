@@ -199,23 +199,27 @@ for (group in GROUPS) {
   behav.grp[[group]] <- do.call(what = 'cbind', args =  behav.list)
   
   ##### flagging outliers #####
-  
-  if (length(VARBS) > 1) {
+
+  if (RM_OUT == T) {
     
-    outliers[[group]] <- multiOut(dat = cbind(timept = 1,
-                                              behav.grp[[group]]), 
-                                  exVar = NULL, 
-                                  rmdo_alpha = 0.5)
+    if (length(VARBS) > 1) {
+      
+      outliers[[group]] <- multiOut(dat = cbind(timept = 1,
+                                                behav.grp[[group]]), 
+                                    exVar = NULL, 
+                                    rmdo_alpha = 0.5)
+      
+      outliers[[group]]$flagged  <- as.character( unique(outliers[[group]]$outliers$subject_id) )
+      behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
+      
+    } else {
+      tmp.varb <- behav.grp[[group]][, - which(colnames(behav.grp[[group]]) == 'subject_id')]
+      outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
+      outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
+      
+      behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
+    }
     
-    outliers[[group]]$flagged  <- as.character( unique(outliers[[group]]$outliers$subject_id) )
-    behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
-    
-  } else {
-    tmp.varb <- behav.grp[[group]][, - which(colnames(behav.grp[[group]]) == 'subject_id')]
-    outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
-    outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
-    
-    behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
   }
   
   
