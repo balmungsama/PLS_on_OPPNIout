@@ -8,7 +8,7 @@
 #$ -e logs/write_erfmri_analysis.err
 
 ##### accept arguments ##### 
-while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
+while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e: option; do
 	case "${option}"
 	in
 		p) PATH=${OPTARG};;
@@ -31,6 +31,7 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 		s) save_data=${OPTARG};;
 
 		d) CONTRASTS=${OPTARG};;
+		e) CONDS=${OPTARG};;
 
 		\?) printf "illegal option: -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -39,4 +40,4 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 	esac
 done
 
-Rscript write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS
+Rscript write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS --CONDS=$CONDS
