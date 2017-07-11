@@ -118,6 +118,7 @@ for (arg in args) {
     
     # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
     
+    print(CONTRASTS)
     CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
     
     for (contrast in 1:length(CONTRASTS)) {
