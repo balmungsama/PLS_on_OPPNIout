@@ -58,7 +58,12 @@ for (arg in args) {
     
     RM_OUT <- arg[2] 
     
-  }  else if (arg[1] == '--PLS_opt') {
+  }  else if (arg[1] == '--CONDS') {
+    
+    CONDS <- arg[2] 
+    CONDS <- strsplit(CONDS, split = ' ')[[1]]
+    
+  } else if (arg[1] == '--PLS_opt') {
     
     PLS_opt <- arg[2] 
     
@@ -111,7 +116,7 @@ for (arg in args) {
     CONTRASTS.list   <- NULL
     CONTRASTS.length <- NULL
     
-    CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
+    # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
     
     CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
     
