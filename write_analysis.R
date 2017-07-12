@@ -118,7 +118,6 @@ for (arg in args) {
     
     # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
     
-    print(CONTRASTS)
     CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
     
     for (contrast in 1:length(CONTRASTS)) {
@@ -191,16 +190,18 @@ for (group in GROUPS) {
   for (varb in VARBS) {
     
     tmp.varb <- read.table(file = file.path(BEHAV_DIR, group, paste0(varb, '.txt')), header = T)
-    tmp.varb <- tmp.varb[order(tmp.varb$subject_id), ]
-    
+    tmp.varb <- tmp.varb[ order(tmp.varb$subject_id) , ]
+
     behav.list[[varb]] <- tmp.varb
+
   }
   
-  # behav.grp[[group]] <- ldply(behav.list, cbind)
   behav.grp[[group]] <- do.call(what = 'cbind', args =  behav.list)
   
+  colnames(behav.grp[[group]]) <- c('subject_id', VARBS)
+  
   ##### flagging outliers #####
-
+  
   if (RM_OUT == T) {
     
     if (length(VARBS) > 1) {
@@ -214,15 +215,18 @@ for (group in GROUPS) {
       behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
       
     } else {
-      tmp.varb <- behav.grp[[group]][, - which(colnames(behav.grp[[group]]) == 'subject_id')]
+      
+      tmp.varb <- data.frame(behav.grp[[group]][ , -which(colnames(behav.grp[[group]]) == 'subject_id') ])
+      colnames(tmp.varb) <- colnames(behav.grp[[group]])[ -which(colnames(behav.grp[[group]]) == 'subject_id') ]
+      
       outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
       outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
       
       behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
+      
     }
     
   }
-  
   
   ##### add group row labels #####
   
@@ -239,6 +243,9 @@ row.names(behav.tab) <- NULL
 output.file <- paste0(paste(GROUPS, collapse = '&'), '_', paste(VARBS, collapse = '&'), '_analysis.txt')
 output.file <- file.path(PATH, output.file)
 
+# defining the results file
+results.file <- paste0(paste(GROUPS, collapse = '&'), '_', paste(VARBS, collapse = '&'), '_fMRIresult.mat')
+
 # line seperator
 
 line.sep <- '\n%------------------------------------------------------------------------\n'
@@ -246,6 +253,24 @@ line.sep <- '\n%----------------------------------------------------------------
 ##### WRITE: Group Selection Start #####
 
 write(x = line.sep, file = output.file, append = FALSE)
+
+write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
+write(x = '	%  Result File Name Start  %'  , file = output.file, append = TRUE)
+write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
+
+write(x = '%  Note: Result file must be listed first, and must follow the file', file = output.file, append = TRUE)
+write(x = '%	 name format of xxxx_yyyyresult.mat, where xxxx stands for'      , file = output.file, append = TRUE)
+write(x = '%	 "any result file name prefix" and yyyy stands for the name'     , file = output.file, append = TRUE)
+write(x = '%	 of PLS module (either PET ERP fMRI BfMRI STRUCT or SmallFC).'   , file = output.file, append = TRUE)
+write(x = '%	 File name is case sensitive on Unix or Linux computers.\n'      , file = output.file, append = TRUE)
+
+write(x = paste0('result_file ', results.file), file = output.file, append = TRUE)
+
+write(x = '\n	%%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
+write(x =  '	%  Result File Name End  %'    , file = output.file, append = TRUE)
+write(x =  '	%%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
+
+write(x = line.sep, file = output.file, append = TRUE)
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Group Section Start  %'  , file = output.file, append = TRUE)
@@ -298,7 +323,7 @@ write(x = '%    6. dot product\n'      , file = output.file, append = TRUE)
 write(x = paste0('cormode    ', COR_mode, '    % Correlation Mode (can be 0,2,4,6, see above)\n'), file = output.file, append = TRUE)
 
 write(x = paste0('num_perm	' , num_perm,   '		% Number of Permutation'                   ), file = output.file, append = TRUE)
-write(x = paste0('num_split	' , snum_split, '		% Natasha Perm Split Half'                 ), file = output.file, append = TRUE)
+write(x = paste0('num_split	' , num_split, '		% Natasha Perm Split Half'                 ), file = output.file, append = TRUE)
 write(x = paste0('num_boot	' , num_boot,   '		% Number of Bootstrap'                     ), file = output.file, append = TRUE)
 write(x = paste0('boot_type	' , boot_type,  '		% Either strat or nonstrat bootstrap type' ), file = output.file, append = TRUE)
 write(x = paste0('clim		'   , clim,       '		% Confidence Level for Behavior PLS'       ), file = output.file, append = TRUE)
@@ -355,9 +380,10 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 write(x = '%  Notes: only list selected conditions (selected_cond)\n', file = output.file, append = TRUE)
 
+
 for (contrast in 1:dim(CONTRASTS)[1]) {
   contrast <- CONTRASTS[contrast, ]
-  write(x = contrast, file = output.file, append = TRUE)
+  write(x = paste0( c('contrast_data ', contrast), collapse = ' '), file = output.file, append = TRUE)
 }
 
 write(x = '\n% ... following above pattern for more groups\n', file = output.file, append = TRUE)
@@ -405,7 +431,7 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%' , file = output.file, append = TRUE)
 
 write(x = '\n%  Numbers of Behavior Name should match the Behavior Data above\n', file = output.file, append = TRUE)
 
-write(x = paste( c('behaviour_name', VARBS), collapse = ' ' ) , file = output.file, append = TRUE)
+write(x = paste( c('behavior_name', VARBS), collapse = ' ' ) , file = output.file, append = TRUE)
 
 write(x = '\n	%%%%%%%%%%%%%%%%%%%%%%%' , file = output.file, append = TRUE)
 write(x =  '	%  Behavior Name End  %' , file = output.file, append = TRUE)

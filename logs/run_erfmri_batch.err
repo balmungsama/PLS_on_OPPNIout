@@ -1,0 +1,78 @@
+{Index exceeds matrix dimensions.
+
+Error in batch_create_datamat (line 370)
+      subject = session.subj_files{1,1};
+
+Error in batch_plsgui (line 43)
+         batch_create_datamat(fid);
+
+Error in run_pls_batch (line 28)
+batch_plsgui Young_custReg_2382_batch_fmri_data.txt
+
+Error in run (line 86)
+evalin('caller', [script ';']);
+} 
+{Error using fgets
+Invalid file identifier. Use fopen to generate a valid file identifier.
+
+Error in fgetl (line 32)
+[tline,lt] = fgets(fid);
+
+Error in batch_plsgui (line 16)
+      tmp = fgetl(fid);
+
+Error in run_pls_batch (line 28)
+batch_plsgui Young_custReg_2382_batch_fmri_data.txt
+
+Error in run (line 86)
+evalin('caller', [script ';']);
+} 
+bash: swlogin.sh: No such file or directory
+{Error using fgets
+Invalid file identifier. Use fopen to generate a valid file identifier.
+
+Error in fgetl (line 32)
+[tline,lt] = fgets(fid);
+
+Error in batch_plsgui (line 16)
+      tmp = fgetl(fid);
+
+Error in run_pls_batch (line 4)
+batch_plsgui(pls_batch_file)
+
+Error in run (line 86)
+evalin('caller', [script ';']);
+} 
+bash: swlogin.sh: No such file or directory
+bash: swlogin.sh: No such file or directory
+{Error using fgets
+Invalid file identifier. Use fopen to generate a valid file identifier.
+
+Error in fgetl (line 32)
+[tline,lt] = fgets(fid);
+
+Error in batch_plsgui (line 16)
+      tmp = fgetl(fid);
+
+Error in run_pls_batch (line 4)
+batch_plsgui(pls_batch_file)
+
+Error in run (line 86)
+evalin('caller', [script ';']);
+} 
+{Error using fgets
+Invalid file identifier. Use fopen to generate a valid file identifier.
+
+Error in fgetl (line 32)
+[tline,lt] = fgets(fid);
+
+Error in batch_plsgui (line 16)
+      tmp = fgetl(fid);
+
+Error in run_pls_batch (line 4)
+batch_plsgui(pls_batch_file)
+
+Error in run (line 86)
+evalin('caller', [script ';']);
+} 
+bash: swlogin.sh: No such file or directory

@@ -1,0 +1,8 @@
+-------- freesurfer-Linux-centos6_x86_64-stable-pub-v5.3.0 --------
+Setting up environment for FreeSurfer/FS-FAST (and FSL)
+FREESURFER_HOME   /scratch/hpc3194/software/freesurfer
+FSFAST_HOME       /scratch/hpc3194/software/freesurfer/fsfast
+FSF_OUTPUT_FORMAT nii.gz
+SUBJECTS_DIR      /scratch/hpc3194/software/freesurfer/subjects
+MNI_DIR           /scratch/hpc3194/software/freesurfer/mni
+FSL_DIR           /home/hpc2590/fsl
