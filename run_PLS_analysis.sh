@@ -4,8 +4,6 @@
 #$ -M hpc3586@localhost
 #$ -m be
 #$ -q abaqus.q
-#$ -o logs/analysis_erfmri_batch.out
-#$ -e logs/analysis_erfmri_batch.err
 
 filename=$1
 
