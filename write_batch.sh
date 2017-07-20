@@ -23,7 +23,6 @@ WIN_SIZE=8
 NORMAL=0
 RUN=false
 REF_NUM=1
-BRAIN_ROI=0.15
 
 ##### get help Documentation text #####
 
