@@ -148,7 +148,7 @@ mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mAC
 # echo $mCOMMANDS
 cd $OUTPUT
 echo 'Creating batch files...'
-$matlab -r "$mCOMMANDS" -nosplash -nodesktop -nosoftwareopengl #-wait
+$matlab -r "$mCOMMANDS" -nosplash -nodesktop 
 echo 'DONE'
 
 echo ' '
