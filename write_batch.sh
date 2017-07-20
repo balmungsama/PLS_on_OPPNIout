@@ -17,6 +17,12 @@ MAT_PLUGINS='/home/hpc3586/matlab_plugins'
 INSTALL_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout' # enter in the directory in which the package is stored
 cd $INSTALL_DIR                                         # cd to the install directory
 
+##### Default values #####
+ 
+WIN_SIZE=8
+NORMAL=0
+REF_NUM=1
+
 ##### get help Documentation text #####
 
 usage=$(cat write_batch_Documentation.txt)
