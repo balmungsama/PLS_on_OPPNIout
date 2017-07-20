@@ -155,6 +155,6 @@ echo ' '
 
 if [[ $RUN == 'true' ]]; then
 	echo 'Running batch_plsgui...'
-	$matlab -r "$mPREFIX;$mOUTPUT;run('$INSTALL_DIR/run_subjmat.m')"
+	$matlab -r "$mPREFIX;$mOUTPUT;run('$INSTALL_DIR/run_subjmat.m')" -nosplash -nodesktop
 	echo 'DONE'
 fi
