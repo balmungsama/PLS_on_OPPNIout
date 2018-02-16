@@ -1,13 +1,11 @@
 #!/bin/bash
-#$ -S /bin/bash
-#$ -cwd
-#$ -M hpc3586@localhost
-#$ -m be
-#$ -q abaqus.q
-#$ -o logs/write_erfmri_analysis.out
-#$ -e logs/write_erfmri_analysis.err
+#!/bin/bash
+#SBATCH -c 4            # Number of CPUS requested. If omitted, the default is 1 CPU.
+#SBATCH --mem=10240     # Memory requested in megabytes. If omitted, the default is 1024 MB.
+#SBATCH -t 0-4:0:0      # How long will your job run for? If omitted, the default is 3 hours.
 
 SCRIPT_DIR='/global/home/hpc3586/JE_packages/PLS_on_OPPNIout'
+
 
 ##### accept arguments ##### 
 while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
