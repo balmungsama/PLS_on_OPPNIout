@@ -2,11 +2,11 @@
 library('plyr')
 library('R.matlab')
 
-mvOutliers <- '/home/hpc3586/JE_packages/mvOutliers'
+# mvOutliers <- '/home/hpc3586/JE_packages/mvOutliers'
 
-for (source_file in list.files(mvOutliers, full.names = T) ) {
-  source(source_file)
-}
+# for (source_file in list.files(mvOutliers, full.names = T) ) {
+#   source(source_file)
+# }
 
 ##### prepare for input #####
 args        <- commandArgs(trailingOnly = TRUE)
@@ -26,7 +26,7 @@ save_data  <- 1
 
 ##### input arguments #####
 
-for (arg in args) {
+for (arg in args) {  
   arg <- strsplit(arg, split = '=')[[1]]
   if (arg[1] == '--PATH') {
     
@@ -103,37 +103,43 @@ for (arg in args) {
   } else if (arg[1] == '--CONTRASTS') {
     
     CONTRASTS <- arg[2] 
-    CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
+
+    if (CONTRAST == 'NULL') { rm('CONTRAST') }
+    else {
+      CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
     
-    CONTRASTS.list   <- NULL
-    CONTRASTS.length <- NULL
-    
-    # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
-    
-    for (contrast in 1:length(CONTRASTS)) {
-      count <- contrast
+      CONTRASTS.list   <- NULL
+      CONTRASTS.length <- NULL
       
-      contrast                <- CONTRASTS[count]      
-      contrast                <- trimws( contrast )
-      CONTRASTS.list[[count]] <- strsplit( contrast , split = ' ')[[1]]
-      CONTRASTS.list[[count]] <- as.numeric( CONTRASTS.list[[count]] )
+      # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
       
-      CONTRASTS.length        <- c(CONTRASTS.length, length(CONTRASTS.list[[count]]))
-    }
-    
-    CONTRASTS <- do.call(what = 'rbind', args =  CONTRASTS.list)
-    
-    if (sum(CONTRASTS) != 0) { 
-      CONTRASTS <- NULL
-      stop('All contrasts must sum to zero.') 
-    } else if ( length(unique(CONTRASTS.length)) > 1) {
-      CONTRASTS <- NULL
-      stop('All contrasts must have the same number of digits') 
+      for (contrast in 1:length(CONTRASTS)) {
+        count <- contrast
+        
+        contrast                <- CONTRASTS[count]      
+        contrast                <- trimws( contrast )
+        CONTRASTS.list[[count]] <- strsplit( contrast , split = ' ')[[1]]
+        CONTRASTS.list[[count]] <- as.numeric( CONTRASTS.list[[count]] )
+        
+        CONTRASTS.length        <- c(CONTRASTS.length, length(CONTRASTS.list[[count]]))
+      }
+      
+      CONTRASTS <- do.call(what = 'rbind', args =  CONTRASTS.list)
+      
+      if (sum(CONTRASTS) != 0) { 
+        CONTRASTS <- NULL
+        stop('All contrasts must sum to zero.') 
+      } else if ( length(unique(CONTRASTS.length)) > 1) {
+        CONTRASTS <- NULL
+        stop('All contrasts must have the same number of digits') 
+      }
+
+      if (dim(CONTRASTS)[2] != length(GROUPS) * length(CONDS)) { 
+        stop('The length of each contrast must be equal to the number of groups times the number conditions') 
+      }
     }
 
-    if (dim(CONTRASTS)[2] != length(GROUPS) * length(CONDS)) { 
-      stop('The length of each contrast must be equal to the number of groups times the number conditions') 
-    }
+    
     
   } else if (arg[1] == '--remove') {
 
