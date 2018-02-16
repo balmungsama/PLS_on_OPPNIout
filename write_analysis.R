@@ -103,7 +103,8 @@ for (arg in args) {
   } else if (arg[1] == '--CONTRASTS') {
     
     CONTRASTS <- arg[2] 
-
+    print(is.null(CONTRASTS))
+    print(CONTRASTS)
     if (!is.null(CONTRASTS)) { 
 
       CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
