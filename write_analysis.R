@@ -104,7 +104,7 @@ for (arg in args) {
     
     CONTRASTS <- arg[2] 
 
-    if (CONTRASTS != NULL) { 
+    if (!is.null(CONTRASTS)) { 
 
       CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
     
@@ -348,7 +348,7 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Contrast Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
-if (CONTRASTS != NULL) {
+if (!is.null(CONTRASTS)) {
   for (contrast in 1:dim(CONTRASTS)[1]) {
     contrast <- CONTRASTS[contrast, ]
     write(x = paste0( c('contrast_data ', contrast), collapse = ' '), file = output.file, append = TRUE)
