@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/usr/bin/R
 #SBATCH -c 4            # Number of CPUS requested. If omitted, the default is 1 CPU.
 #SBATCH --mem=10240     # Memory requested in megabytes. If omitted, the default is 1024 MB.
 #SBATCH -t 0-4:0:0      # How long will your job run for? If omitted, the default is 3 hours.
@@ -39,4 +40,4 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
 	esac
 done
 
-R $SCRIPT_DIR/write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS
+Rscript $SCRIPT_DIR/write_analysis.R --PATH=$PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS==$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS
