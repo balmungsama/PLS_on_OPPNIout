@@ -7,7 +7,7 @@
 #$ -o logs/write_erfmri_analysis.out
 #$ -e logs/write_erfmri_analysis.err
 
-SCRIPT_DIR='/home/hpc3586/JE_packages/PLS_on_OPPNIout'
+SCRIPT_DIR='/global/home/hpc3586/JE_packages/PLS_on_OPPNIout'
 
 ##### accept arguments ##### 
 while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e: option; do
