@@ -39,12 +39,12 @@ for (arg in args) {
   } else if (arg[1] == '--VARBS') {
     
     VARBS <- arg[2]
-    VARBS <- strsplit(VARBS, split = ' ')[[1]]
+    VARBS <- strsplit(VARBS, split = "\\,|\\;|\\:")[[1]]
     
   } else if (arg[1] == '--GROUPS') {
     
     GROUPS <- arg[2]
-    GROUPS <- strsplit(GROUPS, split = ' ')[[1]]
+    GROUPS <- strsplit(GROUPS, split = "\\,|\\;|\\:")[[1]]
     
   } else if (arg[1] == '--PREFIX') {
     
@@ -57,7 +57,7 @@ for (arg in args) {
   }  else if (arg[1] == '--CONDS') {
     
     CONDS <- arg[2] 
-    CONDS <- strsplit(CONDS, split = ' ')[[1]]
+    CONDS <- strsplit(CONDS, split = "\\,|\\;|\\:")[[1]]
     
   } else if (arg[1] == '--PLS_opt') {
     
