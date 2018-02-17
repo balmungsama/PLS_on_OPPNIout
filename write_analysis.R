@@ -365,7 +365,7 @@ write(x = line.sep, file = output.file, append = TRUE)
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n\n', file = output.file, append = TRUE)
+write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 for (line in behav.tab) {
   write(x = line, file = output.file, append = TRUE)
@@ -383,7 +383,7 @@ write(x = line.sep, file = output.file, append = TRUE)
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%' , file = output.file, append = TRUE)
 write(x = '	%  Behavior Name Start  %' , file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%' , file = output.file, append = TRUE)
+write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n' , file = output.file, append = TRUE)
 
 write(x = paste( c('behavior_name', VARBS), collapse = ' ' ) , file = output.file, append = TRUE)
 
