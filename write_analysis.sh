@@ -12,7 +12,7 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
 		p) IN_PATH=${OPTARG};;
 		b) BEHAV_DIR=${OPTARG};;
 		v) VARBS=${OPTARG};;
-		g) GROUPS=${OPTARG};;
+		g) GROUPS="${OPTARG}";;
 		f) PREFIX=${OPTARG};;
 		r) RM_OUT=${OPTARG};;
 		t) PLS_opt=${OPTARG};;
