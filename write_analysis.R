@@ -44,6 +44,7 @@ for (arg in args) {
   } else if (arg[1] == '--GROUPS') {
     
     GROUPS <- arg[2]
+    print(GROUPS)
     GROUPS <- strsplit(GROUPS, split = "\\,|\\;|\\:")[[1]]
     
   } else if (arg[1] == '--PREFIX') {
