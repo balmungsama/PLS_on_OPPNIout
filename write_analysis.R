@@ -228,8 +228,8 @@ for (group in GROUPS) {
     }
   }
 
-  print(class(behav.values))
-  print(behav.values)
+  print(class(behav.values[[group]]))
+  print(behav.values[[group]])
   behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
   
   ##### flagging outliers #####
