@@ -9,28 +9,28 @@ SCRIPT_DIR='/global/home/hpc3586/JE_packages/PLS_on_OPPNIout'
 while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
 	case "${option}"
 	in
-		p) IN_PATH=$(echo ${OPTARG});;
-		b) BEHAV_DIR=$(echo ${OPTARG});;
-		v) VARBS=$(echo ${OPTARG});;
-		g) GROUP_LS=$(echo ${OPTARG});;
-		f) PREFIX=$(echo ${OPTARG});;
-		r) RM_OUT=$(echo ${OPTARG});;
-		t) PLS_opt=$(echo ${OPTARG});;
-		m) MEAN_type=$(echo ${OPTARG});;
-		c) COR_mode=$(echo ${OPTARG});;
+		p) IN_PATH=${OPTARG};;
+		b) BEHAV_DIR=${OPTARG};;
+		v) VARBS=${OPTARG};;
+		g) GROUP_LS=${OPTARG};;
+		f) PREFIX=${OPTARG};;
+		r) RM_OUT=${OPTARG};;
+		t) PLS_opt=${OPTARG};;
+		m) MEAN_type=${OPTARG};;
+		c) COR_mode=${OPTARG};;
 
-		w) num_perm=$(echo ${OPTARG});;
-		x) num_split=$(echo ${OPTARG});;
-		y) num_boot=$(echo ${OPTARG});;
-		z) boot_type=$(echo ${OPTARG});;
+		w) num_perm=${OPTARG};;
+		x) num_split=${OPTARG};;
+		y) num_boot=${OPTARG};;
+		z) boot_type=${OPTARG};;
 
-		q) clim=$(echo ${OPTARG});;
+		q) clim=${OPTARG};;
 
-		s) save_data=$(echo ${OPTARG});;
+		s) save_data=${OPTARG};;
 
-		d) CONTRASTS=$(echo ${OPTARG});;
-		e) CONDS=$(echo ${OPTARG});;
-		l) REMOVE_LS=$(echo ${OPTARG});;
+		d) CONTRASTS=${OPTARG};;
+		e) CONDS=${OPTARG};;
+		l) REMOVE_LS=${OPTARG};;
 
 		\?) printf "illegal option: -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -39,24 +39,26 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
 	esac
 done
 
-echo $IN_PATH   
-echo $BEHAV_DIR 
-echo $VARBS     
-echo $GROUP_LS    
-echo $PREFIX    
-echo $RM_OUT    
-echo $PLS_opt   
-echo $MEAN_type 
-echo $COR_mode  
-echo $num_perm  
-echo $num_split 
-echo $num_boot  
-echo $boot_type 
-echo $clim      
-echo $save_data 
-echo $CONTRASTS 
-echo $CONDS     
-echo $REMOVE_LS 
+echo '	%%% VARIABLES %%%'
+echo IN_PATH   = $IN_PATH   
+echo BEHAV_DIR = $BEHAV_DIR 
+echo VARBS     = $VARBS     
+echo GROUP_LS  = $GROUP_LS    
+echo PREFIX    = $PREFIX    
+echo RM_OUT    = $RM_OUT    
+echo PLS_opt   = $PLS_opt   
+echo MEAN_type = $MEAN_type 
+echo COR_mode  = $COR_mode  
+echo num_perm  = $num_perm  
+echo num_split = $num_split 
+echo num_boot  = $num_boot  
+echo boot_type = $boot_type 
+echo clim      = $clim      
+echo save_data = $save_data 
+echo CONTRASTS = $CONTRASTS 
+echo CONDS     = $CONDS     
+echo REMOVE_LS = $REMOVE_LS 
+echo ' '
 
 
 Rscript $SCRIPT_DIR/write_analysis.R --PATH=$IN_PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUP_LS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS=$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS

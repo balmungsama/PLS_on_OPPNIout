@@ -44,7 +44,6 @@ for (arg in args) {
   } else if (arg[1] == '--GROUPS') {
     
     GROUPS <- arg[2]
-    print(GROUPS)
     GROUPS <- strsplit(GROUPS, split = "\\,|\\;|\\:")[[1]]
     
   } else if (arg[1] == '--PREFIX') {
@@ -207,8 +206,6 @@ for (group in GROUPS) {
 ##### get behavioural data #####
 behav.values <- list()
 for (group in GROUPS) {
-  print(GROUPS)
-  print(group)
 
   for (subj in subj.IDs[[group]]) {
     tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
@@ -339,9 +336,9 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRU
 write(x = '	%  Condition Selection Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'    , file = output.file, append = TRUE)
-write(x = '	%  Condition Selection End  %'    , file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'  , file = output.file, append = TRUE)
+write(x = '\n	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'    , file = output.file, append = TRUE)
+write(x =  '	%  Condition Selection End  %'    , file = output.file, append = TRUE)
+write(x =  '	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'  , file = output.file, append = TRUE)
 
 ##### WRITE: Contrast Data Start #####
 
@@ -368,7 +365,7 @@ write(x = line.sep, file = output.file, append = TRUE)
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
+write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n\n', file = output.file, append = TRUE)
 
 for (line in behav.tab) {
   write(x = line, file = output.file, append = TRUE)
