@@ -214,9 +214,6 @@ for (group in GROUPS) {
     tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
     tmp.varb <- tmp.varb[[1]][,,1]
 
-    print('tmp.varb')
-    print(tmp.varb)
-
     for (run in tmp.varb$Runs) {
       tmp.behav.row <- NULL
       for (varb in VARBS) {
@@ -234,8 +231,6 @@ for (group in GROUPS) {
     }
   }
 
-  print(class(behav.values[[group]]))
-  print(behav.values[[group]])
   behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
   
   ##### flagging outliers #####
