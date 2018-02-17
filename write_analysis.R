@@ -206,7 +206,9 @@ for (group in GROUPS) {
 ##### get behavioural data #####
 behav.values <- list()
 for (group in GROUPS) {
-  
+  print(GROUPS)
+  print(group)
+
   for (subj in subj.IDs[[group]]) {
     tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
     tmp.varb <- tmp.varb[[1]][,,1]
