@@ -21,4 +21,4 @@ while getopts o:f: option; do
 	esac
 done
 
-matlab -r "OUTPUT='$OUTPUT';pls_batch_file='$FILE';run('/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_pls_batch.m')" -nodesktop -nosplash
+matlab -r "OUTPUT='$OUTPUT';pls_batch_file='$FILE';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_pls_batch.m')" -nodesktop -nosplash
