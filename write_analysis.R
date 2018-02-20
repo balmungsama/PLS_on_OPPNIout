@@ -371,8 +371,8 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
-for (line in behav.tab) {
-	write(x = line, file = output.file, append = TRUE)
+for (line in 1:dim(behav.tab)[1]) {
+	write(x = behav.tab[line,], file = output.file, append = TRUE)
 }
 
 write(x = ' ', file = output.file, append = TRUE)
