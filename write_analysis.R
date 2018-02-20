@@ -141,7 +141,7 @@ for (arg in args) {
 
 		
 		
-	} else if (arg[1] == '--remove') {
+	} else if (arg[1] == '--REMOVE_LS') {
 
 		REMOVE_LS <- strsplit(arg[2], split = "\\,|\\;|\\:|\\ ")[[1]]
 
