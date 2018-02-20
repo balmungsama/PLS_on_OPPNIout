@@ -264,7 +264,7 @@ for (group in GROUPS) {
 
 behav.tab <- ldply(behav.values, data.frame)
 behav.tab <- behav.tab[,VARBS]
-behav.tab <- cbind('behavior_data', behav.tab)
+behav.tab <- data.frame(labels = 'behavior_data', behav.tab, collapse = ' ')
 
 ##### WRITE: Defining Output Filename #####
 
@@ -372,7 +372,7 @@ write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 for (line in 1:dim(behav.tab)[1]) {
-	write(x = behav.tab[line,], file = output.file, append = TRUE)
+	write(x = paste(behav.tab[line, ], collapse = ' '), file = output.file, append = TRUE)
 }
 
 write(x = ' ', file = output.file, append = TRUE)
