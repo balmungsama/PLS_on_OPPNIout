@@ -181,14 +181,11 @@ for (group in GROUPS) {
 	subj.files[[group]] <- Sys.glob(paste0(PREFIX, '_', group, '_', '*fMRIsessiondata.mat') )
 
 	# remove any specified subjects
-	print(paste('REMOVE_LS exists:',exists('REMOVE_LS')))
-
 	if (exists('REMOVE_LS')) {
 		REMOVE_LS.tmp <- unique( grep(paste(REMOVE_LS,collapse="|"),subj.files[[group]], value=F) )
 
 		if (length(REMOVE_LS.tmp) > 0) {
 			subj.files[[group]] <- subj.files[[group]][-REMOVE_LS.tmp] #[[group]]
-			print(subj.files[[group]])
 		}
 	}
 	
