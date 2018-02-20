@@ -264,6 +264,7 @@ for (group in GROUPS) {
 
 behav.tab <- ldply(behav.values, data.frame)
 behav.tab <- behav.tab[,VARBS]
+behav.tab <- cbind('behavior_data', behav.tab)
 
 ##### WRITE: Defining Output Filename #####
 
