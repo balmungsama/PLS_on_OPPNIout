@@ -1,7 +1,6 @@
 
 disp(OUTPUT)
-disp(pls_batch_file
-)
+disp(pls_batch_file)
 
 cd(OUTPUT)
 
