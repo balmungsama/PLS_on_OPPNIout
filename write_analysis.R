@@ -191,11 +191,8 @@ for (group in GROUPS) {
   }
 
   # remove any specified subjects
-  print(paste('REMOVE_LS =', exists('REMOVE_LS')))
   if (exists('REMOVE_LS')) {
     REMOVE_LS.tmp <- unique( grep(paste(REMOVE_LS,collapse="|"),subj.files[[group]], value=F) )
-    print('REMOVEING...')
-    print(REMOVE_LS.tmp)
 
     if (length(REMOVE_LS.tmp) > 0) {
       subj.files[[group]] <- subj.files[[group]][-REMOVE_LS.tmp] #[[group]]
@@ -272,31 +269,17 @@ for (group in GROUPS) {
   
 }
 
-print('BEHAV_VALUES')
-print(behav.values)
-
 if (MERGE == T) {
-  print(MERGE)
   for (group in GROUPS) {
     tmp.behav.values <- 0
-    print(tmp.behav.values)
     for (run in unique(behav.values[[group]]$run)) {
-      print(paste('run', run))
-      print(dim(tmp.behav.values))
-      print(dim(behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]))
-       tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
+      tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
     }
-    print('works5')
     tmp.behav.values <- tmp.behav.values / max(behav.values[[group]]$run)
-    print('works4')
     behav.values[[group]] <- tmp.behav.values
-    print('works3')
-    print(behav.values[[group]])
   }
-  print('works2')
 }
 
-print('works1')
 
 behav.tab <- ldply(behav.values, data.frame)
 behav.tab <- behav.tab[,VARBS]
@@ -343,9 +326,9 @@ for (group in GROUPS) {
   write(x = paste( c('group_files', subj.files[[group]]) , collapse = ' '), file = output.file, append = TRUE)
 }
 
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
-write(x = '	%  Group Section End  %', file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
+write(x = '\n	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
+write(x =   '	%  Group Section End  %', file = output.file, append = TRUE)
+write(x =   '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
 
 ##### WRITE: PLS Section Start #####
 
