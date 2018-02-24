@@ -191,6 +191,7 @@ for (group in GROUPS) {
   }
 
   # remove any specified subjects
+  print(paste('REMOVE_LS =', exists('REMOVE_LS')))
   if (exists('REMOVE_LS')) {
     REMOVE_LS.tmp <- unique( grep(paste(REMOVE_LS,collapse="|"),subj.files[[group]], value=F) )
     print('REMOVEING...')
