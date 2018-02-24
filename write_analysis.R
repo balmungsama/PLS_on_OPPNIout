@@ -276,7 +276,8 @@ if (MERGE == T) {
     print(tmp.behav.values)
     for (run in unique(behav.values[[group]]$run)) {
       print(paste('run', run))
-      print(behav.values[[group]][which(behav.values[[group]]$run == run), VARBS])
+      print(dim(tmp.behav.values))
+      print(dim(behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]))
        tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
     }
     print('works5')
