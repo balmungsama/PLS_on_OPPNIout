@@ -270,6 +270,7 @@ for (group in GROUPS) {
 }
 
 if (MERGE == T) {
+  print(MERGE)
   for (group in GROUPS) {
     tmp.behav.values <- 0
     for (run in unique(behav.values[[group]]$run)) {
