@@ -4,6 +4,8 @@
 
 filename=$1
 
+echo filename = $filename
+
 TOP_DIR=$(dirname $filename)
 FILE=$(basename $filename)
 
