@@ -269,6 +269,9 @@ for (group in GROUPS) {
   
 }
 
+print('BEHAV_VALUES')
+print(behav.values)
+
 if (MERGE == T) {
   print(MERGE)
   for (group in GROUPS) {
