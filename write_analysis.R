@@ -279,7 +279,9 @@ if (MERGE == T) {
       print(behav.values[[group]][which(behav.values[[group]]$run == run), VARBS])
        tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
     }
+    print('works5')
     tmp.behav.values <- tmp.behav.values / max(behav.values[[group]]$run)
+    print('works4')
     behav.values[[group]] <- tmp.behav.values
     print('works3')
     print(behav.values[[group]])
