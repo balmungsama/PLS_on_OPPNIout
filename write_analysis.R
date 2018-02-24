@@ -273,7 +273,10 @@ if (MERGE == T) {
   print(MERGE)
   for (group in GROUPS) {
     tmp.behav.values <- 0
+    print(tmp.behav.values)
     for (run in unique(behav.values[[group]]$run)) {
+      print(paste('run', run))
+      print(behav.values[[group]][which(behav.values[[group]]$run == run), VARBS])
        tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
     }
     tmp.behav.values <- tmp.behav.values / max(behav.values[[group]]$run)
