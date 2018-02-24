@@ -281,8 +281,13 @@ if (MERGE == T) {
     }
     tmp.behav.values <- tmp.behav.values / max(behav.values[[group]]$run)
     behav.values[[group]] <- tmp.behav.values
+    print('works3')
+    print(behav.values[[group]])
   }
+  print('works2')
 }
+
+print('works1')
 
 behav.tab <- ldply(behav.values, data.frame)
 behav.tab <- behav.tab[,VARBS]
