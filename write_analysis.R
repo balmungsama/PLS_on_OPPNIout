@@ -168,7 +168,7 @@ setwd(PATH)
 
 ##### create placeholder variables #####
 subj.files <- list()
-subj.IDs   <- NULL
+subj.IDs   <- list()
 behav.list <- NULL
 behav.grp  <- NULL
 outliers   <- NULL
@@ -395,7 +395,8 @@ write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%'  , file = output.file, append = TRUE)
 write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
-for (line in behav.tab) {
+for (line in 1:dim(behav.tab)[1]) {
+  line <- paste('behavior_data', paste(behav.tab[line,], collapse = ' '), collapse = ' ')
   write(x = line, file = output.file, append = TRUE)
 }
 
