@@ -7,9 +7,9 @@ filename=$1
 TOP_DIR=$(dirname $filename)
 FILE=$(basename $filename)
 
-echo filename = $filename
-echo TOP_DIR = $TOP_DIR
-echo FILE = $FILE
+# echo filename = $filename
+# echo TOP_DIR = $TOP_DIR
+# echo FILE = $FILE
 
 if [ ${#TOPDIR[@]} == 1 ]; then
 	TOP_DIR=$(pwd)
