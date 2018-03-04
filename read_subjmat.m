@@ -201,7 +201,7 @@ for nsubj = 1:size(group.names,1);
 			batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur), '_batch_fmri_data.txt']);
 			fid = fopen( batch_filename, 'w'); 
 
-			SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
+			SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur)];
 
 			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
