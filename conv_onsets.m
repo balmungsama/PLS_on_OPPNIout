@@ -5,8 +5,8 @@ function YY = conv_onsets(onsets, TR, DROP)
 	% onsets = str2num(onsets);
 	% DROP   = str2num(DROP);
 
-	% drop.start = DROP(1);
-	% drop.end   = DROP(2);
+	drop.start = DROP(1);
+	drop.end   = DROP(2);
 
 	TR = TR * 1000;
 
