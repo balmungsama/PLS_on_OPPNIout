@@ -253,7 +253,7 @@ for nsubj = 1:size(group.names,1);
 			fprintf(fid, ['	%%  Run Section Start  %%\n']);
 			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-			task_run = group.runs{nsubj}; 
+			task_run = group.rows{nsubj};; 
 			task_run = task_run(run_cur);
 
 			out_index           = strfind(input_file, 'OUT=');
