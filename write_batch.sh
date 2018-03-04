@@ -136,7 +136,7 @@ mRUN=$(echo "RUN=$RUN")
 mMERGE_RUNS=$(echo "MERGE_RUNS=$MERGE_RUNS")
 
 
-mREAD_SUBJMAT=$(echo "run('$INSTALL_DIR/read_subjmat.m')")
+mREAD_SUBJMAT=$(echo "run('$JE_packages/PLS_on_OPPNIout/read_subjmat.m')")
 
 mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mMERGE_RUNS;$mREAD_SUBJMAT")
 
