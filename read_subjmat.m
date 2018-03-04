@@ -183,106 +183,198 @@ end
 
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
-	if MERGE_RUNS == true:
-		for run = 
-	batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']);
-	fid = fopen( batch_filename, 'w'); 
+	if MERGE_RUNS == true;
+		for run_cur = group.runs{nsubj}:
 
-	SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
+			batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur), '_batch_fmri_data.txt']);
+			fid = fopen( batch_filename, 'w'); 
 
-	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+			SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
 
-	%%%%% first section  - General Section Start
+			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  General Section Start  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+			%%%%% first section  - General Section Start
 
-	fprintf(fid, [ 'prefix '		          , SUBJ_PREFIX    , '\n'   ] ); % prefix for session file and datamat file
-	fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
-	fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
-	fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
-	fprintf(fid, [ 'single_subj '	        , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
-	fprintf(fid, [ 'single_ref_scan '	    , NORM_REF       , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
-	fprintf(fid, [ 'single_ref_onset '    , REF_ONSET      , '\n'   ] ); % single reference scan onset
-	fprintf(fid, [ 'single_ref_number '   , REF_NUM        , '\n'   ] ); % single reference scan number
-	fprintf(fid, [ 'normalize '           , NORMAL         , '\n\n' ] ); % normalize volume mean (keey 0 unless necessary)
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  General Section Start  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  General Section End  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+			fprintf(fid, [ 'prefix '		          , SUBJ_PREFIX    , '\n'   ] ); % prefix for session file and datamat file
+			fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
+			fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
+			fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
+			fprintf(fid, [ 'single_subj '	        , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
+			fprintf(fid, [ 'single_ref_scan '	    , NORM_REF       , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
+			fprintf(fid, [ 'single_ref_onset '    , REF_ONSET      , '\n'   ] ); % single reference scan onset
+			fprintf(fid, [ 'single_ref_number '   , REF_NUM        , '\n'   ] ); % single reference scan number
+			fprintf(fid, [ 'normalize '           , NORMAL         , '\n\n' ] ); % normalize volume mean (keey 0 unless necessary)
 
-	%%%%% second section - Condition Section Start
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  General Section End  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+			%%%%% second section - Condition Section Start
 
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  Condition Section Start  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
-	cond_count = unique({cond(:).names});
-	cond_count = length(cond_count);
-	for num_conds = 1:cond_count;
-		fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
-		fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
-		fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
-	end
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  Condition Section Start  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  Condition Section End  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+			cond_count = unique({cond(:).names});
+			cond_count = length(cond_count);
+			for num_conds = 1:cond_count;
+				fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
+				fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
+				fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
+			end
 
-	%%%%% run section start %%%%%
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  Condition Section End  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+			%%%%% run section start %%%%%
 
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  Run Section Start  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
 
-	for task_run = group.rows{nsubj}; % was nsubj
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  Run Section Start  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
-		out_index           = strfind(input_file, 'OUT=');
-		out_index           = out_index(1, :);
-		out_index           = find(~cellfun(@isempty, out_index));
+			task_run = group.run{nsubj}; 
+			task_run = task_run(run_cur);
 
-		tmp_input_file      = input_file{task_run, out_index};
-		% tmp_input_file      = strsplit(tmp_input_file, '=');
-		% tmp_input_file      = tmp_input_file{2};
-		tmp_input_file      = strsplit(tmp_input_file, '=');
-		tmp_input_file      = tmp_input_file{2};
-		[~, nifti_name, ~]  = fileparts(tmp_input_file);
-		tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
-		[~, tmp_input_file] = fileattrib(tmp_input_file);
-		tmp_input_file      = tmp_input_file.Name;
+			out_index           = strfind(input_file, 'OUT=');
+			out_index           = out_index(1, :);
+			out_index           = find(~cellfun(@isempty, out_index));
 
-		fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
-		
-		for num_cond = 1:cond_count;
-			cond_ind = ((task_run - 1) * cond_count) + num_cond;
-			fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
+			tmp_input_file      = input_file{task_run, out_index};
+			% tmp_input_file      = strsplit(tmp_input_file, '=');
+			% tmp_input_file      = tmp_input_file{2};
+			tmp_input_file      = strsplit(tmp_input_file, '=');
+			tmp_input_file      = tmp_input_file{2};
+			[~, nifti_name, ~]  = fileparts(tmp_input_file);
+			tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
+			[~, tmp_input_file] = fileattrib(tmp_input_file);
+			tmp_input_file      = tmp_input_file.Name;
 
-			% disp([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
+			fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
+			
+			for num_cond = 1:cond_count;
+				cond_ind = ((task_run - 1) * cond_count) + num_cond;
+				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
+
+				% disp([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
+			end
+
+			fprintf(fid, [ '\n' ] );
+
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+			fprintf(fid, ['	%%  Run Section End  %%\n']);
+			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+
+
+			fclose(fid);
+
+		end
+	else
+		batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']);
+		fid = fopen( batch_filename, 'w'); 
+
+		SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
+
+		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+
+		%%%%% first section  - General Section Start
+
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  General Section Start  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+		fprintf(fid, [ 'prefix '		          , SUBJ_PREFIX    , '\n'   ] ); % prefix for session file and datamat file
+		fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
+		fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
+		fprintf(fid, [ 'across_run '	        , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
+		fprintf(fid, [ 'single_subj '	        , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
+		fprintf(fid, [ 'single_ref_scan '	    , NORM_REF       , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
+		fprintf(fid, [ 'single_ref_onset '    , REF_ONSET      , '\n'   ] ); % single reference scan onset
+		fprintf(fid, [ 'single_ref_number '   , REF_NUM        , '\n'   ] ); % single reference scan number
+		fprintf(fid, [ 'normalize '           , NORMAL         , '\n\n' ] ); % normalize volume mean (keey 0 unless necessary)
+
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  General Section End  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+		%%%%% second section - Condition Section Start
+
+		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  Condition Section Start  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+		cond_count = unique({cond(:).names});
+		cond_count = length(cond_count);
+		for num_conds = 1:cond_count;
+			fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
+			fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
+			fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
 		end
 
-		fprintf(fid, [ '\n' ] );
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  Condition Section End  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
 
+		%%%%% run section start %%%%%
+
+		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  Run Section Start  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+		for task_run = group.rows{nsubj}; % was nsubj
+
+			out_index           = strfind(input_file, 'OUT=');
+			out_index           = out_index(1, :);
+			out_index           = find(~cellfun(@isempty, out_index));
+
+			tmp_input_file      = input_file{task_run, out_index};
+			% tmp_input_file      = strsplit(tmp_input_file, '=');
+			% tmp_input_file      = tmp_input_file{2};
+			tmp_input_file      = strsplit(tmp_input_file, '=');
+			tmp_input_file      = tmp_input_file{2};
+			[~, nifti_name, ~]  = fileparts(tmp_input_file);
+			tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
+			[~, tmp_input_file] = fileattrib(tmp_input_file);
+			tmp_input_file      = tmp_input_file.Name;
+
+			fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
+			
+			for num_cond = 1:cond_count;
+				cond_ind = ((task_run - 1) * cond_count) + num_cond;
+				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
+
+				% disp([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
+			end
+
+			fprintf(fid, [ '\n' ] );
+
+		end
+
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+		fprintf(fid, ['	%%  Run Section End  %%\n']);
+		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
+
+
+		fclose(fid);
 	end
-
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-	fprintf(fid, ['	%%  Run Section End  %%\n']);
-	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-
-	fclose(fid);
-
 end
 
 disp('Batch file created.');
-
-
-
 
 exit
