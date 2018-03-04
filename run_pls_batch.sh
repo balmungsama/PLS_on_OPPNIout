@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -c 4            # Number of CPUS requested. If omitted, the default is 1 CPU.
 #SBATCH --mem=10240     # Memory requested in megabytes. If omitted, the default is 1024 MB.
-#SBATCH -t 0-4:0:0      # How long will your job run for? If omitted, the default is 3 hours.
+
 
 echo '	running batch PLS job'
 
@@ -21,4 +21,4 @@ while getopts o:f: option; do
 	esac
 done
 
-matlab -r "OUTPUT='$OUTPUT';pls_batch_file='$FILE';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_pls_batch.m')" -nodesktop -nosplash
+matlab -nodesktop -nosplash -r "OUTPUT='$OUTPUT';pls_batch_file='$FILE';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_pls_batch.m')"

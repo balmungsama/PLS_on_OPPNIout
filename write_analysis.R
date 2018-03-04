@@ -27,129 +27,129 @@ save_data  <- 1
 ##### input arguments #####
 
 for (arg in args) {  
-	arg <- strsplit(arg, split = '=')[[1]]
-	if (arg[1] == '--PATH') {
-		
-		PATH <- arg[2]
-		
-	} else if (arg[1] == '--BEHAV_DIR') {
-		
-		BEHAV_DIR <- arg[2]
-				
-	} else if (arg[1] == '--VARBS') {
-		
-		VARBS <- arg[2]
-		VARBS <- strsplit(VARBS, split = "\\,|\\;|\\:")[[1]]
-		
-	} else if (arg[1] == '--GROUPS') {
-		
-		GROUPS <- arg[2]
-		GROUPS <- strsplit(GROUPS, split = "\\,|\\;|\\:")[[1]]
-		
-	} else if (arg[1] == '--PREFIX') {
-		
-		PREFIX <- arg[2]
-		
-	} else if (arg[1] == '--RM_OUT') {
-		
-		RM_OUT <- arg[2] 
-		
-	}  else if (arg[1] == '--CONDS') {
-		
-		CONDS <- arg[2] 
-		CONDS <- strsplit(CONDS, split = "\\,|\\;|\\:")[[1]]
-		
-	} else if (arg[1] == '--PLS_opt') {
-		
-		PLS_opt <- arg[2] 
-		
-		
-	} else if (arg[1] == '--MEAN_type') {
-		
-		MEAN_type <- arg[2] 
-		
-		
-	} else if (arg[1] == '--COR_mode') {
-		
-		COR_mode <- arg[2] 
-		
-		
-	} else if (arg[1] == '--num_perm') {
-		
-		num_perm <- arg[2] 
-		
-	} else if (arg[1] == '--num_split') {
-		
-		num_split <- arg[2] 
-		
-	} else if (arg[1] == '--num_boot') {
-		
-		num_boot <- arg[2] 
-		
-	} else if (arg[1] == '--boot_type') {
-		
-		boot_type <- arg[2] 
-		
-	} else if (arg[1] == '--clim') {
-		
-		clim <- arg[2] 
-		
-		
-	} else if (arg[1] == '--save_data') {
-		
-		save_data <- arg[2] 
-		
-		
-	} else if (arg[1] == '--CONTRASTS') {
-		
-		CONTRASTS <- arg[2] 
-	
-		if (CONTRASTS != 'NULL') { 
+  arg <- strsplit(arg, split = '=')[[1]]
+  if (arg[1] == '--PATH') {
+    
+    PATH <- arg[2]
+    
+  } else if (arg[1] == '--BEHAV_DIR') {
+    
+    BEHAV_DIR <- arg[2]
+        
+  } else if (arg[1] == '--VARBS') {
+    
+    VARBS <- arg[2]
+    VARBS <- strsplit(VARBS, split = "\\,|\\;|\\:")[[1]]
+    
+  } else if (arg[1] == '--GROUPS') {
+    
+    GROUPS <- arg[2]
+    GROUPS <- strsplit(GROUPS, split = "\\,|\\;|\\:")[[1]]
+    
+  } else if (arg[1] == '--PREFIX') {
+    
+    PREFIX <- arg[2]
+    
+  } else if (arg[1] == '--RM_OUT') {
+    
+    RM_OUT <- arg[2] 
+    
+  }  else if (arg[1] == '--CONDS') {
+    
+    CONDS <- arg[2] 
+    CONDS <- strsplit(CONDS, split = "\\,|\\;|\\:")[[1]]
+    
+  } else if (arg[1] == '--PLS_opt') {
+    
+    PLS_opt <- arg[2] 
+    
+    
+  } else if (arg[1] == '--MEAN_type') {
+    
+    MEAN_type <- arg[2] 
+    
+    
+  } else if (arg[1] == '--COR_mode') {
+    
+    COR_mode <- arg[2] 
+    
+    
+  } else if (arg[1] == '--num_perm') {
+    
+    num_perm <- arg[2] 
+    
+  } else if (arg[1] == '--num_split') {
+    
+    num_split <- arg[2] 
+    
+  } else if (arg[1] == '--num_boot') {
+    
+    num_boot <- arg[2] 
+    
+  } else if (arg[1] == '--boot_type') {
+    
+    boot_type <- arg[2] 
+    
+  } else if (arg[1] == '--clim') {
+    
+    clim <- arg[2] 
+    
+    
+  } else if (arg[1] == '--save_data') {
+    
+    save_data <- arg[2] 
+    
+    
+  } else if (arg[1] == '--CONTRASTS') {
+    
+    CONTRASTS <- arg[2] 
+  
+    if (CONTRASTS != 'NULL') { 
 
-			CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
-		
-			CONTRASTS.list   <- NULL
-			CONTRASTS.length <- NULL
-			
-			# CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
-			
-			for (contrast in 1:length(CONTRASTS)) {
-				count <- contrast
-				
-				contrast                <- CONTRASTS[count]      
-				contrast                <- trimws( contrast )
-				CONTRASTS.list[[count]] <- strsplit( contrast , split = ' ')[[1]]
-				CONTRASTS.list[[count]] <- as.numeric( CONTRASTS.list[[count]] )
-				
-				CONTRASTS.length        <- c(CONTRASTS.length, length(CONTRASTS.list[[count]]))
-			}
-			
-			CONTRASTS <- do.call(what = 'rbind', args =  CONTRASTS.list)
-			
-			if (sum(CONTRASTS) != 0) { 
-				CONTRASTS <- NULL
-				stop('All contrasts must sum to zero.') 
-			} else if ( length(unique(CONTRASTS.length)) > 1) {
-				CONTRASTS <- NULL
-				stop('All contrasts must have the same number of digits') 
-			}
+      CONTRASTS <- strsplit(CONTRASTS, split = "\\,|\\;|\\:")[[1]]
+    
+      CONTRASTS.list   <- NULL
+      CONTRASTS.length <- NULL
+      
+      # CONTRASTS <- '1 -1 1 -1; 1 1 -1 -1, 1 -1 -1 1: 1 0 -1 0' # comment out
+      
+      for (contrast in 1:length(CONTRASTS)) {
+        count <- contrast
+        
+        contrast                <- CONTRASTS[count]      
+        contrast                <- trimws( contrast )
+        CONTRASTS.list[[count]] <- strsplit( contrast , split = ' ')[[1]]
+        CONTRASTS.list[[count]] <- as.numeric( CONTRASTS.list[[count]] )
+        
+        CONTRASTS.length        <- c(CONTRASTS.length, length(CONTRASTS.list[[count]]))
+      }
+      
+      CONTRASTS <- do.call(what = 'rbind', args =  CONTRASTS.list)
+      
+      if (sum(CONTRASTS) != 0) { 
+        CONTRASTS <- NULL
+        stop('All contrasts must sum to zero.') 
+      } else if ( length(unique(CONTRASTS.length)) > 1) {
+        CONTRASTS <- NULL
+        stop('All contrasts must have the same number of digits') 
+      }
 
-			if (dim(CONTRASTS)[2] != length(GROUPS) * length(CONDS)) { 
-				stop('The length of each contrast must be equal to the number of groups times the number conditions') 
-			}
-		}
+      if (dim(CONTRASTS)[2] != length(GROUPS) * length(CONDS)) { 
+        stop('The length of each contrast must be equal to the number of groups times the number conditions') 
+      }
+    }
 
-		
-		
-	} else if (arg[1] == '--REMOVE_LS') {
+    
+    
+  } else if (arg[1] == '--REMOVE_LS') {
 
-		REMOVE_LS <- strsplit(arg[2], split = "\\,|\\;|\\:|\\ ")[[1]]
+    REMOVE_LS <- strsplit(arg[2], split = "\\,|\\;|\\:|\\ ")[[1]]
 
-	} else {
-		
-		unused_args <- c(unused_args, paste0(arg[1], '=', arg[2]))
-		
-	}
+  } else {
+    
+    unused_args <- c(unused_args, paste0(arg[1], '=', arg[2]))
+    
+  }
 }
 
 ##### sanity checks #####
@@ -168,7 +168,7 @@ setwd(PATH)
 
 ##### create placeholder variables #####
 subj.files <- list()
-subj.IDs   <- NULL
+subj.IDs   <- list()
 behav.list <- NULL
 behav.grp  <- NULL
 outliers   <- NULL
@@ -178,95 +178,122 @@ VARBS <- gsub("_", ".", VARBS)
 
 ##### collect group .mat files #####
 for (group in GROUPS) {
-	subj.files[[group]] <- Sys.glob(paste0(PREFIX, '_', group, '_', '*fMRIsessiondata.mat') )
+  subj.files[[group]] <- Sys.glob(paste0(PREFIX, '_', group, '_', '*fMRIsessiondata.mat') )
+  
+  check_merge <- readMat(subj.files[[group]][1])
+  check_merge <- check_merge$session.info[,,1]
+  check_merge <- check_merge$across.run
 
-	# remove any specified subjects
-	if (exists('REMOVE_LS')) {
-		REMOVE_LS.tmp <- unique( grep(paste(REMOVE_LS,collapse="|"),subj.files[[group]], value=F) )
+  if (check_merge == 1) {
+    MERGE <- TRUE
+  } else {
+    MERGE <- FALSE
+  }
 
-		if (length(REMOVE_LS.tmp) > 0) {
-			subj.files[[group]] <- subj.files[[group]][-REMOVE_LS.tmp] #[[group]]
-		}
-	}
-	
-	grp.ids <- NULL
-	for (subj in subj.files[[group]]) {
+  # remove any specified subjects
+  if (exists('REMOVE_LS')) {
+    REMOVE_LS.tmp <- unique( grep(paste(REMOVE_LS,collapse="|"),subj.files[[group]], value=F) )
 
-		subj <- strsplit(x = subj, split = paste0(PREFIX, '_', group, '_'))
-		subj <- subj[[1]][2]
-		subj <- strsplit(x = subj, split = '_')
-		subj <- subj[[1]][1]
-		
-		grp.ids <- c(grp.ids, subj)
-	}
-	
-	subj.IDs[[group]] <- grp.ids
+    if (length(REMOVE_LS.tmp) > 0) {
+      subj.files[[group]] <- subj.files[[group]][-REMOVE_LS.tmp] #[[group]]
+    }
+  }
+  
+  grp.ids <- NULL
+  for (subj in subj.files[[group]]) {
+
+    subj <- strsplit(x = subj, split = paste0(PREFIX, '_', group, '_'))
+    subj <- subj[[1]][2]
+    subj <- strsplit(x = subj, split = '_')
+    subj <- subj[[1]][1]
+    
+    grp.ids <- c(grp.ids, subj)
+  }
+  
+  subj.IDs[[group]] <- grp.ids
 }
 
 ##### get behavioural data #####
 behav.values <- list()
 for (group in GROUPS) {
 
-	for (subj in subj.IDs[[group]]) {
-		tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
-		tmp.varb <- tmp.varb[[1]][,,1]
+  for (subj in subj.IDs[[group]]) {
+    tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
+    tmp.varb <- tmp.varb[[1]][,,1]
 
-		for (run in tmp.varb$Runs) {
-			tmp.behav.row <- NULL
-			for (varb in VARBS) {
-				tmp.behav.meas <- tmp.varb[[varb]][run]
-				tmp.behav.row <- c(tmp.behav.row, tmp.behav.meas)
-			}
-			tmp.behav.row <- data.frame(t(tmp.behav.row))
-			colnames(tmp.behav.row) <- VARBS
-			tmp.behav.row <- cbind(tmp.behav.row, group, subj, run)
-			if (length(behav.values) < which(GROUPS == group)) {
-				 behav.values[[group]] <- tmp.behav.row
-			} else {
-				behav.values[[group]] <- rbind(behav.values[[group]], tmp.behav.row)
-			}
-		}
-	}
+    for (run in tmp.varb$Runs) {
+      tmp.behav.row <- NULL
+      for (varb in VARBS) {
+        tmp.behav.meas <- tmp.varb[[varb]][run]
+        tmp.behav.row <- c(tmp.behav.row, tmp.behav.meas)
+      }
+      tmp.behav.row <- data.frame(t(tmp.behav.row))
+      colnames(tmp.behav.row) <- VARBS
+      tmp.behav.row <- cbind(tmp.behav.row, group, subj, run)
+      if (length(behav.values) < which(GROUPS == group)) {
+         behav.values[[group]] <- tmp.behav.row
+      } else {
+        behav.values[[group]] <- rbind(behav.values[[group]], tmp.behav.row)
+      }
+    }
+  }
 
-	behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
-	
-	##### flagging outliers #####
-	if (RM_OUT == T) {
-		
-		if (length(VARBS) > 1) {
-			
-			outliers[[group]] <- multiOut(dat = cbind(timept = 1,
-																								behav.grp[[group]]), 
-																		exVar = NULL, 
-																		rmdo_alpha = 0.5)
-			
-			outliers[[group]]$flagged  <- as.character( unique(outliers[[group]]$outliers$subject_id) )
-			behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
-			
-		} else {
-			
-			tmp.varb <- data.frame(behav.grp[[group]][ , -which(colnames(behav.grp[[group]]) == 'subject_id') ])
-			colnames(tmp.varb) <- colnames(behav.grp[[group]])[ -which(colnames(behav.grp[[group]]) == 'subject_id') ]
-			
-			outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
-			outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
-			
-			behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
-			
-		}
-		
-	}
-	
+  behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
+  
+  ##### flagging outliers #####
+  if (RM_OUT == T) {
+    
+    if (length(VARBS) > 1) {
+      
+      outliers[[group]] <- multiOut(dat = cbind(timept = 1,
+                                                behav.grp[[group]]), 
+                                    exVar = NULL, 
+                                    rmdo_alpha = 0.5)
+      
+      outliers[[group]]$flagged  <- as.character( unique(outliers[[group]]$outliers$subject_id) )
+      behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
+      
+    } else {
+      
+      tmp.varb <- data.frame(behav.grp[[group]][ , -which(colnames(behav.grp[[group]]) == 'subject_id') ])
+      colnames(tmp.varb) <- colnames(behav.grp[[group]])[ -which(colnames(behav.grp[[group]]) == 'subject_id') ]
+      
+      outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
+      outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
+      
+      behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
+      
+    }
+    
+  }
+  
 }
+
+if (MERGE == T) {
+  for (group in GROUPS) {
+    tmp.behav.values <- 0
+    for (run in unique(behav.values[[group]]$run)) {
+      tmp.behav.values <- tmp.behav.values + behav.values[[group]][which(behav.values[[group]]$run == run), VARBS]
+    }
+    tmp.behav.values <- tmp.behav.values / max(behav.values[[group]]$run)
+    behav.values[[group]] <- tmp.behav.values
+  }
+}
+
 
 behav.tab <- ldply(behav.values, data.frame)
 behav.tab <- behav.tab[,VARBS]
-behav.tab <- data.frame(labels = 'behavior_data', behav.tab, collapse = ' ', stringsAsFactors = F)
+print(behav.tab)
 
 ##### WRITE: Defining Output Filename #####
 
 # defining the output file name
-output.file <- paste0(paste(GROUPS, collapse = '&'), '_', paste(VARBS, collapse = '&'), '_analysis.txt')
+if (MERGE == T) {
+  merge_txt <- '_merge'
+} else {
+  merge_txt <- ''
+}
+output.file <- paste0(paste(GROUPS, collapse = '&'), '_', paste(VARBS, collapse = '&'), merge_txt, '_analysis.txt')
 output.file <- file.path(PATH, output.file)
 
 # defining the results file
@@ -297,12 +324,12 @@ write(x = '	%  Group Section Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 for (group in GROUPS) {
-	write(x = paste( c('group_files', subj.files[[group]]) , collapse = ' '), file = output.file, append = TRUE)
+  write(x = paste( c('group_files', subj.files[[group]]) , collapse = ' '), file = output.file, append = TRUE)
 }
 
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
-write(x = '	%  Group Section End  %', file = output.file, append = TRUE)
-write(x = '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
+write(x = '\n	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
+write(x =   '	%  Group Section End  %', file = output.file, append = TRUE)
+write(x =   '	%%%%%%%%%%%%%%%%%%%%%%%', file = output.file, append = TRUE)
 
 ##### WRITE: PLS Section Start #####
 
@@ -350,10 +377,10 @@ write(x = '	%  Contrast Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 if (CONTRASTS != 'NULL') {
-	for (contrast in 1:dim(CONTRASTS)[1]) {
-		contrast <- CONTRASTS[contrast, ]
-		write(x = paste0( c('contrast_data ', contrast), collapse = ' '), file = output.file, append = TRUE)
-	}
+  for (contrast in 1:dim(CONTRASTS)[1]) {
+    contrast <- CONTRASTS[contrast, ]
+    write(x = paste0( c('contrast_data ', contrast), collapse = ' '), file = output.file, append = TRUE)
+  }
 }
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%'    , file = output.file, append = TRUE)
@@ -369,7 +396,8 @@ write(x = '	%  Behavior Data Start  %'  , file = output.file, append = TRUE)
 write(x = '	%%%%%%%%%%%%%%%%%%%%%%%%%\n', file = output.file, append = TRUE)
 
 for (line in 1:dim(behav.tab)[1]) {
-	write(x = paste(behav.tab[line, ], collapse = ' '), file = output.file, append = TRUE)
+  line <- paste('behavior_data', paste(behav.tab[line,], collapse = ' '), collapse = ' ')
+  write(x = line, file = output.file, append = TRUE)
 }
 
 write(x = ' ', file = output.file, append = TRUE)
