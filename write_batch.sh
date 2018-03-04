@@ -20,7 +20,7 @@ REF_NUM=1
 
 ##### get help Documentation text #####
 
-usage=$(cat write_batch_Documentation.txt)
+# usage=$(cat write_batch_Documentation.txt)
 
 ##### accept arguments ##### 
 while getopts i:o:p:b:w:a:f:s:r:n:t:z:m:h:c: option; do
