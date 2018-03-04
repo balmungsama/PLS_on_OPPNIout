@@ -1,13 +1,13 @@
 
 %%%%% Add the PLS package to Matlab's search path %%%%%
 
-PLUGINS = fopen('matlab_plugins.txt');
-PLUGINS_DIR = fscanf(PLUGINS, '%c', Inf);
-fclose(PLUGINS);
+% PLUGINS = fopen('matlab_plugins.txt');
+% PLUGINS_DIR = fscanf(PLUGINS, '%c', Inf);
+% fclose(PLUGINS);
 
-PLUGINS_DIR = fullfile( PLUGINS_DIR, 'Pls');
+% PLUGINS_DIR = fullfile( PLUGINS_DIR, 'Pls');
 
-addpath( genpath(PLUGINS_DIR) );
+% addpath( genpath(PLUGINS_DIR) );
 
 %%%%% check OS to determine how to access BASH commands %%%%%
 

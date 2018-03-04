@@ -31,7 +31,7 @@ usage=$(cat write_batch_Documentation.txt)
 while getopts i:o:p:b:w:a:f:s:r:n:t:z:h:c:m: option; do
 	case "${option}"
 	in
-		i) OPPNI_DIR=${OPTARG};;    # path to the PLS package
+		i) OPPNI_DIR=${OPTARG};;     # path to oppni-preprocessed data
 		o) OUTPUT=${OPTARG};;        # place to output the PLS files
 		p) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
 		b) BRAIN_ROI=${OPTARG};;     # brain roi (can be number or file path to a mask)
