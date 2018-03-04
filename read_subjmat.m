@@ -55,6 +55,8 @@ for line = 1:length(input_file)
 
 end
 
+disp('1')
+
 input_file = input_file_array;
 clear input_file_array tmp_line;
 fclose(fileID);
@@ -67,6 +69,8 @@ if ~exist(sample_img, 'file')
 	sample_img = fullfile('/global', sample_img);
 end
 
+disp(2)
+
 [status, TR_length] = system(['fslval ', sample_file, ' pixdim4' ]);
 TR_length = str2num(TR_length);
 
@@ -77,6 +81,8 @@ out_index = out_index(1, :);
 out_index = find(~cellfun(@isempty, out_index));
 
 out_array  = input_file(:, out_index);
+
+disp(3)
 
 % get an array of all individual subjects and their respective runs
 for row = 1:size(out_array, 1);
@@ -90,6 +96,8 @@ for row = 1:size(out_array, 1);
 	out_array2{row,3}  = str2num(out_array2{row,2});
 end
 
+disp(4)
+
 out_array = out_array2;
 clear out_array2;
 
@@ -97,6 +105,8 @@ group.out_array = out_array;
 % group.names     = unique( group.out_array(:,1) ); % get array of unique subjects
 [group.names, grp_indx] = unique( group.out_array(:,1) ); % get array of unique subjects
  group.names            = group.out_array(sort(grp_indx)) ;
+
+disp(5)
 
 for row = 1:size(group.names, 1)
 	name_index      = strfind( group.out_array(:, 1), group.names{row} );
@@ -107,6 +117,7 @@ end
 
 clear out_array;
 
+disp(6)
 for subj = 1:size(input_file,1)
 	subj_task = input_file{subj, 5};
 	subj_task = strsplit(subj_task, '=');
@@ -180,7 +191,7 @@ for subj = 1:size(input_file,1)
 
 end
 
-
+disp(7)
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
 	if MERGE_RUNS == false;
