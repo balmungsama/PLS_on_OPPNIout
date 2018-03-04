@@ -32,6 +32,7 @@ disp(class(REF_ONSET  ))
 disp(class(REF_NUM    ))
 disp(class(NORMAL     ))
 disp(class(RUN        ))
+disp(class(MERGE_RUNS ))
 
 %%%%% begin gathering data to build text file %%%%%
 
@@ -106,6 +107,9 @@ for subj = 1:size(input_file,1)
 	subj_task = strsplit(subj_task, '=');
 	subj_task = subj_task(2);
 	subj_task = subj_task{1};
+	if ~exist(subj_task, 'file')
+		subj_task = fullfile('/global', subj_task);
+	end
 
 	% find number of volumes to be dropped
 	DROP = input_file(subj,:);
@@ -118,7 +122,7 @@ for subj = 1:size(input_file,1)
 	DROP = DROP{2};
 	DROP = str2num(DROP);
 	% disp(['DROP = ', num2str(DROP)]);
-
+	
 	fid = fopen(subj_task);
 
 	while true
@@ -174,6 +178,8 @@ end
 
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
+	if MERGE_RUNS == true:
+		for run = 
 	batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']);
 	fid = fopen( batch_filename, 'w'); 
 

@@ -28,7 +28,7 @@ REF_NUM=1
 usage=$(cat write_batch_Documentation.txt)
 
 ##### accept arguments ##### 
-while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
+while getopts i:o:p:b:w:a:f:s:r:n:t:z:h:c:m: option; do
 	case "${option}"
 	in
 		i) OPPNI_DIR=${OPTARG};;    # path to the PLS package
@@ -43,6 +43,7 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:hc: option; do
 		n) REF_NUM=${OPTARG};;       # number of reference scans for all conditions
 		t) NORMAL=${OPTARG};;        # normalize volume mean (keey 0 unless necessary)
 		z) RUN=${OPTARG};;           # do you want to run the analysis after the creation of the file? ('true or false')
+		m) MERGE_RUNS=${OPTARG};;    # Do you want a seperate batch file for each run (1), or all runs to be within a single batch (0)?
 		h) echo "$usage" >&2
 			 exit 1
 			 ;;
@@ -137,11 +138,12 @@ mREF_ONSET=$(echo "REF_ONSET='$REF_ONSET'")
 mREF_NUM=$(echo "REF_NUM='$REF_NUM'")
 mNORMAL=$(echo "NORMAL='$NORMAL'") 
 mRUN=$(echo "RUN=$RUN")
+mMERGE_RUNS=$(echo "MERGE_RUNS=$MERGE_RUNS")
 
 
 mREAD_SUBJMAT=$(echo "run('$INSTALL_DIR/read_subjmat.m')")
 
-mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mREAD_SUBJMAT")
+mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mMERGE_RUNS;$mREAD_SUBJMAT")
 
 # echo $mCOMMANDS
 cd $OUTPUT
