@@ -173,6 +173,7 @@ for subj = 1:size(input_file,1)
 			cond(cond_count).names = tline;
 		elseif ~isempty(TFons);
 			t_ons = tline;
+			t_ons = str2num(t_ons);
 			t_ons = conv_onsets(t_ons, TR_length, DROP);
 			cond(cond_count).ons   = t_ons;
 		elseif ~isempty(TFdur);
