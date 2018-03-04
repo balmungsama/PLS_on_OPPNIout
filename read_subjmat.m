@@ -62,7 +62,12 @@ fclose(fileID);
 cond_count    = 0;
 cond(1).names = 0;
 
-[status, TR_length] = system(['fslval ', input_file{1,1}, ' pixdim4' ], '-echo');
+sample_img = input_file{1,1};
+if ~exist(sample_img, 'file')
+	sample_img = fullfile('/global', sample_img);
+end
+
+[status, TR_length] = system(['fslval ', sample_file, ' pixdim4' ]);
 TR_length = str2num(TR_length);
 
 num_subs = size(input_file,1);

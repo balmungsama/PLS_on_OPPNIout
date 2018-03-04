@@ -11,7 +11,7 @@ function YY = conv_onsets(onsets, TR, DROP)
 	TR = TR * 1000;
 
 	disp(onsets);
-	disp(['TR = ' str2num(TR)]);
+	disp(TR);
 
 	t_onsets = onsets ./ TR;
 	t_onsets = round(t_onsets);  % TODO: decide if you want to use round() or floor()
