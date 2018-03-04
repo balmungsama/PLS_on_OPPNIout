@@ -213,6 +213,8 @@ for (group in GROUPS) {
   subj.IDs[[group]] <- grp.ids
 }
 
+print(subj.IDs)
+
 ##### get behavioural data #####
 behav.values <- list()
 for (group in GROUPS) {
@@ -235,6 +237,7 @@ for (group in GROUPS) {
       } else {
         behav.values[[group]] <- rbind(behav.values[[group]], tmp.behav.row)
       }
+
     }
   }
 
