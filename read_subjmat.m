@@ -71,7 +71,7 @@ end
 
 disp(2)
 
-[status, TR_length] = system(['fslval ', sample_file, ' pixdim4' ]);
+[status, TR_length] = system(['fslval ', sample_img, ' pixdim4' ]);
 TR_length = str2num(TR_length);
 
 num_subs = size(input_file,1);
@@ -194,7 +194,7 @@ end
 disp(7)
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
-	if MERGE_RUNS == false;
+	if MERGE_RUNS == 0;
 		for run_cur = group.runs{nsubj}:
 
 			batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur), '_batch_fmri_data.txt']);
