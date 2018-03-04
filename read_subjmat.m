@@ -19,20 +19,20 @@ end
 
 %%%%% trouble-shooting print statements %%%%%
 
-disp(class(OS         ))
-disp(class(OPPNI_DIR  ))
-disp(class(OUTPUT     ))
-disp(class(PREFIX     ))
-disp(class(BRAIN_ROI  ))
-disp(class(WIN_SIZE   ))
-disp(class(ACROSS_RUN ))
-disp(class(NORM_REF   ))
-disp(class(SINGLE_SUBJ))
-disp(class(REF_ONSET  ))
-disp(class(REF_NUM    ))
-disp(class(NORMAL     ))
-disp(class(RUN        ))
-disp(class(MERGE_RUNS ))
+%disp(* )(class(OS         ))
+%disp(* )(class(OPPNI_DIR  ))
+%disp(* )(class(OUTPUT     ))
+%disp(* )(class(PREFIX     ))
+%disp(* )(class(BRAIN_ROI  ))
+%disp(* )(class(WIN_SIZE   ))
+%disp(* )(class(ACROSS_RUN ))
+%disp(* )(class(NORM_REF   ))
+%disp(* )(class(SINGLE_SUBJ))
+%disp(* )(class(REF_ONSET  ))
+%disp(* )(class(REF_NUM    ))
+%disp(* )(class(NORMAL     ))
+%disp(* )(class(RUN        ))
+%disp(* )(class(MERGE_RUNS ))
 
 %%%%% begin gathering data to build text file %%%%%
 
@@ -55,7 +55,7 @@ for line = 1:length(input_file)
 
 end
 
-disp('1')
+%disp(* )('1')
 
 input_file = input_file_array;
 clear input_file_array tmp_line;
@@ -69,7 +69,7 @@ if ~exist(sample_img, 'file')
 	sample_img = fullfile('/global', sample_img);
 end
 
-disp(2)
+%disp(* )(2)
 
 [status, TR_length] = system(['fslval ', sample_img, ' pixdim4' ]);
 TR_length = str2num(TR_length);
@@ -82,7 +82,7 @@ out_index = find(~cellfun(@isempty, out_index));
 
 out_array  = input_file(:, out_index);
 
-disp(3)
+%disp(* )(3)
 
 % get an array of all individual subjects and their respective runs
 for row = 1:size(out_array, 1);
@@ -96,7 +96,7 @@ for row = 1:size(out_array, 1);
 	out_array2{row,3}  = str2num(out_array2{row,2});
 end
 
-disp(4)
+%disp(* )(4)
 
 out_array = out_array2;
 clear out_array2;
@@ -106,7 +106,7 @@ group.out_array = out_array;
 [group.names, grp_indx] = unique( group.out_array(:,1) ); % get array of unique subjects
  group.names            = group.out_array(sort(grp_indx)) ;
 
-disp(5)
+%disp(* )(5)
 
 for row = 1:size(group.names, 1)
 	name_index      = strfind( group.out_array(:, 1), group.names{row} );
@@ -117,7 +117,7 @@ end
 
 clear out_array;
 
-disp(6)
+%disp(* )(6)
 for subj = 1:size(input_file,1)
 	subj_task = input_file{subj, 5};
 	subj_task = strsplit(subj_task, '=');
@@ -137,7 +137,7 @@ for subj = 1:size(input_file,1)
 	DROP = strsplit(DROP, '=');
 	DROP = DROP{2};
 	DROP = str2num(DROP);
-	% disp(['DROP = ', num2str(DROP)]);
+	% %disp(* )(['DROP = ', num2str(DROP)]);
 	
 	fid = fopen(subj_task);
 
@@ -192,7 +192,7 @@ for subj = 1:size(input_file,1)
 
 end
 
-disp(7)
+%disp(* )(7)
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
 	if MERGE_RUNS == 0;
@@ -276,7 +276,7 @@ for nsubj = 1:size(group.names,1);
 				cond_ind = ((task_run - 1) * cond_count) + num_cond;
 				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
 
-				% disp([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
+				% %disp(* )([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
 			end
 
 			fprintf(fid, [ '\n' ] );
@@ -369,7 +369,7 @@ for nsubj = 1:size(group.names,1);
 				cond_ind = ((task_run - 1) * cond_count) + num_cond;
 				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
 
-				% disp([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
+				% %disp(* )([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
 			end
 
 			fprintf(fid, [ '\n' ] );
@@ -387,6 +387,6 @@ for nsubj = 1:size(group.names,1);
 	end
 end
 
-disp('Batch file created.');
+%disp(* )('Batch file created.');
 
 exit
