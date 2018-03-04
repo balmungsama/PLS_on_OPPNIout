@@ -1,11 +1,6 @@
 #!/bin/bash
-#$ -S /bin/bash
-#$ -cwd
-#$ -M hpc3586@localhost
-#$ -m be
-#$ -q abaqus.q
-#$ -o logs/write_erfmri_batch.out
-#$ -e logs/write_erfmri_batch.err
+#SBATCH -c 4            # Number of CPUS requested. If omitted, the default is 1 CPU.
+#SBATCH --mem=1024      # Memory requested in megabytes. If omitted, the default is 1024 MB.
 
 # TODO: make this extract the CON/FIX/IND optimized data instead of the un-preprocessed input
 
@@ -28,7 +23,7 @@ REF_NUM=1
 usage=$(cat write_batch_Documentation.txt)
 
 ##### accept arguments ##### 
-while getopts i:o:p:b:w:a:f:s:r:n:t:z:h:c:m: option; do
+while getopts i:o:p:b:w:a:f:s:r:n:t:z:m:h:c: option; do
 	case "${option}"
 	in
 		i) OPPNI_DIR=${OPTARG};;     # path to oppni-preprocessed data
@@ -37,13 +32,13 @@ while getopts i:o:p:b:w:a:f:s:r:n:t:z:h:c:m: option; do
 		b) BRAIN_ROI=${OPTARG};;     # brain roi (can be number or file path to a mask)
 		w) WIN_SIZE=${OPTARG};;      # temporal window size in scans
 		a) ACROSS_RUN=${OPTARG};;    # for merge data across all run, 0 for within each run
-		f) NORM_REF=${OPTARG};;      # for single subject analysis, 0 for normal analysis
+		f) NORM_REF=${OPTARG};;      # 1 for single subject analysis, 0 for normal analysis
 		s) SINGLE_SUBJ=${OPTARG};;   # 1 for single subject analysis, 0 for normal analysis
 		r) REF_ONSET=${OPTARG};;     # reference scan onset for all conditions
 		n) REF_NUM=${OPTARG};;       # number of reference scans for all conditions
 		t) NORMAL=${OPTARG};;        # normalize volume mean (keey 0 unless necessary)
 		z) RUN=${OPTARG};;           # do you want to run the analysis after the creation of the file? ('true or false')
-		m) MERGE_RUNS=${OPTARG};;    # Do you want a seperate batch file for each run (1), or all runs to be within a single batch (0)?
+		m) MERGE_RUNS=${OPTARG};;    # Do you want a seperate batch file for each run (0), or all runs to be within a single batch (1)?
 		h) echo "$usage" >&2
 			 exit 1
 			 ;;

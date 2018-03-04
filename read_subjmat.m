@@ -183,7 +183,7 @@ end
 
 %%%%% write to text file #####	
 for nsubj = 1:size(group.names,1);
-	if MERGE_RUNS == true;
+	if MERGE_RUNS == false;
 		for run_cur = group.runs{nsubj}:
 
 			batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur), '_batch_fmri_data.txt']);
