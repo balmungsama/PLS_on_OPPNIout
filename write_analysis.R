@@ -198,8 +198,6 @@ for (group in GROUPS) {
       subj.files[[group]] <- subj.files[[group]][-REMOVE_LS.tmp] #[[group]]
     }
   }
-  
-  print(subj.files[[group]])
 
   # only include subjects specified within the outlier-cleaned csv
   if (exists('RM_CLEAN')) {
@@ -212,13 +210,12 @@ for (group in GROUPS) {
       out.ind <- NULL
       for (subj in 1:length(subj.files[[group]])) {
         tmp.out.ind <- subj.files[[group]][subj]
-        tmp.out.ind <- grepl(x = sample, pattern = test)
+        tmp.out.ind <- grepl(x = tmp.out.ind, pattern = cleaned.ls)
 
         if (!tmp.out.ind) {
           out.ind <- c(out.ind, tmp.out.ind)
         }
       }
-      print(out.ls)
       subj.files[[group]] <- subj.files[[group]][-out.ing]
 
     } else {
