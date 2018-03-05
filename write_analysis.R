@@ -216,6 +216,7 @@ for (group in GROUPS) {
         tmp.out.ind <- subj.files[[group]][subj]
         print(paste('tmp.out.ind =', tmp.out.ind))
         tmp.out.ind <- grepl(x = tmp.out.ind, pattern = cleaned.ls)
+        print(paste('tmp.out.ind =', tmp.out.ind))
 
         if (!tmp.out.ind) {
           out.ind <- c(out.ind, tmp.out.ind)
