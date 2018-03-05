@@ -200,6 +200,8 @@ for (group in GROUPS) {
   }
 
   # only include subjects specified within the outlier-cleaned csv
+  print(subj.files[[group]])
+  
   if (exists('RM_CLEAN')) {
     out.ls <- NULL
     if (file.exists(RM_CLEAN)) {
