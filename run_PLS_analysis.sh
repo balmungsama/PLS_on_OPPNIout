@@ -4,19 +4,19 @@
 
 filename=$1
 
-TOP_DIR=$(dirname $filename)
-FILE=$(basename $filename)
+top_dir=$(dirname $filename)
+file=$(basename $filename)
 
-# echo filename = $filename
-# echo TOP_DIR = $TOP_DIR
-# echo FILE = $FILE
+echo filename = $filename
+echo top_dir = $top_dir
+echo file = $file
 
 if [ ${#TOPDIR[@]} == 1 ]; then
-	TOP_DIR=$(pwd)
+	top_dir=$(pwd)
 fi 
 
 echo 'Running PLS anlalysis...'
 
-matlab -nodesktop -nosplash -r "pls_file='$FILE';pls_path='$TOP_DIR';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_PLS_analysis.m')"
+matlab -nodesktop -nosplash -r "pls_file='$file';pls_path='$top_dir';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/run_PLS_analysis.m')"
 
 echo 'Finished.'
