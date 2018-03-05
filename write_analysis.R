@@ -203,7 +203,7 @@ for (group in GROUPS) {
   grp.runs <- NULL
   for (subj in subj.files[[group]]) {
 
-    if grepl(x = subj, pattern = '_run') {
+    if (grepl(x = subj, pattern = '_run')) {
       split_runs <- T
       run <- gregexpr(pattern = '_run', subj)
       run <- run[[1]][1]
