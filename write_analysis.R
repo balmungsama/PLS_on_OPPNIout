@@ -225,7 +225,7 @@ for (group in GROUPS) {
     }
   }
   
-  subj.RUNS[[group]] <- grp.RUNS
+  subj.RUNS[[group]] <- grp.runs
   subj.IDs[[group]]  <- grp.ids
 }
 
