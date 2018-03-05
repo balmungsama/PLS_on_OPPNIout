@@ -210,7 +210,7 @@ for (group in GROUPS) {
       cleaned.ls <- paste(cleaned.ls, collapse = '|')
 
       out.ind <- NULL
-      for (subj in 1:length(subj.files[[group]]) {
+      for (subj in 1:length(subj.files[[group]])) {
         tmp.out.ind <- subj.files[[group]][subj]
         tmp.out.ind <- grepl(x = sample, pattern = test)
 
