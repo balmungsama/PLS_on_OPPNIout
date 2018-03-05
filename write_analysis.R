@@ -223,6 +223,8 @@ for (group in GROUPS) {
     }
   }
 
+  print(subj.files[[group]])
+
   grp.ids  <- NULL
   grp.runs <- NULL
   for (subj in subj.files[[group]]) {
