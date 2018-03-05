@@ -385,12 +385,12 @@ write(x = paste0('mean_type    ', MEAN_type, '    % Mean-Centering Type (between
 
 write(x = paste0('cormode    ', COR_mode, '    % Correlation Mode (can be 0,2,4,6, see above)\n'), file = output.file, append = TRUE)
 
-write(x = paste0('num_perm	' , num_perm,   '		% Number of Permutation'                   ), file = output.file, append = TRUE)
-write(x = paste0('num_split	' , num_split, '		% Natasha Perm Split Half'                 ), file = output.file, append = TRUE)
-write(x = paste0('num_boot	' , num_boot,   '		% Number of Bootstrap'                     ), file = output.file, append = TRUE)
-write(x = paste0('boot_type	' , boot_type,  '		% Either strat or nonstrat bootstrap type' ), file = output.file, append = TRUE)
-write(x = paste0('clim		'   , clim,       '		% Confidence Level for Behavior PLS'       ), file = output.file, append = TRUE)
-write(x = paste0('save_data	' , save_data,  '		% Set to 1 to save stacked datamat\n'      ), file = output.file, append = TRUE)
+write(x = paste0('num_perm	'  , num_perm , '		% Number of Permutation'                   ), file = output.file, append = TRUE)
+write(x = paste0('num_split  ' , num_split, '		% Natasha Perm Split Half'                 ), file = output.file, append = TRUE)
+write(x = paste0('num_boot	'  , num_boot , '		% Number of Bootstrap'                     ), file = output.file, append = TRUE)
+write(x = paste0('boot_type  ' , boot_type, '		% Either strat or nonstrat bootstrap type' ), file = output.file, append = TRUE)
+write(x = paste0('clim		'    , clim     , '		% Confidence Level for Behavior PLS'       ), file = output.file, append = TRUE)
+write(x = paste0('save_data	'  , save_data, '		% Set to 1 to save stacked datamat\n'      ), file = output.file, append = TRUE)
 
 write(x = '	%%%%%%%%%%%%%%%%%%%%%'      , file = output.file, append = TRUE)
 write(x = '	%  PLS Section End  %'      , file = output.file, append = TRUE)
