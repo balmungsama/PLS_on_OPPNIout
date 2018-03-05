@@ -218,12 +218,10 @@ for (group in GROUPS) {
         tmp.out.ind <- grepl(x = tmp.out.ind, pattern = cleaned.ls)
         print(paste('tmp.out.ind =', tmp.out.ind))
 
-        if (!tmp.out.ind) {
-          out.ind <- c(out.ind, tmp.out.ind)
-        }
+        out.ind <- c(out.ind, tmp.out.ind)
       }
       print(paste('out.ind =', out.ind))
-      subj.files[[group]] <- subj.files[[group]][-out.ind]
+      subj.files[[group]] <- subj.files[[group]][out.ind]
 
     } else {
       cat('\n\n Outlier-cleaned file does not exist. \n\n')
