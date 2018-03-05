@@ -216,6 +216,10 @@ for (group in GROUPS) {
         tmp.ind  <- sum(tmp.ind)
         if (!tmp.ind) {
           out.ls <- c(out.ls, subj)
+          print(tmp.patt)
+          print(tmp.subj)
+          print(tmp.run)
+          cat('\n')
         }
       }
 
