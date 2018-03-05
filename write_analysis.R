@@ -169,6 +169,7 @@ setwd(PATH)
 ##### create placeholder variables #####
 subj.files <- list()
 subj.IDs   <- list()
+subj.RUNS  <- list()
 behav.list <- NULL
 behav.grp  <- NULL
 outliers   <- NULL
@@ -224,8 +225,8 @@ for (group in GROUPS) {
     }
   }
   
-  subj.RUNS[[group]] grp.RUNS
-  subj.IDs[[group]] <- grp.ids
+  subj.RUNS[[group]] <- grp.RUNS
+  subj.IDs[[group]]  <- grp.ids
 }
 
 print(subj.IDs)
