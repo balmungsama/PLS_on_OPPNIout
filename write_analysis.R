@@ -261,7 +261,7 @@ for (group in GROUPS) {
   for (ii in 1:length(subj.IDs[[group]])) {
     subj <- subj.IDs[[group]][ii]
 
-    tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
+    tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '*.mat')))
     tmp.varb <- tmp.varb[[1]][,,1]
 
     if (split_runs == T) {
