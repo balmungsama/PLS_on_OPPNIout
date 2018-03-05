@@ -222,6 +222,7 @@ for (group in GROUPS) {
           out.ind <- c(out.ind, tmp.out.ind)
         }
       }
+      print(paste('out.ind =', out.ind))
       subj.files[[group]] <- subj.files[[group]][-out.ind]
 
     } else {
