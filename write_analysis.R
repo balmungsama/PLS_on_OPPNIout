@@ -214,6 +214,7 @@ for (group in GROUPS) {
       out.ind <- NULL
       for (subj in 1:length(subj.files[[group]])) {
         tmp.out.ind <- subj.files[[group]][subj]
+        print(paste('tmp.out.ind =', tmp.out.ind))
         tmp.out.ind <- grepl(x = tmp.out.ind, pattern = cleaned.ls)
 
         if (!tmp.out.ind) {
