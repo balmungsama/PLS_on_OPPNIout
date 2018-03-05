@@ -199,17 +199,32 @@ for (group in GROUPS) {
     }
   }
   
-  grp.ids <- NULL
+  grp.ids  <- NULL
+  grp.runs <- NULL
   for (subj in subj.files[[group]]) {
 
+    if grepl(x = subj, pattern = '_run') {
+      split_runs <- T
+      run <- gregexpr(pattern = '_run', subj)
+      run <- run[[1]][1]
+      run <- run + 4
+      run <- as.numeric(substr(subj, run, run))
+    } else {
+      split_runs <- F
+    }
+    
     subj <- strsplit(x = subj, split = paste0(PREFIX, '_', group, '_'))
     subj <- subj[[1]][2]
     subj <- strsplit(x = subj, split = '_')
     subj <- subj[[1]][1]
     
     grp.ids <- c(grp.ids, subj)
+    if (split_runs == T) {
+      grp.runs <- c(grp.runs, run)
+    }
   }
   
+  subj.RUNS[[group]] grp.RUNS
   subj.IDs[[group]] <- grp.ids
 }
 
@@ -219,11 +234,14 @@ print(subj.IDs)
 behav.values <- list()
 for (group in GROUPS) {
 
-  for (subj in subj.IDs[[group]]) {
+  for (ii in 1:length(subj.IDs[[group]])) {
+    subj <- subj.IDs[[group]][ii]
+
     tmp.varb <- readMat(file.path(BEHAV_DIR, paste0(subj, '.mat')))
     tmp.varb <- tmp.varb[[1]][,,1]
 
-    for (run in tmp.varb$Runs) {
+    if (split_runs == T) {
+      run <- subj.RUNS[[group]][ii]
       tmp.behav.row <- NULL
       for (varb in VARBS) {
         tmp.behav.meas <- tmp.varb[[varb]][run]
@@ -237,8 +255,24 @@ for (group in GROUPS) {
       } else {
         behav.values[[group]] <- rbind(behav.values[[group]], tmp.behav.row)
       }
-
+    } else {
+        for (run in tmp.varb$Runs) {
+        tmp.behav.row <- NULL
+        for (varb in VARBS) {
+          tmp.behav.meas <- tmp.varb[[varb]][run]
+          tmp.behav.row <- c(tmp.behav.row, tmp.behav.meas)
+        }
+        tmp.behav.row <- data.frame(t(tmp.behav.row))
+        colnames(tmp.behav.row) <- VARBS
+        tmp.behav.row <- cbind(tmp.behav.row, group, subj, run)
+        if (length(behav.values) < which(GROUPS == group)) {
+          behav.values[[group]] <- tmp.behav.row
+        } else {
+          behav.values[[group]] <- rbind(behav.values[[group]], tmp.behav.row)
+        }
+      }
     }
+    
   }
 
   behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
