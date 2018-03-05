@@ -15,7 +15,6 @@ unused_args <- NULL
 ##### default values #####
 
 PREFIX <- ''
-RM_OUT <- FALSE
 
 mum_perm   <- 500
 num_split  <- 100
@@ -50,9 +49,9 @@ for (arg in args) {
     
     PREFIX <- arg[2]
     
-  } else if (arg[1] == '--RM_OUT') {
+  } else if (arg[1] == '--RM_CLEAN') {
     
-    RM_OUT <- arg[2] 
+    RM_CLEAN <- arg[2] 
     
   }  else if (arg[1] == '--CONDS') {
     
@@ -180,7 +179,7 @@ VARBS <- gsub("_", ".", VARBS)
 ##### collect group .mat files #####
 for (group in GROUPS) {
   subj.files[[group]] <- Sys.glob(paste0(PREFIX, '_', group, '_', '*fMRIsessiondata.mat') )
-  
+
   check_merge <- readMat(subj.files[[group]][1])
   check_merge <- check_merge$session.info[,,1]
   check_merge <- check_merge$across.run
@@ -200,6 +199,33 @@ for (group in GROUPS) {
     }
   }
   
+  # only include subjects specified within the outlier-cleaned csv
+  if (exists('RM_CLEAN')) {
+    out.ls <- NULL
+    if (file.exists(RM_CLEAN)) {
+      cleaned.ls <- read.csv(RM_CLEAN)
+      for (subj in 1:length(cleaned.ls$subj)) {
+        tmp.subj <- cleaned.ls$subj[subj]
+        tmp.run  <- cleaned.ls$run[subj]
+        if (MERGE) {
+          tmp.patt <- paste0('*', tmp.subj, '*')
+        } else {
+          tmp.patt <- paste0('*', tmp.subj, '*_run', tmp.run, '*')
+        }
+        tmp.ind  <- grepl(x = subj.files[[group]], pattern = tmp.patt)
+        tmp.ind  <- sum(tmp.ind)
+        if (!tmp.ind) {
+          out.ls <- c(out.ls, subj)
+        }
+      }
+
+      subj.files[[group]] <- subj.files[[group]][-out.ls]
+
+    } else {
+      cat('\n\n Outlier-cleaned file does not exist. \n\n')
+    }
+  }
+
   grp.ids  <- NULL
   grp.runs <- NULL
   for (subj in subj.files[[group]]) {
@@ -281,7 +307,7 @@ for (group in GROUPS) {
   }
   
   ##### flagging outliers #####
-  if (RM_OUT == T) {
+  if (RM_CLEAN == T) {
     
     if (length(VARBS) > 1) {
       

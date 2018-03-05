@@ -14,7 +14,7 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l: option; do
 		v) VARBS=${OPTARG};;
 		g) GROUP_LS=${OPTARG};;
 		f) PREFIX=${OPTARG};;
-		r) RM_OUT=${OPTARG};;
+		r) RM_CLEAN=${OPTARG};;
 		t) PLS_opt=${OPTARG};;
 		m) MEAN_type=${OPTARG};;
 		c) COR_mode=${OPTARG};;
@@ -45,7 +45,7 @@ echo BEHAV_DIR = $BEHAV_DIR
 echo VARBS     = $VARBS     
 echo GROUP_LS  = $GROUP_LS    
 echo PREFIX    = $PREFIX    
-echo RM_OUT    = $RM_OUT    
+echo RM_CLEAN    = $RM_CLEAN    
 echo PLS_opt   = $PLS_opt   
 echo MEAN_type = $MEAN_type 
 echo COR_mode  = $COR_mode  
@@ -61,4 +61,4 @@ echo REMOVE_LS = $REMOVE_LS
 echo ' '
 
 
-Rscript $SCRIPT_DIR/write_analysis.R --PATH=$IN_PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUP_LS --PREFIX=$PREFIX --RM_OUT=$RM_OUT --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS=$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS
+Rscript $SCRIPT_DIR/write_analysis.R --PATH=$IN_PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUP_LS --PREFIX=$PREFIX --RM_CLEAN=$RM_CLEAN --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS=$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS

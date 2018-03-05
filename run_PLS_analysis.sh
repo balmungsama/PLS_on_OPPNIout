@@ -11,9 +11,9 @@ echo filename = $filename
 echo top_dir = $top_dir
 echo file = $file
 
-if [ ${#TOPDIR[@]} == 1 ]; then
-	top_dir=$(pwd)
-fi 
+# if [ ${#TOPDIR[@]} == 1 ]; then
+# 	top_dir=$(pwd)
+# fi 
 
 echo 'Running PLS anlalysis...'
 
