@@ -216,7 +216,7 @@ for (group in GROUPS) {
           out.ind <- c(out.ind, tmp.out.ind)
         }
       }
-      subj.files[[group]] <- subj.files[[group]][-out.ing]
+      subj.files[[group]] <- subj.files[[group]][-out.ind]
 
     } else {
       cat('\n\n Outlier-cleaned file does not exist. \n\n')
