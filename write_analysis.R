@@ -224,7 +224,7 @@ for (group in GROUPS) {
           cat('\n')
         }
       }
-
+      print(out.ls)
       subj.files[[group]] <- subj.files[[group]][-out.ls]
 
     } else {
