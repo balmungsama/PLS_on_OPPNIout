@@ -206,26 +206,20 @@ for (group in GROUPS) {
     out.ls <- NULL
     if (file.exists(RM_CLEAN)) {
       cleaned.ls <- read.csv(RM_CLEAN)
-      for (subj in 1:length(cleaned.ls$subj)) {
-        tmp.subj <- cleaned.ls$subj[subj]
-        tmp.run  <- cleaned.ls$run[subj]
-        if (MERGE) {
-          tmp.patt <- paste0('*', tmp.subj, '*')
-        } else {
-          tmp.patt <- paste0('*', tmp.subj, '*_run', tmp.run, '*')
-        }
-        tmp.ind  <- grepl(x = subj.files[[group]], pattern = tmp.patt)
-        tmp.ind  <- sum(tmp.ind)
-        if (!tmp.ind) {
-          out.ls <- c(out.ls, subj)
-          print(tmp.patt)
-          print(tmp.subj)
-          print(tmp.run)
-          cat('\n')
+      cleaned.ls <- paste0(cleaned.ls$subj, '*_run', cleaned.ls$run)
+      cleaned.ls <- paste(cleaned.ls, collapse = '|')
+
+      out.ind <- NULL
+      for (subj in 1:length(subj.files[[group]]) {
+        tmp.out.ind <- subj.files[[group]][subj]
+        tmp.out.ind <- grepl(x = sample, pattern = test)
+
+        if (!tmp.out.ind) {
+          out.ind <- c(out.ind, tmp.out.ind)
         }
       }
       print(out.ls)
-      subj.files[[group]] <- subj.files[[group]][-out.ls]
+      subj.files[[group]] <- subj.files[[group]][-out.ing]
 
     } else {
       cat('\n\n Outlier-cleaned file does not exist. \n\n')
