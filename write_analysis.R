@@ -209,6 +209,8 @@ for (group in GROUPS) {
       cleaned.ls <- paste0(cleaned.ls$subj, '*_run', cleaned.ls$run)
       cleaned.ls <- paste(cleaned.ls, collapse = '|')
 
+      print(cleaned.ls)
+
       out.ind <- NULL
       for (subj in 1:length(subj.files[[group]])) {
         tmp.out.ind <- subj.files[[group]][subj]
