@@ -276,7 +276,9 @@ for (group in GROUPS) {
     
   }
 
-  behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
+  if (split_runs == F) {
+    behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
+  }
   
   ##### flagging outliers #####
   if (RM_OUT == T) {
