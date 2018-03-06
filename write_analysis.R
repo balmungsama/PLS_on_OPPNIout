@@ -208,6 +208,7 @@ for (group in GROUPS) {
       cleaned.ls <- read.csv(RM_CLEAN)
       cleaned.ls <- paste0(cleaned.ls$subj, '*_run', cleaned.ls$run)
       cleaned.ls <- paste(cleaned.ls, collapse = '|')
+      cleaned.ls <- paste0('|', cleaned.ls, '|')
 
       print(cleaned.ls)
 
@@ -310,33 +311,6 @@ for (group in GROUPS) {
     behav.values[[group]] <- behav.values[[group]][order(behav.values[[group]]$run),]
   }
   
-  ##### flagging outliers #####
-  if (RM_CLEAN == T) {
-    
-    if (length(VARBS) > 1) {
-      
-      outliers[[group]] <- multiOut(dat = cbind(timept = 1,
-                                                behav.grp[[group]]), 
-                                    exVar = NULL, 
-                                    rmdo_alpha = 0.5)
-      
-      outliers[[group]]$flagged  <- as.character( unique(outliers[[group]]$outliers$subject_id) )
-      behav.grp[[group]]$outlier <- behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
-      
-    } else {
-      
-      tmp.varb <- data.frame(behav.grp[[group]][ , -which(colnames(behav.grp[[group]]) == 'subject_id') ])
-      colnames(tmp.varb) <- colnames(behav.grp[[group]])[ -which(colnames(behav.grp[[group]]) == 'subject_id') ]
-      
-      outliers[[group]]$flagged <- which( abs(tmp.varb[,1] - mean(tmp.varb[,1])) > 3*sd(x = tmp.varb[,1]) )
-      outliers[[group]]$flagged <- behav.grp[[group]] [outliers[[group]]$flagged, 'subject_id']
-      
-      behav.grp[[group]]$outlier <-  behav.grp[[group]]$subject_id %in% outliers[[group]]$flagged
-      
-    }
-    
-  }
-  
 }
 
 if (MERGE == T) {
@@ -352,7 +326,7 @@ if (MERGE == T) {
 
 
 behav.tab <- ldply(behav.values, data.frame)
-print(print(behav.tab))
+print(behav.tab)
 behav.tab <- behav.tab[,VARBS]
 
 ##### WRITE: Defining Output Filename #####
