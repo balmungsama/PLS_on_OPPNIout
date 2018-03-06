@@ -352,8 +352,8 @@ if (MERGE == T) {
 
 
 behav.tab <- ldply(behav.values, data.frame)
+print(print(behav.tab))
 behav.tab <- behav.tab[,VARBS]
-print(behav.tab)
 
 ##### WRITE: Defining Output Filename #####
 
