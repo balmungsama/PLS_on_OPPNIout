@@ -206,9 +206,9 @@ for (group in GROUPS) {
     out.ls <- NULL
     if (file.exists(RM_CLEAN)) {
       cleaned.ls <- read.csv(RM_CLEAN)
-      cleaned.ls <- paste0(cleaned.ls$subj, '*_run', cleaned.ls$run)
+      cleaned.ls <- paste0(cleaned.ls$subj, '_run', cleaned.ls$run)
       cleaned.ls <- paste(cleaned.ls, collapse = '|')
-      cleaned.ls <- paste0(cleaned.ls, '|')
+      # cleaned.ls <- paste0(cleaned.ls, '|')
 
       print(cleaned.ls)
 
