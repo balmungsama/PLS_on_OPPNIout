@@ -1,0 +1,90 @@
+######### code_init #########
+# importing psychopy's packages
+from __future__ import absolute_import, division
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
+from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED, STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
+import numpy as np  # whole numpy lib is available, prepend 'np.'
+from numpy import (sin, cos, tan, log, log10, pi, average, sqrt, std, deg2rad, rad2deg, linspace, asarray)
+from numpy.random import random, randint, normal, shuffle
+import os  # handy system and path functions
+import sys  # to get file system encoding
+
+# IMPORTING MY PACKAGES
+import random as rand
+import string
+
+# TEST VARIABLES
+trial_count = 0 # temporary value to see if it loops correctly
+
+# USER_DEFINED OPTIONS
+stim_dur = 50 #duration of stimulus presentation in ms
+mask_dur = 34 #duration of the mask in ms
+trialType_stim = ['t1', 't2'] #stimulus ondition types
+trialType_sep  = ['long', 'short']
+sep_short = 4 # number of stimuli that should seperate T1 from T2
+sep_long  = 8
+
+##create an array of short/long interval conditions 
+trialType_sep  = np.repeat(a = ['short', 'long'], repeats = [192, 72])
+trialType_sep  = np.repeat(a = trialType_sep, repeats = len(trialType_stim))
+trialType_stim = np.repeat(a = trialType_stim, repeats = 192 + 72)  #create an array of short/long interval conditions 
+trialType_mat  = np.stack((trialType_stim, trialType_sep))
+trialType_mat = np.transpose(trialType_mat)
+
+# number of trials
+ntrials = trialType_mat.shape[0]
+
+######### trial_def ############
+for trial in range(1,ntrials + 1):
+# trial_count = trial_count + 1
+# stim_count  = 0 # keep track of which stimulus to display
+	nstim = randint(15,19)
+
+	trialType_cur = randint(0, np.shape(trialType_mat)[0]-1) # determine type of trial (eg. T2-present, long seperation)
+	trialType_cur = trialType_mat[trialType_cur]
+	stim_array    = [rand.choice(string.ascii_uppercase) for _ in range(nstim)] # begin building array of stimuli to be shown in this trial
+
+	# determine the postions for the Target stimuli
+	if trialType_cur[1] == 'long':
+			t1_pos = np.random.choice(range(1,nstim - sep_long))
+			t2_pos = t1_pos + sep_long
+	elif trialType_cur[1] == 'short':
+			t1_pos = np.random.choice(range(1,nstim - sep_short))
+			t2_pos = t1_pos + sep_short
+
+	# place the T1 target number into the stimulus array
+	stim_array[t1_pos - 1] = np.random.choice(range(1,9))
+
+	# put T2 in the stimulus vector
+	if trialType_cur[0] == 't2':
+			stim_array[t2_pos - 1] = np.random.choice(range(1,9))
+	elif trialType_cur[0] == 't1':
+			stim_array[t2_pos - 1] = ' '
+
+	# the 20% chance of the trial including a blank stimulus
+	if trialType_cur[0] == 't2':
+			roll_die = np.random.choice(range(1,5))
+			if roll_die == 1:
+					blank_pos = range(1,nstim) 
+					blank_pos.remove(t1_pos)
+					blank_pos.remove(t2_pos)
+					blank_pos = np.random.choice(blank_pos)
+					stim_array[blank_pos - 1] = ' '
+
+	stim_cond = []
+	for elem in range(len(stim_array)):
+		# print(type(stim_array[elem]))
+		if stim_array[elem] == ' ':
+			stim_cond.append('mask')
+		elif type(stim_array[elem]) is np.int64:
+			stim_cond.append('target')
+		elif type(stim_array[elem]) is str:
+			stim_cond.append('distractor')
+
+	trial_col = [str(trial) for _ in range(nstim)]
+	stimCount_col = range(1,nstim + 1)
+	sep_col = [trialType_cur[1] for _ in range(nstim)] 
+	tnum_col = [trialType_cur[0] for _ in range(nstim)] 
+
+	trial_tab = np.vstack((trial_col, sep_col, tnum_col, stimCount_col, stim_array, stim_cond))
+	trial_tab = np.transpose(trial_tab)
