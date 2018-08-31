@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -c 4            # Number of CPUS requested. If omitted, the default is 1 CPU.
-#SBATCH --mem=10240     # Memory requested in megabytes. If omitted, the default is 1024 MB.
-#SBATCH --time=7-0:0:0  # --time=days-hours:minutes:seconds 		Default is 3 hours.
+#SBATCH -c 2            # Number of CPUS requested. If omitted, the default is 1 CPU.
+#SBATCH --mem=4096     # Memory requested in megabytes. If omitted, the default is 1024 MB.
+#SBATCH --time=0-3:0:0  # --time=days-hours:minutes:seconds 		Default is 3 hours.
 
 filename=$1
 
