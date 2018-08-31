@@ -27,7 +27,7 @@ ALT_COND='default'
 while getopts i:o:p:b:w:a:f:s:r:n:t:z:m:h:c: option; do
 	case "${option}"
 	in
-		i) OPPNI_DIR=${OPTARG};;     # path to oppni-preprocessed data
+		i) OPPNI_DIR=${OPTARG};;     # path to oppni input file (must already be preprocessed)
 		o) OUTPUT=${OPTARG};;        # place to output the PLS files
 		p) PREFIX=${OPTARG};;        # prefix for the session file & datamat file
 		b) BRAIN_ROI=${OPTARG};;     # brain roi (can be number or file path to a mask)
@@ -66,63 +66,10 @@ done
 
 mkdir -p $OUTPUT
 
-##### check OS #####
-
-detect_OS=$(uname -r)
-
-if [[ $detect_OS =~ 'Microsoft' ]]; then
-	OS=windows
-	matlab='matlab.exe'
-else
-	OS=unix
-	matlab='matlab'
-fi
-
-##### define function to change Unix-style paths to Windows-style
-function lin2win {
-
-	if [ $OS != 'windows' ]; then
-		exit
-	fi
-
-	conv_path=$1
-
-	conv_path=${conv_path//'/mnt/'/ }
-
-	conv_path=(${conv_path//'/'/ })
-
-	conv_count=0
-	conv_path_new=''
-	for dir in ${conv_path[@]}; do
-		
-
-		if (( conv_count == 0 )); then
-			dir=${dir^^}:
-			split=''
-		else
-			split='\'
-		fi
-
-		# echo count=$conv_count, dir is '"'$dir'"'
-		
-		conv_path_new=$conv_path_new$split$dir
-
-		conv_count=$(($conv_count + 1))
-	done
-
-
-	# echo $conv_path
-	echo $conv_path_new
-}
-
-if [ $OS == "windows" ]; then
-	OPPNI_DIR=$(lin2win $OPPNI_DIR)
-fi
 
 ##### prep arguments for passage into Matlab #####
 
-mOS=$(echo "OS='$OS'")
-mOPPNI_DIR=$(echo "OPPNI_DIR='$OPPNI_DIR'")
+mOPPNI_DIR=$(echo "INPUT='$OPPNI_DIR'")
 mOUTPUT=$(echo "OUTPUT='$OUTPUT'")
 mPREFIX=$(echo "PREFIX='$PREFIX'")
 mBRAIN_ROI=$(echo "BRAIN_ROI='$BRAIN_ROI'")
@@ -141,18 +88,18 @@ mALT_COND=$(echo "ALT_COND='$ALT_COND'")
 
 mREAD_SUBJMAT=$(echo "run('$JE_packages/PLS_on_OPPNIout/read_subjmat.m')")
 
-mCOMMANDS=$(echo "$mOS;$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mMERGE_RUNS;$mALT_COND;$mREAD_SUBJMAT")
+mCOMMANDS=$(echo "$mOPPNI_DIR;$mOUTPUT;$mPREFIX;$mBRAIN_ROI;$mWIN_SIZE;$mACROSS_RUN;$mNORM_REF;$mSINGLE_SUBJ;$mREF_ONSET;$mREF_NUM;$mNORMAL;$mRUN;$mMERGE_RUNS;$mALT_COND;$mREAD_SUBJMAT")
 
 # echo $mCOMMANDS
 cd $OUTPUT
 echo 'Creating batch files...'
-$matlab -r "$mCOMMANDS" -nosplash -nodesktop 
+matlab -r "$mCOMMANDS" -nosplash -nodesktop 
 echo 'DONE'
 
 echo ' '
 
 if [[ $RUN == 'true' ]]; then
 	echo 'Running batch_plsgui...'
-	$matlab -r "$mPREFIX;$mOUTPUT;run('$INSTALL_DIR/run_subjmat.m')" -nosplash -nodesktop
+	matlab -r "$mPREFIX;$mOUTPUT;run('$INSTALL_DIR/run_subjmat.m')" -nosplash -nodesktop
 	echo 'DONE'
 fi

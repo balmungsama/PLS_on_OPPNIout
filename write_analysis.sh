@@ -5,22 +5,20 @@
 
 SCRIPT_DIR='/global/home/hpc3586/JE_packages/PLS_on_OPPNIout'
 
-##### accept arguments ##### 
-while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l:a: option; do
+##### accept arguments #####
+while getopts p:b:v:g:f:t:m:c:w:x:y:z:q:s:d:e:l:a: option; do
 	case "${option}"
 	in
 		p) IN_PATH=${OPTARG};;
 			# path to directory containing *sessiondata.mat files
-		b) BEHAV_DIR=${OPTARG};;
+		b) BEHAV_FILE=${OPTARG};;
 			# path to directory containing behavioural data, stored in subj-specific *.mat files
 		v) VARBS=${OPTARG};;
 			# names of behavioural variables to use in the analysis
-		g) GROUP_LS=${OPTARG};;
+		g) GROUPS=${OPTARG};;
 			# list of groups to use in the analysis
 		f) PREFIX=${OPTARG};;
 			# prefix of sessiondata files to include
-		r) REPLACE=${OPTARG};;
-			# direct path behavioural data if you don't want to extract it from the subject *.mat files
 		t) PLS_opt=${OPTARG};;
 			# 1. Mean-Centering PLS
 			# 2. Non-Rotated Task PLS (please also fill out contrast data below)
@@ -29,15 +27,15 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l:a: option; do
 			# 5. Non-Rotated Behav PLS (please also fill out contrast data and behavior data & name below)
 			# 6. Non-Rotated Multiblock PLS (please also fill out contrast data and behavior data & name below)
 		m) MEAN_type=${OPTARG};;
-			# 0. Remove group condition means from conditon means within each group      
-			# 1. Remove grand condition means from each group condition mean             
-			# 2. Remove grand mean over all subjects and conditions                      
-			# 3. Remove all main effects by subtracting condition and group means        
+			# 0. Remove group condition means from conditon means within each group
+			# 1. Remove grand condition means from each group condition mean
+			# 2. Remove grand mean over all subjects and conditions
+			# 3. Remove all main effects by subtracting condition and group means
 		c) COR_mode=${OPTARG};;
-			# 0. Pearson correlation        
-			# 2. covaraince                 
-			# 4. cosine angle               
-			# 6. dot product                
+			# 0. Pearson correlation
+			# 2. covaraince
+			# 4. cosine angle
+			# 6. dot product
 		w) num_perm=${OPTARG};;
 			# number of permutations
 		x) num_split=${OPTARG};;
@@ -67,26 +65,25 @@ while getopts p:b:v:g:f:r:t:m:c:w:x:y:z:q:s:d:e:l:a: option; do
 done
 
 echo '	%%% VARIABLES %%%'
-echo IN_PATH    = $IN_PATH   
-echo BEHAV_DIR  = $BEHAV_DIR 
-echo VARBS      = $VARBS     
-echo GROUP_LS   = $GROUP_LS    
-echo PREFIX     = $PREFIX    
-echo RM_CLEAN   = $RM_CLEAN    
-echo PLS_opt    = $PLS_opt   
-echo MEAN_type  = $MEAN_type 
-echo COR_mode   = $COR_mode  
-echo num_perm   = $num_perm  
-echo num_split  = $num_split 
-echo num_boot   = $num_boot  
-echo boot_type  = $boot_type 
-echo clim       = $clim      
-echo save_data  = $save_data 
-echo CONTRASTS  = $CONTRASTS 
-echo CONDS      = $CONDS     
-echo REMOVE_LS  = $REMOVE_LS 
+echo IN_PATH    = $IN_PATH
+echo BEHAV_FILE = $BEHAV_FILE
+echo VARBS      = $VARBS
+echo GROUPS     = $GROUPS
+echo PREFIX     = $PREFIX
+echo PLS_opt    = $PLS_opt
+echo MEAN_type  = $MEAN_type
+echo COR_mode   = $COR_mode
+echo num_perm   = $num_perm
+echo num_split  = $num_split
+echo num_boot   = $num_boot
+echo boot_type  = $boot_type
+echo clim       = $clim
+echo save_data  = $save_data
+echo CONTRASTS  = $CONTRASTS
+echo CONDS      = $CONDS
+echo REMOVE_LS  = $REMOVE_LS
 echo indep_runs = $indep_runs
 echo ' '
 
 
-Rscript $SCRIPT_DIR/write_analysis.R --PATH=$IN_PATH --BEHAV_DIR=$BEHAV_DIR --VARBS=$VARBS --GROUPS=$GROUP_LS --PREFIX=$PREFIX --RM_CLEAN=$RM_CLEAN --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS=$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS --indep_runs=$indep_runs
+Rscript $SCRIPT_DIR/write_analysis.R --PATH=$IN_PATH --BEHAV_FILE=$BEHAV_FILE --VARBS=$VARBS --GROUPS=$GROUPS --PREFIX=$PREFIX --RM_CLEAN=$RM_CLEAN --PLS_opt=$PLS_opt --MEAN_type=$MEAN_type --COR_mode=$COR_mode --num_perm=$num_perm --num_split=$num_split --num_boot=$num_boot --clim=$clim --save_data=$save_data --CONTRASTS=$CONTRASTS --CONDS=$CONDS --REMOVE_LS=$REMOVE_LS --indep_runs=$indep_runs
