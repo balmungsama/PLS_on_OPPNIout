@@ -1,393 +1,271 @@
 
-%%%%% Add the PLS package to Matlab's search path %%%%%
+%%%%% load matlab plugins %%%%%
 
-% PLUGINS = fopen('matlab_plugins.txt');
-% PLUGINS_DIR = fscanf(PLUGINS, '%c', Inf);
-% fclose(PLUGINS);
+% addpath('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout')
 
-% PLUGINS_DIR = fullfile( PLUGINS_DIR, 'Pls');
 
-% addpath( genpath(PLUGINS_DIR) );
+%% function calls 
 
-%%%%% check OS to determine how to access BASH commands %%%%%
+prefs       = read_usr_prefs(prefs_file);
+input_array = get_oppni_input(INPUT, prefs.detect_runs);
 
-if strcmp(OS, 'windows') == true
-	bash = 'bash -c ';
-else
-	bash = 'bash ';
+if prefs.detect_runs 
+	batch_iterations = unique(input_array.SUBJ_ID);
+elseif ~prefs.detect_runs
+	batch_iterations = input_array.IN;
 end
 
-%%%%% begin gathering data to build text file %%%%%
+for subj = 1:length(batch_iterations)
+	subj = batch_iterations{subj};
 
-fileID     = fullfile(OPPNI_DIR, 'input_file.txt');
-fileID     = fopen(fileID);
-input_file = fscanf(fileID, '%c');
-input_file = strsplit(input_file, 'IN=')';
-input_file = {input_file{2:end}};
-
-for line = 1:length(input_file)
-	tmp_line    = strsplit( input_file{line} );
-	% tmp_line{1} = ['IN=', tmp_line{1}];
-	tmp_line    = tmp_line(~cellfun('isempty',tmp_line));
-
-	if exist('input_file_array') == true
-		input_file_array = vertcat(input_file_array, tmp_line);
-	else
-		input_file_array = tmp_line;
+	if prefs.detect_runs
+		subj_sessions    = find(strcmp(subj, input_array.SUBJ_ID));
+	elseif ~prefs.detect_runs
+		subj_sessions    = find(strcmp(subj, input_array.IN));
 	end
 
-end
+	subj_onsets      = convert_onsets(input_array, subj_sessions);
+	subj_input_array = input_array(subj_sessions,:);
 
-%disp(* )('1')
-
-input_file = input_file_array;
-clear input_file_array tmp_line;
-fclose(fileID);
-
-cond_count    = 0;
-cond(1).names = 0;
-
-sample_img = input_file{1,1};
-if ~exist(sample_img, 'file')
-	sample_img = fullfile('/global', sample_img);
-end
-
-%disp(* )(2)
-
-[status, TR_length] = system(['fslval ', sample_img, ' pixdim4' ]);
-TR_length = str2num(TR_length);
-
-num_subs = size(input_file,1);
-
-out_index = strfind(input_file, 'OUT=');
-out_index = out_index(1, :);
-out_index = find(~cellfun(@isempty, out_index));
-
-out_array  = input_file(:, out_index);
-
-%disp(* )(3)
-
-% get an array of all individual subjects and their respective runs
-for row = 1:size(out_array, 1);
-	out_array2(row,:)  = strsplit(out_array{row}, '=');
-	name               = out_array2{row,2};
-	[pathstr,name,ext] = fileparts(name);
-	out_array2(row,:)  = strsplit(name, '_run');
-end
-
-for row = 1:size(out_array, 1);
-	out_array2{row,3}  = str2num(out_array2{row,2});
-end
-
-%disp(* )(4)
-
-out_array = out_array2;
-clear out_array2;
-
-group.out_array         = out_array;
-% group.names           = unique( group.out_array(:,1) ); % get array of unique subjects
-[group.names, grp_indx] = unique( group.out_array(:,1) ); % get array of unique subjects
- group.names            = group.out_array(sort(grp_indx)) ;
-
-%disp(* )(5)
-
-for row = 1:size(group.names, 1)
-	name_index      = strfind( group.out_array(:, 1), group.names{row} );
-	name_index      = find(~cellfun(@isempty, name_index))';
-	group.runs{row,1} = [ group.out_array{ [name_index] , 3} ];
-	group.rows{row,1} = [name_index];
-end
-
-clear out_array;
-
-for subj = 1:size(input_file,1)
-	subj_task = strfind(input_file(subj,:), 'TASK='); 
-	subj_task = find(~cellfun(@isempty, subj_task));
-	subj_task = input_file{subj, subj_task};
-	subj_task = strsplit(subj_task, '=');
-	subj_task = subj_task(2);
-	subj_task = subj_task{1};
-	if ~exist(subj_task, 'file')
-		subj_task = fullfile('/global', subj_task);
-	end
-	
-	% if contains(subj_task, '4503'); continue; end %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	% Relace the split_info file used in OPPNI with a matching one in the provided directory
-	if ~strcmp(ALT_COND, 'default')
-		[~,subj_task, subj_task_ext] = fileparts(subj_task) ;
-		subj_task                    = fullfile(ALT_COND, [subj_task, subj_task_ext]);
+	if prefs.detect_runs
+		name = unique(subj_input_array.SUBJ_ID);
+	elseif ~prefs.detect_runs
+		[~,name,~] = fileparts(subj_input_array.IN);
 	end
 
-	% find number of volumes to be dropped
-	DROP = input_file(subj,:);
-	DROP = strfind(DROP, 'DROP=');
-	DROP = DROP(1, :);
-	DROP = find(~cellfun(@isempty, DROP));
-	DROP = input_file(subj, DROP);
-	DROP = DROP{:};
-	DROP = strsplit(DROP, '=');
-	DROP = DROP{2};
-	DROP = str2num(DROP);
-	% %disp(* )(['DROP = ', num2str(DROP)]);
-	
-	fid = fopen(subj_task);
+	write_plsbatch(subj_input_array, name{:}, subj_onsets, outpath, prefs);
+	clear subj_input_array;
+end
 
-	while true
+exit
 
+%% define functions
+
+function prefs = read_usr_prefs(prefs_file)
+
+	fid = fopen(prefs_file);
+	while ~feof(fid)
 		tline = fgetl(fid);
-
-		if sum(size(tline)) == 0; continue; end % check if the line is blank
-		if ~ischar(tline); break; end           % check if the file has ended
-
-		TFname = strfind(tline, 'NAME='    );
-		TFons  = strfind(tline, 'ONSETS='  );
-		TFdur  = strfind(tline, 'DURATION=');
-		SCunit = strfind(tline, 'UNIT='    );
-		SCtr   = strfind(tline, 'TR_MSEC=' );
-		SCtype = strfind(tline, 'TYPE='    );
-
-		TFname = TFname(:);
-		TFons  = TFons(:) ;
-		TFdur  = TFdur(:) ;
-
-		tline = strsplit(tline, '[');
-		tline = tline(2); 
-		tline = tline{1};
-		tline = strsplit(tline, ']');
-		tline = tline(1);
-		tline = tline{1};
-
-		% scan and cond are the variables containing important information
-
-		if ~isempty(TFname);
-			cond_count             = cond_count + 1;		
-			cond(cond_count).names = tline;
-		elseif ~isempty(TFons);
-			t_ons = tline;
-			t_ons = str2num(t_ons);
-			t_ons = conv_onsets(t_ons, TR_length, DROP);
-			cond(cond_count).ons   = t_ons;
-		elseif ~isempty(TFdur);
-			cond(cond_count).dur   = tline;
-		elseif ~isempty(SCunit)
-			scan.unit = tline;
-		elseif ~isempty(SCtr)
-			scan.tr   = tline;
-		elseif ~isempty(SCtype);
-			scan.type = tline;
+		
+		if startsWith(tline, 'brain_region')
+			brain_region = strsplit(tline, ' ');
+			prefs.brain_region = brain_region{2};
+		elseif startsWith(tline, 'win_size')
+			win_size = strsplit(tline, ' ');
+			prefs.win_size = win_size{2};
+		elseif startsWith(tline, 'across_run')
+			across_run = strsplit(tline, ' ');
+			prefs.across_run = across_run{2};
+		elseif startsWith(tline, 'single_subj')
+			single_subj = strsplit(tline, ' ');
+			prefs.single_subj = single_subj{2};
+		elseif startsWith(tline, 'single_ref_scan')
+			single_ref_scan = strsplit(tline, ' ');
+			prefs.single_ref_scan = single_ref_scan{2};
+		elseif startsWith(tline, 'single_ref_onset')
+			single_ref_onset = strsplit(tline, ' ');
+			prefs.single_ref_onset = single_ref_onset{2};
+		elseif startsWith(tline, 'single_ref_number')
+			single_ref_number = strsplit(tline, ' ');
+			prefs.single_ref_number = single_ref_number{2};
+		elseif startsWith(tline, 'normalize')
+			normalize = strsplit(tline, ' ');
+			prefs.normalize = normalize{2};
+		elseif startsWith(tline, 'pipe')
+			pipe = strsplit(tline, ' ');
+			prefs.pipe = pipe{2};
+			prefs.pipe = str2num(prefs.pipe);
+		elseif startsWith(tline, 'detect_runs')
+			detect_runs = strsplit(tline, ' ');
+			prefs.detect_runs = detect_runs{2};
+			prefs.detect_runs = logical(str2num(prefs.detect_runs));
+		elseif startsWith(tline, 'relative_ref_onset')
+			relative_ref_onset = strsplit(tline, ' ');
+			prefs.relative_ref_onset = relative_ref_onset{2};
+		elseif startsWith(tline, 'relative_ref_num')
+			relative_ref_num = strsplit(tline, ' ');
+			prefs.relative_ref_num = relative_ref_num{2};
+		else
+			continue
 		end
 
 	end
+	fclose(fid);
+
+end
+
+function input_array = get_oppni_input(INPUT, detect_runs)
+	%myFun - Description
+	%
+	% Syntax: input_file_array = myFun(input)
+	%
+	% Long description
+
+	input_array = readtable(INPUT, 'Delimiter', ' ', 'ReadVariableNames', false, 'HeaderLines', 0);
+
+	for col = 1:size(input_array,2)
+		for row = 1:size(input_array,1)
+
+			val_tmp = strsplit( char(input_array{row, col}), '=');
+			input_array{row, col} = val_tmp(1,2);
+
+			if row == 1
+				input_array.Properties.VariableNames{col} = val_tmp{1,1};
+			end
+
+		end
+
+	end
+
+	if detect_runs
+		unique_struct.orig = input_array(:,find(strcmp(input_array.Properties.VariableNames, 'STRUCT'))).Variables;
+		unique_struct.ls   = unique(unique_struct.orig);
+		[~, unique_struct.names,~] = cellfun(@fileparts, input_array(:,find(strcmp(input_array.Properties.VariableNames, 'STRUCT'))).Variables,'un', 0);
+		[~,unique_struct.ind] = ismember(unique_struct.orig, unique_struct.ls);
+	else
+		unique_struct.ind = [1:size(input_array,1)]';
+		[~, unique_struct.names,~] = cellfun(@fileparts, input_array(:,find(strcmp(input_array.Properties.VariableNames, 'IN'))).Variables,'un', 0);
+	end
+
+	unique_subjs = table(unique_struct.ind, unique_struct.names, 'VariableNames', {'SUBJ_IND', 'SUBJ_ID'});
+	input_array  = [input_array, unique_subjs];
+
+end
+
+function onsets = convert_onsets(input_array, subj_sessions)
+
+	for loop_count = 1:length(subj_sessions)
+		session = subj_sessions(loop_count);
+
+		drops = input_array.DROP{session};
+		drops = regexprep(drops, '\[(.*)\]', '$1');
+		onsets(loop_count).drops = str2num(drops);
+
+		task_file = input_array.TASK{session};
+
+		fid = fopen(task_file);
+		while ~feof(fid)
+			tline = fgetl(fid);
+
+			if startsWith(tline, 'TR_MSEC')
+				tr_msec = strsplit(tline, '=');
+				tr_msec = tr_msec{2};
+				tr_msec = regexprep(tr_msec, '\[(.*)\]', '$1');
+				onsets(loop_count).tr_msec = str2num(tr_msec);
+			elseif startsWith(tline, 'NAME')
+				name = strsplit(tline, '=');
+				name = name{2};
+				onsets(loop_count).name = regexprep(name, '\[(.*)\]', '$1');
+			elseif startsWith(tline, 'ONSETS')
+				event_onsets = strsplit(tline, '=');
+				event_onsets = event_onsets{2};
+				event_onsets = regexprep(event_onsets, '\[(.*)\]', '$1');
+				onsets(loop_count).onsets = str2num(event_onsets);
+			end
+
+		end
+		fclose(fid);
+
+		% convert the onsets into TRs
+		onsets(loop_count).onsets = onsets(loop_count).onsets ./ onsets(loop_count).tr_msec;
+		onsets(loop_count).onsets = onsets(loop_count).onsets  - onsets(loop_count).drops(1);
+
+		% round them to integers so that they correspond to specific volumes in the timeseries
+		onsets(loop_count).onsets = round(onsets(loop_count).onsets);
+	end
+
+end
+
+function write_plsbatch(subject, name, onsets, output_path, prefs)
+	pipes = {'CON', 'FIX', 'IND'};
+	prefs.pipe = pipes{prefs.pipe}; % convert the pipeline setting to a character vector
+
+	% subject = input_array([1, 27],:)
+
+	for num_run = 1:size(subject,1)
+		subject_name = subject.OUT{num_run};
+		[~,subject_name,~] = fileparts(subject_name);
+
+		[nifti_file,~]          = fileparts(subject.OUT{num_run});
+		nifti_file              = fullfile(nifti_file, 'optimization_results', 'processed', ['*', subject_name, '*' prefs.pipe, '_sNorm.nii']);
+		nifti_file              = dir(nifti_file);
+		subject.nifti{num_run}  = fullfile(nifti_file.folder, nifti_file.name);
+	end
+
+	subject_batch = unique(subject.SUBJ_ID);
+	subject_batch = subject_batch{:};
+	subject_batch = fullfile(output_path, [subject_batch, '.txt']);
+
+	% the actual writing starts 
+	fid = fopen( subject_batch, 'w'); 
+	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division 
+
+	%%%%% first section  - General Section Start
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+	fprintf(fid, ['	%%  General Section Start  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+	
+	fprintf(fid, [ 'prefix '            , name                      , '\n'   ] ); % prefix for session file and datamat file
+	fprintf(fid, [ 'brain_region '      , prefs.brain_region        , '\n'   ] ); % threshold or file name for brain region
+	fprintf(fid, [ 'win_size '          , prefs.win_size            , '\n'   ] ); % temporal window size in scans
+	fprintf(fid, [ 'across_run '        , prefs.across_run          , '\n'   ] ); % 1: merge data across runs, 0: within each run
+	fprintf(fid, [ 'single_subj '	      , prefs.single_subj         , '\n'   ] ); % 1: single subject analysis, 0: normal analysis
+	fprintf(fid, [ 'single_ref_scan '	  , prefs.single_ref_scan     , '\n'   ] ); % 1: single ref scan, 0: normal ref scan
+	fprintf(fid, [ 'single_ref_onset '  , prefs.single_ref_onset    , '\n'   ] ); % single reference scan onset
+	fprintf(fid, [ 'single_ref_number ' , prefs.single_ref_number   , '\n'   ] ); % single reference scan number
+	fprintf(fid, [ 'normalize '         , prefs.normalize           , '\n\n' ] ); % normalize vol mean; 0 unless necessary
+
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'  ]);
+	fprintf(fid, ['	%%  General Section End  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] );  
+
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+	fprintf(fid, ['	%%  Condition Section Start  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+	cond_names = unique({onsets.name});
+	for cond_name = cond_names
+		fprintf(fid, ['cond_name '     , cond_name{1}            , '\n'   ] );
+		fprintf(fid, ['ref_scan_onset ', prefs.relative_ref_onset, '\n'   ] );
+		fprintf(fid, ['num_ref_scan '  , prefs.relative_ref_num  , '\n\n' ] );
+	end
+
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+	fprintf(fid, ['	%%  Condition Section End  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); 
+
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+	fprintf(fid, ['	%%  Run Section Start  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+
+	% disp(size(onsets))
+
+	for num_run = 1:(size(onsets,2)/length(cond_names))
+		fprintf(fid, ['data_files      ', subject.nifti{num_run}, '\n'] );
+		% disp(['data_files      ', subject.nifti{num_run}, '\n']);
+
+		for cond_name = unique({onsets.name})
+			cond_runs = find(strcmp(cond_name, {onsets.name}));
+			cond_run  = cond_runs(num_run);
+			
+			fprintf(fid, ['event_onsets	 ', num2str(onsets(cond_run).onsets), '\n\n'] );
+			% disp(['event_onsets	 ', num2str(onsets(cond_run).onsets), '\n\n']);
+		end
+	end
+
+	fprintf(fid, [ '\n' ] );
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
+	fprintf(fid, ['	%%  Run Section End  %%\n']);
+	fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
+	fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); 
 
 	fclose(fid);
 
 end
 
-% get vector of subjects to exclude from the analysis
-% EXCLUDE = strsplit(EXCLUDE, ',');
 
-%%%%% write to text file #####	
-for nsubj = 1:size(group.names,1);
-
-	% check if this subject should be skipped
-	% [~, subj_id, ~] = fileparts(group.names{nsubj});
-	% checkEXCLUDE = regexp(subj_id, EXCLUDE);
-	% if sum(~cellfun(@isempty, checkEXCLUDE)) > 0
-	% 	continue
-	% end
-	
-
-	if MERGE_RUNS == 0
-		for run_cur = group.runs{nsubj}
-
-			batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur), '_batch_fmri_data.txt']);
-			fid = fopen( batch_filename, 'w'); 
-
-			SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}, '_run', num2str(run_cur)];
-
-			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-			%%%%% first section  - General Section Start
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  General Section Start  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			fprintf(fid, [ 'prefix '		    , SUBJ_PREFIX , '\n'   ] ); % prefix for session file and datamat file
-			fprintf(fid, [ 'brain_region '	    , BRAIN_ROI   , '\n'   ] ); % threshold or file name for brain region
-			fprintf(fid, [ 'win_size '	        , WIN_SIZE    , '\n'   ] ); % temporal window size in scans
-			fprintf(fid, [ 'across_run '	    , ACROSS_RUN  , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
-			fprintf(fid, [ 'single_subj '	    , SINGLE_SUBJ , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
-			fprintf(fid, [ 'single_ref_scan '	, NORM_REF    , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
-			fprintf(fid, [ 'single_ref_onset '  , REF_ONSET   , '\n'   ] ); % single reference scan onset
-			fprintf(fid, [ 'single_ref_number ' , REF_NUM     , '\n'   ] ); % single reference scan number
-			fprintf(fid, [ 'normalize '         , NORMAL      , '\n\n' ] ); % normalize volume mean (keey 0 unless necessary)
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  General Section End  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			%%%%% second section - Condition Section Start
-
-			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  Condition Section Start  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			cond_count = unique({cond(:).names});
-			cond_count = length(cond_count);
-			for num_conds = 1:cond_count;
-				fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
-				fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
-				fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
-			end
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  Condition Section End  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			%%%%% run section start %%%%%
-
-			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  Run Section Start  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			task_run = group.rows{nsubj};; 
-			task_run = task_run(run_cur);
-
-			out_index           = strfind(input_file, 'OUT=');
-			out_index           = out_index(1, :);
-			out_index           = find(~cellfun(@isempty, out_index));
-
-			tmp_input_file      = input_file{task_run, out_index};
-			% tmp_input_file      = strsplit(tmp_input_file, '=');
-			% tmp_input_file      = tmp_input_file{2};
-			tmp_input_file      = strsplit(tmp_input_file, '=');
-			tmp_input_file      = tmp_input_file{2};
-			[~, nifti_name, ~]  = fileparts(tmp_input_file);
-			tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
-			[~, tmp_input_file] = fileattrib(tmp_input_file);
-			tmp_input_file      = tmp_input_file.Name;
-
-			fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
-			
-			for num_cond = 1:cond_count;
-				cond_ind = ((task_run - 1) * cond_count) + num_cond;
-				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
-
-				% %disp(* )([num2str(task_run) ' ' (cond_ind)]); % FIXME: this is a trouble-shooting  line 
-			end
-
-			fprintf(fid, [ '\n' ] );
-
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-			fprintf(fid, ['	%%  Run Section End  %%\n']);
-			fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-			fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-
-			fclose(fid);
-
-		end
-	else
-		batch_filename = fullfile(OUTPUT, [PREFIX, '_', group.names{nsubj}, '_batch_fmri_data.txt']);
-		fid = fopen( batch_filename, 'w'); 
-
-		SUBJ_PREFIX = [PREFIX, '_', group.names{nsubj}];
-
-		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-		%%%%% first section  - General Section Start
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  General Section Start  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		fprintf(fid, [ 'prefix '		      , SUBJ_PREFIX    , '\n'   ] ); % prefix for session file and datamat file
-		fprintf(fid, [ 'brain_region '	      , BRAIN_ROI      , '\n'   ] ); % threshold or file name for brain region
-		fprintf(fid, [ 'win_size '	          , WIN_SIZE       , '\n'   ] ); % temporal window size in scans
-		fprintf(fid, [ 'across_run '	      , ACROSS_RUN     , '\n'   ] ); % 1 for merge data across all run, 0 for within each run
-		fprintf(fid, [ 'single_subj '	      , SINGLE_SUBJ    , '\n'   ] ); % 1 for single subject analysis, 0 for normal analysis
-		fprintf(fid, [ 'single_ref_scan '	  , NORM_REF       , '\n'   ] ); % 1 for single reference scan, 0 for normal reference scan
-		fprintf(fid, [ 'single_ref_onset '    , REF_ONSET      , '\n'   ] ); % single reference scan onset
-		fprintf(fid, [ 'single_ref_number '   , REF_NUM        , '\n'   ] ); % single reference scan number
-		fprintf(fid, [ 'normalize '           , NORMAL         , '\n\n' ] ); % normalize volume mean (keey 0 unless necessary)
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  General Section End  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		%%%%% second section - Condition Section Start
-
-		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  Condition Section Start  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		cond_count = unique({cond(:).names});
-		cond_count = length(cond_count);
-		for num_conds = 1:cond_count;
-			fprintf(fid, ['cond_name ', cond(num_conds).names, '\n' ] ); % unique({cond(:).names})
-			fprintf(fid, ['ref_scan_onset ', REF_ONSET, '\n'   ] );
-			fprintf(fid, ['num_ref_scan '  , REF_NUM  , '\n\n' ] );
-		end
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  Condition Section End  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		%%%%% run section start %%%%%
-
-		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  Run Section Start  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		for task_run = group.rows{nsubj}; % was nsubj
-
-			out_index           = strfind(input_file, 'OUT=');
-			out_index           = out_index(1, :);
-			out_index           = find(~cellfun(@isempty, out_index));
-
-			tmp_input_file      = input_file{task_run, out_index};
-			% tmp_input_file      = strsplit(tmp_input_file, '=');
-			% tmp_input_file      = tmp_input_file{2};
-			tmp_input_file      = strsplit(tmp_input_file, '=');
-			tmp_input_file      = tmp_input_file{2};
-			[~, nifti_name, ~]  = fileparts(tmp_input_file);
-			tmp_input_file      = fullfile(OPPNI_DIR, 'optimization_results', 'processed', ['*', nifti_name, '_IND_sNorm.nii'] );
-			[~, tmp_input_file] = fileattrib(tmp_input_file);
-			tmp_input_file      = tmp_input_file.Name;
-
-			fprintf(fid, [ 'data_files ', tmp_input_file, '\n' ] );
-			
-			for num_cond = 1:cond_count;
-				cond_ind = ((task_run - 1) * cond_count) + num_cond;
-				fprintf(fid, [ 'event_onsets ', cond(cond_ind).ons, '\n' ] );
-			end
-
-			fprintf(fid, [ '\n' ] );
-
-		end
-
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n']);
-		fprintf(fid, ['	%%  Run Section End  %%\n']);
-		fprintf(fid, ['	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n']);
-
-		fprintf(fid, [ '\n%%------------------------------------------------------------------------\n\n' ] ); % Division Line
-
-
-		fclose(fid);
-	end
-end
-
-%disp(* )('Batch file created.');
-
-exit
+% matlab -nodesktop -nosplash -r "INPUT='/global/home/hpc3586/SART_data/glm/scripts/glm/level_1/yng_go_input_file.txt';prefs_file='/global/home/hpc3586/SART_data/glm/scripts/glm/level_1/task_pls_prefs.txt';outpath='/global/home/hpc3586/SART_data/glm/scripts/glm/level_1';run('/global/home/hpc3586/JE_packages/PLS_on_OPPNIout/read_subjmat.m')"
