@@ -1,7 +1,7 @@
 # PLS_on_OPPNIout
 This package is designed to run a PLS analysis on OPPNI-preprocessed fMRI data.
 
-The entire package can be run using the write_batch.sh file, which acts as a wrapper for all other scripts in this package. A few user-specified inputs allow for the fast creation of PLS batch text files, to be used in the PLS package developed by Randy McIntosh (see https://www.rotman-baycrest.on.ca/index.php?section=84).
+The entire package can be run using the `write_batch.sh` file, which acts as a wrapper for all other scripts in this package. A few user-specified inputs allow for the fast creation of PLS batch text files, to be used in the PLS package developed by Randy McIntosh (see https://www.rotman-baycrest.on.ca/index.php?section=84).
 
 write_batch.sh accepts the following input parameters:
 
